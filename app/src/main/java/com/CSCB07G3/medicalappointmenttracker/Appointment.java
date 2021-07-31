@@ -4,11 +4,11 @@ public class Appointment {
 	
 	private String date;
 	private String time;
-	private Docter docter;
+	private Doctor doctor;
 	private User user;
 	
-	public Appointment(Docter docter, String date, String time) {
-		this.docter = docter;
+	public Appointment(Doctor doctor, String date, String time) {
+		this.doctor = doctor;
 		this.time = time;
 		this.date = date;
 	}
