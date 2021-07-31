@@ -12,5 +12,5 @@ public class Appointment {
 		this.time = time;
 		this.date = date;
 	}
-	
 }
+
