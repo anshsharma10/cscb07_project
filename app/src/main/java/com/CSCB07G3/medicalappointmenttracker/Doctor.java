@@ -10,6 +10,9 @@ public class Doctor extends User{
           return "Doctor{"+ "id="+userId+", name='"+name+"', password='"+passWord+'\''+'}';
     }
 
+    public Doctor(){
+        super();
+    }
     public Doctor(String name, String id, String password){
         super(name, id, password);
     }
