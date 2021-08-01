@@ -7,6 +7,10 @@ public abstract class User implements Serializable {
     public String userId;
     public String passWord;
 
+    public User(){
+
+    }
+
     public User(String name, String userId, String passWord){
         this.name = name;
         this.userId = userId;
@@ -18,4 +22,7 @@ public abstract class User implements Serializable {
     }
 
     public abstract User signUp();
+
+    public String getName(){ return name; }
+    public String getPassWord(){ return passWord; }
 }
