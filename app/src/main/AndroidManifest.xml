@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppointmentTracker">
         <activity
+            android:name=".ChooseAppointment"
+            android:exported="true" />
+        <activity
             android:name=".CreateAppointment"
             android:exported="true" />
         <activity
@@ -28,7 +31,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

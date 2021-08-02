@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if (getPassword.equals(passwd)){
                                     Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    startActivity(new Intent(LoginActivity.this, ChooseAppointment.class));
                                     finish();
                                 }
                                 else{
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             }
                             else {
-                                Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Wrong username or password", Toast.LENGTH_SHORT).show();
                             }
                         }
 

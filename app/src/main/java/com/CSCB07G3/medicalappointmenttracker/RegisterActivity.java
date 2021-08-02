@@ -38,6 +38,9 @@ public class RegisterActivity extends AppCompatActivity {
         logInRedirect = findViewById(R.id.logInRedirect);
         RadioGroup radioGroup = findViewById(R.id.radioGroup);
 
+        medinfotxt.setVisibility(View.GONE);
+        edt_medinfo.setVisibility(View.GONE);
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {

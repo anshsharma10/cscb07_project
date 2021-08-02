@@ -140,7 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
-                android:text="Have an account? Login"
+                android:text="Already registered? Login here"
                 android:textAlignment="center" />
         </LinearLayout>
     </ScrollView>

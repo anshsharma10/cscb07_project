@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/ACER/cscb07_project/app/src/main/res/layout/activity_create_appointment.xml" value="0.371875" />
+        <entry key="..\:/Users/ACER/cscb07_project/app/src/main/res/layout/activity_choose_appointment.xml" value="0.35185185185185186" />
+        <entry key="..\:/Users/ACER/cscb07_project/app/src/main/res/layout/activity_create_appointment.xml" value="0.35964912280701755" />
         <entry key="..\:/Users/ACER/cscb07_project/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Users/ACER/cscb07_project/app/src/main/res/layout/activity_main.xml" value="0.35185185185185186" />
         <entry key="..\:/Users/ACER/cscb07_project/app/src/main/res/layout/activity_register.xml" value="0.35964912280701755" />
       </map>
     </option>
