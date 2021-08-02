@@ -42,16 +42,28 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Please enter your user ID or password", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    databaseReference.child("Patients").addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             // check if userid is not registered before
-                            if (snapshot.hasChild(userid)) {
-                                String getPassword = snapshot.child(userid).child("Password").getValue(String.class);
+                            if (snapshot.child("Patients").hasChild(userid)) {
+                                String getPassword = snapshot.child("Patients").child(userid).child("Password").getValue(String.class);
 
                                 if (getPassword.equals(passwd)){
                                     Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
+                                }
+                                else{
+                                    Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else if (snapshot.child("Doctors").hasChild(userid)) {
+                                String getPassword = snapshot.child("Doctors").child(userid).child("Password").getValue(String.class);
+
+                                if (getPassword.equals(passwd)){
+                                    Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(LoginActivity.this, CreateAppointment.class));
                                     finish();
                                 }
                                 else{
