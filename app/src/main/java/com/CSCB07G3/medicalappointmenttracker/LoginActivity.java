@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
-
+    public static final String USERID = "userid";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +47,11 @@ public class LoginActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             // check if userid is not registered before
                             if (snapshot.child("Patients").hasChild(userid)) {
-                                String getPassword = snapshot.child("Patients").child(userid).child("Password").getValue(String.class);
+                                String getPassword = snapshot.child("Patients").child(userid).getValue(Doctor.class).getPassWord();
 
                                 if (getPassword.equals(passwd)){
                                     Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, ChooseAppointment.class));
+                                    startActivity(new Intent(LoginActivity.this, ChooseAppointment.class).putExtra(USERID,userid));
                                     finish();
                                 }
                                 else{
@@ -59,11 +59,11 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             }
                             else if (snapshot.child("Doctors").hasChild(userid)) {
-                                String getPassword = snapshot.child("Doctors").child(userid).child("Password").getValue(String.class);
+                                String getPassword = snapshot.child("Doctors").child(userid).getValue(Doctor.class).getPassWord();
 
                                 if (getPassword.equals(passwd)){
                                     Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, CreateAppointment.class));
+                                    startActivity(new Intent(LoginActivity.this, CreateAppointment.class).putExtra(USERID,userid));
                                     finish();
                                 }
                                 else{

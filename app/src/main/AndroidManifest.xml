@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppointmentTracker">
         <activity
+            android:name=".PatientMainActivity"
+            android:exported="true" />
+        <activity
             android:name=".ChooseAppointment"
             android:exported="true" />
         <activity
