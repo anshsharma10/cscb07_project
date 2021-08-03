@@ -17,6 +17,20 @@ public class Patient extends User{
         this.medinfo = medinfo;
     }
 
+    public void selectAppointment(Appointment appointment){
+        appointment.setUser(this);
+        //Update database
+    }
+
+    public void cancelAppointment(){
+        appointment.setUser(null);
+        //Update database
+    }
+
+    public void setMedinfo(medInfo){
+        this.medinfo = medInfo;
+    }
+
 
     public String getMedInfo(){ return medinfo; }
 
