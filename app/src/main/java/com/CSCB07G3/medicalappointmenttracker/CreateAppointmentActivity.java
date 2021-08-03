@@ -50,7 +50,19 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         month = month + 1;
-                        String date = day + "/" + month + "/" + year;
+                        String date;
+                        if (month < 10 && day < 10){
+                            date = "0" + day + "/" + "0" + month + "/" + year;
+                        }
+                        else if(month < 10 && day >= 10){
+                            date = day + "/" + "0" + month + "/" + year;
+                        }
+                        else if(month >= 10 && day < 10){
+                            date = "0" + day + "/" + month + "/" + year;
+                        }
+                        else{
+                            date = day + "/" + month + "/" + year;
+                        }
                         edt_date.setText(date);
                     }
                 }, year, month, day);
@@ -65,7 +77,19 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                         CreateAppointmentActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                        String time = hour + ":" + minute;
+                        String time;
+                        if (minute < 10 && hour < 10){
+                            time = "0" + hour + ":" + "0" + minute;
+                        }
+                        else if(minute >= 10 && hour < 10){
+                            time = "0" + hour + ":" + minute;
+                        }
+                        else if(minute < 10 && hour >= 10){
+                            time = hour + ":" + "0" + minute;
+                        }
+                        else{
+                            time = hour + ":" + minute;
+                        }
                         edt_time.setText(time);
                     }
                 }, hour, minute, true);
