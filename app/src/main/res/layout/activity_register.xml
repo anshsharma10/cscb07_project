@@ -22,7 +22,7 @@
                 android:layout_height="106dp"
                 android:layout_marginBottom="25dp"
                 android:paddingVertical="25dp"
-                android:text="Patient Register"
+                android:text="Register"
                 android:textAlignment="center"
                 android:textSize="30sp" />
 

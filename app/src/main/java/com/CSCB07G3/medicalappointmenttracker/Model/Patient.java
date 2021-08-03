@@ -34,7 +34,7 @@ public class Patient extends User {
         //Update database
     }
 
-    public void setMedinfo(String medInfo){
+    public void setMedInfo(String medInfo){
         this.medinfo = medInfo;
     }
 

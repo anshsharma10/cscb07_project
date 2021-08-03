@@ -92,14 +92,18 @@ public class RegisterActivity extends AppCompatActivity {
                           public void onDataChange(@NonNull DataSnapshot snapshot) {
                               // check if userid is not registered before
                               if (snapshot.child("Patients").hasChild(userid) || snapshot.child("Doctors").hasChild(userid)) {
+                                  System.out.println("Holal");
                                   Toast.makeText(RegisterActivity.this, "User ID already exists", Toast.LENGTH_SHORT).show();
                               }
                               else {
+                                  System.out.println("clgt1");
                                   if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonPatient) {
                                       Patient patient = new Patient(name,password,userid,medinfo);
                                       databaseReference.child("Patients").child(userid).setValue(patient);
+                                      System.out.println("Hoal");
                                   }
                                   else if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonDoctor){
+                                      System.out.println("clgt");
                                       Doctor doctor = new Doctor(name, userid, password);
                                       databaseReference.child("Doctors").child(userid).setValue(doctor);
                                   }
