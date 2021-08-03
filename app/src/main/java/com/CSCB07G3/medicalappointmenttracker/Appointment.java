@@ -12,5 +12,10 @@ public class Appointment {
 		this.time = time;
 		this.date = date;
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 }
 
