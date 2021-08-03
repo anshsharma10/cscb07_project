@@ -14,18 +14,18 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.CSCB07G3.medicalappointmenttracker.ui.main.SectionsPagerAdapter;
-import com.CSCB07G3.medicalappointmenttracker.databinding.ActivityChooseAppointment2Binding;
+import com.CSCB07G3.medicalappointmenttracker.databinding.ActivityChooseAppointmentBinding;
 
 public class ChooseAppointmentActivity extends AppCompatActivity {
-    
+
     public static final String USERID = "userid";
-    private ActivityChooseAppointment2Binding binding;
+    private ActivityChooseAppointmentBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityChooseAppointment2Binding.inflate(getLayoutInflater());
+        binding = ActivityChooseAppointmentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());

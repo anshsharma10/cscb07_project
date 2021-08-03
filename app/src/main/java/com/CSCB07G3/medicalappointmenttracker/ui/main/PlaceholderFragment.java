@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.CSCB07G3.medicalappointmenttracker.R;
-import com.CSCB07G3.medicalappointmenttracker.databinding.FragmentChooseAppointmentActivity2Binding;
+import com.CSCB07G3.medicalappointmenttracker.databinding.FragmentChooseAppointmentActivityBinding;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -23,7 +23,7 @@ public class PlaceholderFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
-    private FragmentChooseAppointmentActivity2Binding binding;
+    private FragmentChooseAppointmentActivityBinding binding;
 
     public static PlaceholderFragment newInstance(int index) {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -49,7 +49,7 @@ public class PlaceholderFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        binding = FragmentChooseAppointmentActivity2Binding.inflate(inflater, container, false);
+        binding = FragmentChooseAppointmentActivityBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.sectionLabel;
