@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if (getPassword.equals(passwd)){
                                     Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, ChooseAppointmentActivity.class));
+                                    startActivity(new Intent(LoginActivity.this, ChooseAppointmentActivity.class).putExtra(USERID,userid));
                                     finish();
                                 }
                                 else{
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if (getPassword.equals(passwd)){
                                     Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, CreateAppointmentActivity.class));
+                                    startActivity(new Intent(LoginActivity.this, CreateAppointmentActivity.class).putExtra(USERID,userid));
                                     finish();
                                 }
                                 else{

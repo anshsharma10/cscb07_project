@@ -17,7 +17,8 @@ import com.CSCB07G3.medicalappointmenttracker.ui.main.SectionsPagerAdapter;
 import com.CSCB07G3.medicalappointmenttracker.databinding.ActivityChooseAppointment2Binding;
 
 public class ChooseAppointmentActivity extends AppCompatActivity {
-
+    
+    public static final String USERID = "userid";
     private ActivityChooseAppointment2Binding binding;
 
     @Override
