@@ -12,10 +12,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
+import com.CSCB07G3.medicalappointmenttracker.Model.Patient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -98,11 +96,11 @@ public class RegisterActivity extends AppCompatActivity {
                               }
                               else {
                                   if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonPatient) {
-                                      Patient patient = new Patient(name,password,medinfo);
+                                      Patient patient = new Patient(name,password,userid,medinfo);
                                       databaseReference.child("Patients").child(userid).setValue(patient);
                                   }
                                   else if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonDoctor){
-                                      Doctor doctor = new Doctor(name,password);
+                                      Doctor doctor = new Doctor(name, userid, password);
                                       databaseReference.child("Doctors").child(userid).setValue(doctor);
                                   }
                                   Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();

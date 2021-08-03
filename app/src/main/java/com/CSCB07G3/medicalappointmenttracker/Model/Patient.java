@@ -1,6 +1,9 @@
-package com.CSCB07G3.medicalappointmenttracker;
+package com.CSCB07G3.medicalappointmenttracker.Model;
 
-public class Patient extends User{
+import com.CSCB07G3.medicalappointmenttracker.Model.Appointment;
+import com.CSCB07G3.medicalappointmenttracker.Model.User;
+
+public class Patient extends User {
     String medinfo;
 
     @Override
@@ -12,9 +15,13 @@ public class Patient extends User{
         super();
         this.medinfo = null;
     }
-    public Patient(String name, String password, String medinfo){
-        super(name, password);
+    public Patient(String name, String password, String userid, String medinfo){
+        super(name, password, userid);
         this.medinfo = medinfo;
+    }
+
+    public Patient signUp() {
+        return new Patient();
     }
 
     public void selectAppointment(Appointment appointment){
@@ -22,12 +29,12 @@ public class Patient extends User{
         //Update database
     }
 
-    public void cancelAppointment(){
+    public void cancelAppointment(Appointment appointment){
         appointment.setUser(null);
         //Update database
     }
 
-    public void setMedinfo(medInfo){
+    public void setMedinfo(String medInfo){
         this.medinfo = medInfo;
     }
 

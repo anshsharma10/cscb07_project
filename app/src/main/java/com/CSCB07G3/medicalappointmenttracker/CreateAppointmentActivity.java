@@ -5,16 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
-public class CreateAppointment extends AppCompatActivity {
+public class CreateAppointmentActivity extends AppCompatActivity {
     EditText edt_date,edt_time;
     Button createapppointmentbtn;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://medical-appointment-trac-30878-default-rtdb.firebaseio.com/").getReference();
@@ -50,7 +46,7 @@ public class CreateAppointment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        CreateAppointment.this, new DatePickerDialog.OnDateSetListener() {
+                        CreateAppointmentActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         month = month + 1;
@@ -66,7 +62,7 @@ public class CreateAppointment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        CreateAppointment.this, new TimePickerDialog.OnTimeSetListener() {
+                        CreateAppointmentActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                         String time = hour + ":" + minute;

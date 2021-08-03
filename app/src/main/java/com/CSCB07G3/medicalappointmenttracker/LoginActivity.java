@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,11 +51,12 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if (getPassword.equals(passwd)){
                                     Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, ChooseAppointment.class).putExtra(USERID,userid));
+                                    startActivity(new Intent(LoginActivity.this, ChooseAppointmentActivity.class));
                                     finish();
                                 }
                                 else{
                                     Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }
                             }
                             else if (snapshot.child("Doctors").hasChild(userid)) {
@@ -63,11 +64,12 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if (getPassword.equals(passwd)){
                                     Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, CreateAppointment.class).putExtra(USERID,userid));
+                                    startActivity(new Intent(LoginActivity.this, CreateAppointmentActivity.class));
                                     finish();
                                 }
                                 else{
                                     Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }
                             }
                             else {
