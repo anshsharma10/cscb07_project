@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="286dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:layout_weight="1"
+        android:minHeight="48dp"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/btn_view_appointment"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_weight="1"
+        android:text="Book" />
+
+</LinearLayout>

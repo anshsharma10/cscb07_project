@@ -13,15 +13,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c69ec6b-b024-42eb-83d9-332ffa6bdde0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/row.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/gender_array.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/specialization_array.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/Medical_Appointment_Tracker.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/Medical_Appointment_Tracker.app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/CreateAppointmentActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/CreateAppointmentActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment1.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Doctor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Patient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/RegisterActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment1_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment1_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\ACER\.android\avd\Pixel_3a_API_30_x86.avd]" />
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\shang\.android\avd\Pixel_3_XL_API_30.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -60,11 +76,17 @@
       <list>
         <option value="resourceFile" />
         <option value="Class" />
+        <option value="valueResourceFile" />
         <option value="layoutResourceFile" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="patient-choose-doctor" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -95,7 +117,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Suggestions" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
