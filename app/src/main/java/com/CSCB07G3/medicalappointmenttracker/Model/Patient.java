@@ -1,8 +1,5 @@
 package com.CSCB07G3.medicalappointmenttracker.Model;
 
-import com.CSCB07G3.medicalappointmenttracker.Model.Appointment;
-import com.CSCB07G3.medicalappointmenttracker.Model.User;
-
 public class Patient extends User {
     String medinfo;
 
@@ -13,10 +10,10 @@ public class Patient extends User {
 
     public Patient(){
         super();
-        this.medinfo = null;
+        this.medinfo = "";
     }
-    public Patient(String name, String password, String userid, String medinfo){
-        super(name, password, userid);
+    public Patient(String name, String userid,String password, String medinfo){
+        super(name, userid, password);
         this.medinfo = medinfo;
     }
 
@@ -38,7 +35,5 @@ public class Patient extends User {
         this.medinfo = medInfo;
     }
 
-
     public String getMedInfo(){ return medinfo; }
-
 }

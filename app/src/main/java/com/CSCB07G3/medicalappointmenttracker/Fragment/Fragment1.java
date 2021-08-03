@@ -32,7 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 
 public class Fragment1 extends Fragment {
     public static final String USERID = "userid";
@@ -42,7 +42,7 @@ public class Fragment1 extends Fragment {
     private EditText searchDoctor;
     private ListView listDoctor;
 
-    private LinkedHashMap<String, User> doctorLHMap = new LinkedHashMap<String,User>();
+    private ArrayList<User> doctorList;
     private UserAdapter useradapter;
 
     @Override
@@ -53,6 +53,7 @@ public class Fragment1 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        doctorList = new ArrayList<>();
         mDatabase = FirebaseDatabase.getInstance().getReference("Doctors");
         ValueEventListener doctorListener = new ValueEventListener() {
             @Override
@@ -60,11 +61,10 @@ public class Fragment1 extends Fragment {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                         Doctor doctor = singleSnapshot.getValue(Doctor.class);
-                        String key = singleSnapshot.getKey();
-                        doctorLHMap.put(key, doctor);
+                        doctorList.add(doctor);
                     }
                 }
-                useradapter = new UserAdapter(getActivity().getApplicationContext(),doctorLHMap);
+                useradapter = new UserAdapter(getActivity().getApplicationContext(),doctorList);
                 listDoctor.setAdapter(useradapter);
             }
 
@@ -77,11 +77,11 @@ public class Fragment1 extends Fragment {
     }
     class UserAdapter extends BaseAdapter implements Filterable {
 
-        private LinkedHashMap<String,User> originUsers; // users before filtered
-        private LinkedHashMap<String,User> displayUsers;    // users after filtered
+        private ArrayList<User> originUsers; // users before filtered
+        private ArrayList<User> displayUsers;    // users after filtered
         LayoutInflater inflater;
 
-        public UserAdapter(Context context, LinkedHashMap<String,User> users) {
+        public UserAdapter(Context context, ArrayList<User> users) {
             this.originUsers = users;
             this.displayUsers = users;
             inflater = LayoutInflater.from(context);
@@ -123,13 +123,12 @@ public class Fragment1 extends Fragment {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            String key = displayUsers.keySet().toArray()[position].toString();
-            holder.userName.setText(displayUsers.get(key).getName());
+            holder.userName.setText(displayUsers.get(position).getName());
 
             holder.btn_view.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity().getApplicationContext(), ChooseAppointmentActivity.class);
-                    intent.putExtra(DOCTOR_SELECTED,key);
+                    intent.putExtra(DOCTOR_SELECTED,displayUsers.get(position).getUserId());
                     startActivity(intent);
                 }
             });
@@ -144,17 +143,17 @@ public class Fragment1 extends Fragment {
                 @SuppressWarnings("unchecked")
                 @Override
                 protected void publishResults(CharSequence constraint,FilterResults results) {
-                    displayUsers = (LinkedHashMap<String,User>) results.values; // has the filtered values
+                    displayUsers = (ArrayList<User>) results.values; // has the filtered values
                     notifyDataSetChanged();  // notifies the data with new filtered values
                 }
 
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
-                    LinkedHashMap<String,User>  FilteredLHMap = new LinkedHashMap<>();
+                    ArrayList<User>  FilteredList = new ArrayList<>();
 
                     if (originUsers == null) {
-                        originUsers = new LinkedHashMap<>(displayUsers); // saves the original data in mOriginalValues
+                        originUsers = new ArrayList<>(displayUsers); // saves the original data in mOriginalValues
                     }
 
                     if (constraint == null || constraint.length() == 0) {
@@ -165,15 +164,14 @@ public class Fragment1 extends Fragment {
                     } else {
                         constraint = constraint.toString().toLowerCase();
                         for (int i = 0; i < originUsers.size(); i++) {
-                            String key = (String) originUsers.keySet().toArray()[i];
-                            User data = originUsers.get(key);
+                            User data = originUsers.get(i);
                             if (data.getName().toLowerCase().contains(constraint.toString().toLowerCase())) {
-                                FilteredLHMap.put(key,data);
+                                FilteredList.add(data);
                             }
                         }
                         // set the Filtered result to return
-                        results.count = FilteredLHMap.size();
-                        results.values = FilteredLHMap;
+                        results.count = FilteredList.size();
+                        results.values = FilteredList;
                     }
                     return results;
                 }

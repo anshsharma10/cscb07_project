@@ -58,68 +58,64 @@ public class RegisterActivity extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://medical-appointment-trac-30878-default-rtdb.firebaseio.com/").getReference();
 
         registerButton.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                  String name = edt_name.getText().toString();
-                  String password = edt_password.getText().toString().trim();
-                  String userid = edt_userid.getText().toString().trim();
-                  String medinfo = edt_medinfo.getText().toString();
-                  boolean validregister = true;
-                  if (TextUtils.isEmpty(name)) {
-                      edt_name.setError("Name is required");
-                      validregister = false;
-                  }
-                  if (TextUtils.isEmpty(userid)) {
-                      edt_userid.setError("User ID is required");
-                      validregister = false;
-                  }
-                  if (TextUtils.isEmpty(password)) {
-                      edt_password.setError("Password is required");
-                      validregister = false;
-                  }
-                  if (password.length() < 6) {
-                      edt_password.setError("Password must be at least 6 characters");
-                      validregister = false;
-                  }
-                  if (radioGroup.getCheckedRadioButtonId() == -1){
-                      Toast.makeText(RegisterActivity.this, "Role must be selected", Toast.LENGTH_SHORT).show();
-                      validregister = false;
-                  }
+            @Override
+            public void onClick(View view) {
+                String name = edt_name.getText().toString();
+                String password = edt_password.getText().toString().trim();
+                String userid = edt_userid.getText().toString().trim();
+                String medinfo = edt_medinfo.getText().toString();
+                boolean validregister = true;
+                if (TextUtils.isEmpty(name)) {
+                    edt_name.setError("Name is required");
+                    validregister = false;
+                }
+                if (TextUtils.isEmpty(userid)) {
+                    edt_userid.setError("User ID is required");
+                    validregister = false;
+                }
+                if (TextUtils.isEmpty(password)) {
+                    edt_password.setError("Password is required");
+                    validregister = false;
+                }
+                if (password.length() < 6) {
+                    edt_password.setError("Password must be at least 6 characters");
+                    validregister = false;
+                }
+                if (radioGroup.getCheckedRadioButtonId() == -1){
+                    Toast.makeText(RegisterActivity.this, "Role must be selected", Toast.LENGTH_SHORT).show();
+                    validregister = false;
+                }
 
-                  if (validregister){
-                      databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                          @Override
-                          public void onDataChange(@NonNull DataSnapshot snapshot) {
-                              // check if userid is not registered before
-                              if (snapshot.child("Patients").hasChild(userid) || snapshot.child("Doctors").hasChild(userid)) {
-                                  System.out.println("Holal");
-                                  Toast.makeText(RegisterActivity.this, "User ID already exists", Toast.LENGTH_SHORT).show();
-                              }
-                              else {
-                                  System.out.println("clgt1");
-                                  if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonPatient) {
-                                      Patient patient = new Patient(name,password,userid,medinfo);
-                                      databaseReference.child("Patients").child(userid).setValue(patient);
-                                      System.out.println("Hoal");
-                                  }
-                                  else if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonDoctor){
-                                      System.out.println("clgt");
-                                      Doctor doctor = new Doctor(name, userid, password);
-                                      databaseReference.child("Doctors").child(userid).setValue(doctor);
-                                  }
-                                  Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
-                              }
-                              finish();
-                          }
+                if (validregister){
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            // check if userid is not registered before
+                            if (snapshot.child("Patients").hasChild(userid) || snapshot.child("Doctors").hasChild(userid)) {
+                                Toast.makeText(RegisterActivity.this, "User ID already exists", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonPatient) {
+                                    Patient patient = new Patient(name,password,userid,medinfo);
+                                    databaseReference.child("Patients").child(userid).setValue(patient);
+                                }
+                                else if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonDoctor){
+                                    Doctor doctor = new Doctor(name, userid, password);
+                                    databaseReference.child("Doctors").child(userid).setValue(doctor);
+                                }
+                                Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                            }
+                            finish();
+                        }
 
-                          @Override
-                          public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                          }
-                      });
-                  }
-              }
-          });
+                        }
+                    });
+                }
+            }
+        });
 
         logInRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
