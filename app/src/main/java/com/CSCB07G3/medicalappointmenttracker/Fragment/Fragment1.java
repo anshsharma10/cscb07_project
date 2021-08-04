@@ -1,13 +1,15 @@
 package com.CSCB07G3.medicalappointmenttracker.Fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,16 +17,14 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.CSCB07G3.medicalappointmenttracker.ChooseAppointmentActivity;
 import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
-import com.CSCB07G3.medicalappointmenttracker.Model.User;
 import com.CSCB07G3.medicalappointmenttracker.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,59 +37,32 @@ import java.util.ArrayList;
 public class Fragment1 extends Fragment {
     public static final String USERID = "userid";
     public static final String DOCTOR_SELECTED = "doctor_selected";
-    private DatabaseReference mDatabase;
-    private LinearLayout llContainer;
-    private EditText searchDoctor;
     private ListView listDoctor;
-
-    private ArrayList<User> doctorList;
-    private UserAdapter useradapter;
+    private ArrayAdapter gender_spinner_adapter,spec_spinner_adapter;
+    private String gender,spec,name;
+    private ArrayList<Doctor> doctorList;
+    private DoctorAdapter doctoradapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        doctorList = new ArrayList<>();
-        mDatabase = FirebaseDatabase.getInstance().getReference("Doctors");
-        ValueEventListener doctorListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
-                        Doctor doctor = singleSnapshot.getValue(Doctor.class);
-                        doctorList.add(doctor);
-                    }
-                }
-                useradapter = new UserAdapter(getActivity().getApplicationContext(),doctorList);
-                listDoctor.setAdapter(useradapter);
-            }
+    class DoctorAdapter extends BaseAdapter implements Filterable {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        mDatabase.addValueEventListener(doctorListener);
-    }
-    class UserAdapter extends BaseAdapter implements Filterable {
-
-        private ArrayList<User> originUsers; // users before filtered
-        private ArrayList<User> displayUsers;    // users after filtered
+        private ArrayList<Doctor> originDoctors; // doctors before filtered
+        private ArrayList<Doctor> displayDoctors;    // doctors after filtered
         LayoutInflater inflater;
 
-        public UserAdapter(Context context, ArrayList<User> users) {
-            this.originUsers = users;
-            this.displayUsers = users;
+        public DoctorAdapter(Context context, ArrayList<Doctor> doctors) {
+            this.originDoctors = doctors;
+            this.displayDoctors = doctors;
             inflater = LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
-            return displayUsers.size();
+            return displayDoctors.size();
         }
 
         @Override
@@ -103,8 +76,8 @@ public class Fragment1 extends Fragment {
         }
 
         private class ViewHolder {
-            LinearLayout llContainer;
-            TextView userName;
+            LinearLayout tlContainer;
+            TextView doctorName,doctorGender,doctorSpec;
             Button btn_view;
         }
 
@@ -116,23 +89,23 @@ public class Fragment1 extends Fragment {
             if (convertView == null) {
                 holder = new ViewHolder();
                 convertView = inflater.inflate(R.layout.row, null);
-                holder.llContainer = convertView.findViewById(R.id.llContainer);
-                holder.userName = convertView.findViewById(R.id.userName);
+                holder.tlContainer = convertView.findViewById(R.id.tlContainer);
+                holder.doctorName = convertView.findViewById(R.id.userName);
+                holder.doctorGender = convertView.findViewById(R.id.userGender);
+                holder.doctorSpec = convertView.findViewById(R.id.userInfo);
                 holder.btn_view = convertView.findViewById(R.id.btn_view_appointment);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.userName.setText(displayUsers.get(position).getName());
-
+            holder.doctorName.setText(displayDoctors.get(position).getName());
+            holder.doctorGender.setText(displayDoctors.get(position).getGender());
+            holder.doctorSpec.setText(displayDoctors.get(position).getSpecialization());
             holder.btn_view.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity().getApplicationContext(), ChooseAppointmentActivity.class);
-                    intent.putExtra(DOCTOR_SELECTED,displayUsers.get(position).getUserId());
-                    startActivity(intent);
+                    Log.i("Choose Appointment",getActivity().getIntent().getStringExtra(USERID)+" select "+displayDoctors.get(position).getUserId());
                 }
             });
-
             return convertView;
         }
 
@@ -143,29 +116,34 @@ public class Fragment1 extends Fragment {
                 @SuppressWarnings("unchecked")
                 @Override
                 protected void publishResults(CharSequence constraint,FilterResults results) {
-                    displayUsers = (ArrayList<User>) results.values; // has the filtered values
+                    displayDoctors = (ArrayList<Doctor>) results.values; // has the filtered values
                     notifyDataSetChanged();  // notifies the data with new filtered values
                 }
 
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
-                    ArrayList<User>  FilteredList = new ArrayList<>();
+                    ArrayList<Doctor>  FilteredList = new ArrayList<>();
 
-                    if (originUsers == null) {
-                        originUsers = new ArrayList<>(displayUsers); // saves the original data in mOriginalValues
+                    if (originDoctors == null) {
+                        originDoctors = new ArrayList<>(displayDoctors);
                     }
 
-                    if (constraint == null || constraint.length() == 0) {
-
+                    if (constraint == null || constraint.length() == 2) {
                         // set the Original result to return
-                        results.count = originUsers.size();
-                        results.values = originUsers;
+                        results.count = originDoctors.size();
+                        results.values = originDoctors;
                     } else {
-                        constraint = constraint.toString().toLowerCase();
-                        for (int i = 0; i < originUsers.size(); i++) {
-                            User data = originUsers.get(i);
-                            if (data.getName().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        String filter = constraint.toString().substring(0,constraint.toString().lastIndexOf(";"));
+                        String filter_name = filter.substring(0,filter.lastIndexOf(";"));
+                        //Log.i("name",filter_name);
+                        String filter_spec = constraint.toString().substring(constraint.toString().lastIndexOf(";")+1);
+                        //Log.i("spec",filter_spec);
+                        String filter_gender = filter.substring(filter.lastIndexOf(";")+1);
+                        //Log.i("gender",filter_gender);
+                        for (int i = 0; i < originDoctors.size(); i++) {
+                            Doctor data = originDoctors.get(i);
+                            if (data.getName().toLowerCase().contains(filter_name.toLowerCase()) && (filter_gender.equals("- -") || data.getGender().equals(filter_gender)) && (filter_spec.equals("- -") || data.getSpecialization().equals(filter_spec))) {
                                 FilteredList.add(data);
                             }
                         }
@@ -183,9 +161,63 @@ public class Fragment1 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment1_layout, container, false);
-        searchDoctor = v.findViewById(R.id.searchDoctor);
+        name="";
+        EditText searchDoctor = v.findViewById(R.id.searchDoctor);
         listDoctor = v.findViewById(R.id.listDoctor);
+        Spinner gender_spinner = v.findViewById(R.id.spn_doctor_gender);
+        Spinner spec_spinner = v.findViewById(R.id.spn_doctor_spec);
+        gender_spinner_adapter = ArrayAdapter.createFromResource(getActivity(), R.array.genders, android.R.layout.simple_spinner_item);
+        gender_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        gender_spinner.setAdapter(gender_spinner_adapter);
+        gender_spinner.setVisibility(View.VISIBLE);
+        spec_spinner_adapter = ArrayAdapter.createFromResource(getActivity(), R.array.specializations, android.R.layout.simple_spinner_item);
+        spec_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spec_spinner.setAdapter(spec_spinner_adapter);
+        spec_spinner.setVisibility(View.VISIBLE);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Doctors");
+        doctorList = new ArrayList<>();
+        doctoradapter = new DoctorAdapter(getActivity().getApplicationContext(),doctorList);
+        listDoctor.setAdapter(doctoradapter);
+        ValueEventListener doctorListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                doctorList = new ArrayList<>();
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
+                        Doctor doctor = singleSnapshot.getValue(Doctor.class);
+                        doctorList.add(doctor);
+                        doctoradapter = new DoctorAdapter(getActivity().getApplicationContext(),doctorList);
+                        listDoctor.setAdapter(doctoradapter);
+                        doctoradapter.getFilter().filter(name+";"+gender+";"+spec);
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
+        mDatabase.addValueEventListener(doctorListener);
+        gender_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                gender= gender_spinner_adapter.getItem(position).toString();
+                doctoradapter.getFilter().filter(name+";"+gender+";"+spec);
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+        spec_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                spec= spec_spinner_adapter.getItem(position).toString();
+                doctoradapter.getFilter().filter(name+";"+gender+";"+spec);
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
         searchDoctor.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -193,12 +225,12 @@ public class Fragment1 extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                useradapter.getFilter().filter(charSequence.toString());
+                name = charSequence.toString();
+                doctoradapter.getFilter().filter(name+";"+gender+";"+spec);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         });
 
