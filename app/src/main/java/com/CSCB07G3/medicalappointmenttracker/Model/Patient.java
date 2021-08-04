@@ -12,8 +12,8 @@ public class Patient extends User {
         super();
         this.medinfo = "";
     }
-    public Patient(String name, String userid,String password, String medinfo){
-        super(name, userid, password);
+    public Patient(String name, String userid,String password, String gender,String medinfo){
+        super(name, userid, password, gender);
         this.medinfo = medinfo;
     }
 

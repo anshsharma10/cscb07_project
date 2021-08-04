@@ -12,8 +12,9 @@ public class Doctor extends User{
         super();
         this.specialization = "";
     }
-    public Doctor(String name, String userid, String password){
-        super(name, userid, password);
+    public Doctor(String name, String userid, String password,String gender,String specialization){
+        super(name, userid,password,gender);
+        this.specialization=specialization;
     }
 
     @Override

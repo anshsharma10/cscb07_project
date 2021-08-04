@@ -12,10 +12,11 @@ public abstract class User implements Serializable {
 
     }
 
-    public User(String name, String userId, String passWord){
+    public User(String name, String userId, String passWord,String gender){
         this.name = name;
         this.userId = userId;
         this.passWord = passWord;
+        this.gender = gender;
     }
 
     public void getAppointment(){

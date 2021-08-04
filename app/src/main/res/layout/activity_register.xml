@@ -77,7 +77,7 @@
                 android:paddingVertical="20dp" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/gendertxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
@@ -149,13 +149,15 @@
                 android:layout_marginHorizontal="30dp"
                 android:text="Specialization"
                 android:textColor="#000"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:layout_marginVertical="20dp"/>
 
             <Spinner
                 android:id="@+id/spn_user_spec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp" />
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="20dp"/>
 
             <Button
                 android:id="@+id/registerbtn"
