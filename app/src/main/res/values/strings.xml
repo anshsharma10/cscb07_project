@@ -25,4 +25,5 @@
     <string name="choose_a_doctor_to_view_appointments">Choose a doctor to view appointments</string>
     <string name="gender">Gender</string>
     <string name="specialization">Specialization</string>
+    <string name="title_activity_doctor_track_appointment">DoctorTrackAppointmentActivity</string>
 </resources>

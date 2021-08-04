@@ -2,19 +2,12 @@ package com.CSCB07G3.medicalappointmenttracker;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-
-import com.CSCB07G3.medicalappointmenttracker.ui.main.SectionsPagerAdapter;
 import com.CSCB07G3.medicalappointmenttracker.databinding.ActivityChooseAppointmentBinding;
+import com.CSCB07G3.medicalappointmenttracker.ui.main2.SectionsPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 public class ChooseAppointmentActivity extends AppCompatActivity {
 

@@ -13,7 +13,9 @@
         android:theme="@style/Theme.MedicalAppointmentTracker">
         <activity
             android:name=".DoctorTrackAppointmentActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="@string/title_activity_doctor_track_appointment"
+            android:theme="@style/Theme.MedicalAppointmentTracker.NoActionBar" />
         <activity
             android:name=".ChooseAppointmentActivity"
             android:exported="true"
