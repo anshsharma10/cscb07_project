@@ -140,11 +140,14 @@ public class Fragment1 extends Fragment {
                     } else {
                         String filter = constraint.toString().substring(0,constraint.toString().lastIndexOf(";"));
                         String filter_name = filter.substring(0,filter.lastIndexOf(";"));
+                        Log.i("name",filter_name);
                         String filter_spec = constraint.toString().substring(constraint.toString().lastIndexOf(";")+1);
+                        Log.i("spec",filter_spec);
                         String filter_gender = filter.substring(filter.lastIndexOf(";")+1);
+                        Log.i("gender",filter_gender);
                         for (int i = 0; i < originDoctors.size(); i++) {
                             Doctor data = originDoctors.get(i);
-                            if (data.getName().toLowerCase().contains(filter_name.toLowerCase()) && (filter_gender.equals("- -") || data.getGender().equals(filter_gender)) && (filter_spec.equals("- -") || data.getSpecialization().equals(filter_spec))) {
+                            if ((data.getName().toLowerCase().contains(filter_name.toLowerCase())||filter_name==null) && (filter_gender.equals("- -") || data.getGender().equals(filter_gender)||filter_gender==null) && (filter_spec.equals("- -") || data.getSpecialization().equals(filter_spec)||filter_spec==null)) {
                                 FilteredList.add(data);
                             }
                         }
@@ -162,6 +165,7 @@ public class Fragment1 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment1_layout, container, false);
+        name="";
         searchDoctor = v.findViewById(R.id.searchDoctor);
         listDoctor = v.findViewById(R.id.listDoctor);
         gender_spinner = v.findViewById(R.id.spn_doctor_gender);
