@@ -37,11 +37,7 @@ import java.util.ArrayList;
 public class Fragment1 extends Fragment {
     public static final String USERID = "userid";
     public static final String DOCTOR_SELECTED = "doctor_selected";
-    private DatabaseReference mDatabase;
-    private LinearLayout tlContainer;
-    private EditText searchDoctor;
     private ListView listDoctor;
-    private Spinner gender_spinner,spec_spinner;
     private ArrayAdapter gender_spinner_adapter,spec_spinner_adapter;
     private String gender,spec,name;
     private ArrayList<Doctor> doctorList;
@@ -147,7 +143,7 @@ public class Fragment1 extends Fragment {
                         Log.i("gender",filter_gender);
                         for (int i = 0; i < originDoctors.size(); i++) {
                             Doctor data = originDoctors.get(i);
-                            if ((data.getName().toLowerCase().contains(filter_name.toLowerCase())||filter_name==null) && (filter_gender.equals("- -") || data.getGender().equals(filter_gender)||filter_gender==null) && (filter_spec.equals("- -") || data.getSpecialization().equals(filter_spec)||filter_spec==null)) {
+                            if (data.getName().toLowerCase().contains(filter_name.toLowerCase()) && (filter_gender.equals("- -") || data.getGender().equals(filter_gender)) && (filter_spec.equals("- -") || data.getSpecialization().equals(filter_spec))) {
                                 FilteredList.add(data);
                             }
                         }
@@ -166,10 +162,10 @@ public class Fragment1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment1_layout, container, false);
         name="";
-        searchDoctor = v.findViewById(R.id.searchDoctor);
+        EditText searchDoctor = v.findViewById(R.id.searchDoctor);
         listDoctor = v.findViewById(R.id.listDoctor);
-        gender_spinner = v.findViewById(R.id.spn_doctor_gender);
-        spec_spinner = v.findViewById(R.id.spn_doctor_spec);
+        Spinner gender_spinner = v.findViewById(R.id.spn_doctor_gender);
+        Spinner spec_spinner = v.findViewById(R.id.spn_doctor_spec);
         gender_spinner_adapter = ArrayAdapter.createFromResource(getActivity(), R.array.genders, android.R.layout.simple_spinner_item);
         gender_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender_spinner.setAdapter(gender_spinner_adapter);
@@ -178,7 +174,7 @@ public class Fragment1 extends Fragment {
         spec_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spec_spinner.setAdapter(spec_spinner_adapter);
         spec_spinner.setVisibility(View.VISIBLE);
-        mDatabase = FirebaseDatabase.getInstance().getReference("Doctors");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Doctors");
         doctorList = new ArrayList<>();
         doctoradapter = new DoctorAdapter(getActivity().getApplicationContext(),doctorList);
         listDoctor.setAdapter(doctoradapter);
@@ -197,8 +193,7 @@ public class Fragment1 extends Fragment {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         };
         mDatabase.addValueEventListener(doctorListener);
