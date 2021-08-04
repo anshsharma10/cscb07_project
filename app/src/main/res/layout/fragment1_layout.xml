@@ -14,29 +14,58 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:hint="Choose a doctor to view appointments"
+        android:hint="@string/choose_a_doctor_to_view_appointments"
+        android:inputType="textFilter|textPersonName|text"
         android:minHeight="48dp"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <Spinner
-            android:id="@+id/spn_doctor_gender"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="visible" />
+            android:layout_height="wrap_content" >
 
-        <Spinner
-            android:id="@+id/spn_doctor_spec"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/gender"
+                android:textAlignment="center"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/specialization"
+                android:textAlignment="center"
+                android:visibility="visible" />
+        </TableRow>
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="visible" />
-    </LinearLayout>
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spn_doctor_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="visible"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Spinner
+                android:id="@+id/spn_doctor_spec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="visible"
+                tools:ignore="TouchTargetSizeCheck" />
+        </TableRow>
+
+    </TableLayout>
 
     <ListView
         android:id="@+id/listDoctor"
