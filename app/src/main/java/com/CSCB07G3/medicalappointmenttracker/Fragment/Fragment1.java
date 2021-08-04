@@ -188,6 +188,7 @@ public class Fragment1 extends Fragment {
                         doctorList.add(doctor);
                         doctoradapter = new DoctorAdapter(getActivity().getApplicationContext(),doctorList);
                         listDoctor.setAdapter(doctoradapter);
+                        doctoradapter.getFilter().filter(name+";"+gender+";"+spec);
                     }
                 }
             }
