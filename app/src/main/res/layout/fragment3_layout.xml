@@ -9,12 +9,20 @@
     android:visibility="visible"
     tools:context=".Fragment.Fragment3">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="Search name"
+        android:visibility="visible" />
+
     <EditText
         android:id="@+id/searchDoctor1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:hint="@string/choose_a_doctor_to_view_appointments"
+        android:hint="Search for a patient"
         android:inputType="textFilter|textPersonName|text"
         android:minHeight="48dp"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -30,8 +38,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/gender"
-                android:textAlignment="center"
                 android:visibility="visible" />
 
         </TableRow>
@@ -44,6 +53,8 @@
                 android:id="@+id/spn_doctor_gender1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:visibility="visible"
                 tools:ignore="TouchTargetSizeCheck" />

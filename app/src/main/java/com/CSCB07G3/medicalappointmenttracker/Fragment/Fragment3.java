@@ -4,14 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -78,7 +76,6 @@ public class Fragment3 extends Fragment {
         private class ViewHolder {
             LinearLayout tlContainer;
             TextView patientName,patientGender;
-            Button btn_view;
         }
 
         @Override
@@ -88,22 +85,16 @@ public class Fragment3 extends Fragment {
 
             if (convertView == null) {
                 holder = new ViewHolder();
-                convertView = inflater.inflate(R.layout.row, null);
-                holder.tlContainer = convertView.findViewById(R.id.tlContainer);
-                holder.patientName = convertView.findViewById(R.id.userName);
-                holder.patientGender = convertView.findViewById(R.id.userGender);
-                holder.btn_view = convertView.findViewById(R.id.btn_view_appointment);
+                convertView = inflater.inflate(R.layout.row2, null);
+                holder.tlContainer = convertView.findViewById(R.id.tlContainer1);
+                holder.patientName = convertView.findViewById(R.id.userName1);
+                holder.patientGender = convertView.findViewById(R.id.userGender1);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             holder.patientName.setText(displayPatients.get(position).getName());
             holder.patientGender.setText(displayPatients.get(position).getGender());
-            holder.btn_view.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Log.i("Choose Appointment",getActivity().getIntent().getStringExtra(USERID)+" select "+displayPatients.get(position).getUserId());
-                }
-            });
             return convertView;
         }
 
