@@ -1,8 +1,5 @@
 package com.CSCB07G3.medicalappointmenttracker;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
 import com.google.firebase.database.DataSnapshot;
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if (getPassword.equals(passwd)){
                                     Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, CreateAppointmentActivity.class).putExtra(USERID,userid));
+                                    startActivity(new Intent(LoginActivity.this, DoctorTrackAppointmentActivity.class).putExtra(USERID,userid));
                                     finish();
                                 }
                                 else{
