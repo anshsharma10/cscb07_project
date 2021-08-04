@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="specializations">
+        <item>- -</item>
         <item>Allergy and immunology</item>
         <item>Anesthesiology</item>
         <item>Dermatology</item>

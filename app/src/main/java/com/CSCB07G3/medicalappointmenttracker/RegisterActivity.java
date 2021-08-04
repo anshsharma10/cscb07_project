@@ -2,6 +2,7 @@ package com.CSCB07G3.medicalappointmenttracker;
 
 import static android.widget.Toast.makeText;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,10 +26,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity {
     EditText edt_name, edt_userid, edt_password, edt_medinfo;
     Button registerButton;
-    TextView logInRedirect;
+    TextView logInRedirect,gendertxt;
     Spinner gender_spinner,spec_spinner;
     ArrayAdapter gender_spinner_adapter,spec_spinner_adapter;
     String gender,spec;
@@ -47,7 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.registerbtn);
         logInRedirect = findViewById(R.id.logInRedirect);
         RadioGroup radioGroup = findViewById(R.id.radioGroup);
-        gender_spinner = findViewById(R.id.spn_user_gender);
+        gender_spinner = findViewById(R.id.spn_doctor_gender);
+        gendertxt = findViewById(R.id.gendertxt);
         gender_spinner_adapter = ArrayAdapter.createFromResource(this, R.array.genders, android.R.layout.simple_spinner_item);
         gender_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender_spinner.setAdapter(gender_spinner_adapter);
@@ -78,8 +82,30 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-        gender_spinner.setOnItemSelectedListener(new genderSelectedListener());
-        spec_spinner.setOnItemSelectedListener(new specSelectedListener());
+        gender_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                gender= gender_spinner_adapter.getItem(position).toString();
+                if (gender.equals("- -")){
+                    gender = null;
+                }
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+        spec_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                spec= spec_spinner_adapter.getItem(position).toString();
+                if (spec.equals("- -")){
+                    spec = null;
+                }
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://medical-appointment-trac-30878-default-rtdb.firebaseio.com/").getReference();
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -87,17 +113,26 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String name = edt_name.getText().toString();
                 String password = edt_password.getText().toString().trim();
-                String userid = edt_userid.getText().toString().trim();
+                String userid = edt_userid.getText().toString();
                 String medinfo = edt_medinfo.getText().toString();
                 boolean validregister = true;
+
                 if (TextUtils.isEmpty(name)) {
                     edt_name.setError("Name is required");
                     validregister = false;
+                }else if(! Pattern.compile(new String ("^[a-zA-Z0-9\\s]*$")).matcher(name).matches()){
+                    edt_name.setError("Name should only contain letters,numbers and space");
+                    validregister = false;
                 }
+
                 if (TextUtils.isEmpty(userid)) {
                     edt_userid.setError("User ID is required");
                     validregister = false;
+                }else if(! Pattern.compile(new String ("^[a-zA-Z0-9_]*$")).matcher(userid).matches()){
+                    edt_userid.setError("User ID should only contain letters, numbers and underline");
+                    validregister = false;
                 }
+
                 if (TextUtils.isEmpty(password)) {
                     edt_password.setError("Password is required");
                     validregister = false;
@@ -108,6 +143,20 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 if (radioGroup.getCheckedRadioButtonId() == -1){
                     makeText(getBaseContext(), "Role must be selected", Toast.LENGTH_SHORT).show();
+                    validregister = false;
+                }
+                if(gender==null){
+                    TextView genderError = (TextView)gender_spinner.getSelectedView();
+                    genderError.setError("");
+                    genderError.setTextColor(Color.RED);
+                    genderError.setText("Gender is required");
+                    validregister = false;
+                }
+                if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonDoctor && spec==null){
+                    TextView specError = (TextView)spec_spinner.getSelectedView();
+                    specError.setError("");
+                    specError.setTextColor(Color.RED);
+                    specError.setText("Specialization is required");
                     validregister = false;
                 }
 
@@ -148,24 +197,6 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
-
-    private class genderSelectedListener implements AdapterView.OnItemSelectedListener {
-        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-                                   long arg3) {
-            gender= gender_spinner_adapter.getItem(arg2).toString();
-        }
-        public void onNothingSelected(AdapterView<?> arg0) {
-        }
-    }
-
-    private class specSelectedListener implements AdapterView.OnItemSelectedListener {
-        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-                                   long arg3) {
-            spec= spec_spinner_adapter.getItem(arg2).toString();
-        }
-        public void onNothingSelected(AdapterView<?> arg0) {
-        }
     }
 
 }

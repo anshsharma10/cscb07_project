@@ -86,7 +86,7 @@
                 android:visibility="visible" />
 
             <Spinner
-                android:id="@+id/spn_user_gender"
+                android:id="@+id/spn_doctor_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
