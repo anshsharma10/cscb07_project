@@ -1,8 +1,5 @@
 package com.CSCB07G3.medicalappointmenttracker;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -11,6 +8,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 public class CreateAppointmentActivity extends AppCompatActivity {
-    EditText edt_date,edt_time;
+    EditText edt_date,edt_start_time, edt_end_time;
     Button createapppointmentbtn;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://medical-appointment-trac-30878-default-rtdb.firebaseio.com/").getReference();
 
@@ -31,7 +31,8 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_appointment);
 
         edt_date = findViewById(R.id.editDate);
-        edt_time = findViewById(R.id.editTimeslot);
+        edt_start_time = findViewById(R.id.editTimeslot1);
+        edt_end_time = findViewById(R.id.editTimeslot2);
         createapppointmentbtn = findViewById(R.id.createappointmentbtn);
 
         Calendar calendar = Calendar.getInstance();
@@ -70,7 +71,7 @@ public class CreateAppointmentActivity extends AppCompatActivity {
             }
         });
 
-        edt_time.setOnClickListener(new View.OnClickListener() {
+        edt_start_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(
@@ -90,7 +91,34 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                         else{
                             time = hour + ":" + minute;
                         }
-                        edt_time.setText(time);
+                        edt_start_time.setText(time);
+                    }
+                }, hour, minute, true);
+                timePickerDialog.show();
+            }
+        });
+
+        edt_end_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        CreateAppointmentActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                        String time;
+                        if (minute < 10 && hour < 10){
+                            time = "0" + hour + ":" + "0" + minute;
+                        }
+                        else if(minute >= 10 && hour < 10){
+                            time = "0" + hour + ":" + minute;
+                        }
+                        else if(minute < 10 && hour >= 10){
+                            time = hour + ":" + "0" + minute;
+                        }
+                        else{
+                            time = hour + ":" + minute;
+                        }
+                        edt_end_time.setText(time);
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();

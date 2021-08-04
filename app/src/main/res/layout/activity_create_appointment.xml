@@ -48,15 +48,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
-                android:text="Time"
+                android:text=" Start time"
                 android:textColor="#000" />
 
             <EditText
-                android:id="@+id/editTimeslot"
+                android:id="@+id/editTimeslot1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
-                android:hint="Enter the available time slot"
+                android:hint="Enter the start time"
+                android:minHeight="48dp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:text=" End time"
+                android:textColor="#000" />
+
+            <EditText
+                android:id="@+id/editTimeslot2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:hint="Enter the end time"
                 android:minHeight="48dp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
