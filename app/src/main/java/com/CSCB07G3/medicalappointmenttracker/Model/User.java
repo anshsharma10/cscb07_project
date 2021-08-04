@@ -6,6 +6,7 @@ public abstract class User implements Serializable {
     public String name;
     public String userId;
     public String passWord;
+    public String gender;
 
     public User(){
 
@@ -25,4 +26,6 @@ public abstract class User implements Serializable {
 
     public String getName(){ return name; }
     public String getPassWord(){ return passWord; }
+    public String getUserId(){ return userId; }
+    public String getGender(){ return gender; }
 }

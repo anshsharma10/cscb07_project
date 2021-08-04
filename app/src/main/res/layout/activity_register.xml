@@ -22,7 +22,7 @@
                 android:layout_height="106dp"
                 android:layout_marginBottom="25dp"
                 android:paddingVertical="25dp"
-                android:text="Patient Register"
+                android:text="Register"
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
@@ -77,6 +77,23 @@
                 android:paddingVertical="20dp" />
 
             <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:text="Gender"
+                android:textColor="#000"
+                android:visibility="visible" />
+
+            <Spinner
+                android:id="@+id/spn_user_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:minHeight="48dp"
+                android:visibility="visible" />
+
+            <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -107,7 +124,7 @@
             </RadioGroup>
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/medinfotxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
@@ -124,6 +141,21 @@
                 android:hint="Please input your medical history"
                 android:minHeight="48dp"
                 tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/specinfotxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:text="Specialization"
+                android:textColor="#000"
+                android:visibility="visible" />
+
+            <Spinner
+                android:id="@+id/spn_user_spec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp" />
 
             <Button
                 android:id="@+id/registerbtn"
