@@ -13,15 +13,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c69ec6b-b024-42eb-83d9-332ffa6bdde0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/DoctorTrackAppointmentActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_track_appointment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Doctor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Patient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/RegisterActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
