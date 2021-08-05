@@ -2,6 +2,7 @@ package com.CSCB07G3.medicalappointmenttracker;
 
 import static android.widget.Toast.makeText;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -26,12 +28,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText edt_name, edt_userid, edt_password, edt_medinfo;
     Button registerButton;
-    TextView logInRedirect,gendertxt;
+    TextView logInRedirect,gendertxt,birthdaytxt,edt_birthday;
     Spinner gender_spinner,spec_spinner;
     ArrayAdapter gender_spinner_adapter,spec_spinner_adapter;
     String gender,spec;
@@ -39,7 +46,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        birthdaytxt = findViewById(R.id.birthdaytxt);
+        edt_birthday = findViewById(R.id.edt_birthday);
         edt_name = findViewById(R.id.editName);
         edt_userid = findViewById(R.id.usrname);
         edt_password = findViewById(R.id.passwd);
@@ -56,7 +64,8 @@ public class RegisterActivity extends AppCompatActivity {
         gender_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender_spinner.setAdapter(gender_spinner_adapter);
         gender_spinner.setVisibility(View.VISIBLE);
-
+        birthdaytxt.setVisibility(View.GONE);
+        edt_birthday.setVisibility(View.GONE);
         medinfotxt.setVisibility(View.GONE);
         edt_medinfo.setVisibility(View.GONE);
         specinfotxt.setVisibility(View.GONE);
@@ -64,6 +73,25 @@ public class RegisterActivity extends AppCompatActivity {
         spec_spinner_adapter = ArrayAdapter.createFromResource(this, R.array.specializations, android.R.layout.simple_spinner_item);
         spec_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spec_spinner.setAdapter(spec_spinner_adapter);
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DATE);
+
+        edt_birthday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        RegisterActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        Date date = new GregorianCalendar(year, month, day).getTime();
+                        edt_birthday.setText(new SimpleDateFormat("dd/MM/yyyy").format(date));
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -73,12 +101,16 @@ public class RegisterActivity extends AppCompatActivity {
                     edt_medinfo.setVisibility(View.GONE);
                     specinfotxt.setVisibility(View.VISIBLE);
                     spec_spinner.setVisibility(View.VISIBLE);
+                    birthdaytxt.setVisibility(View.GONE);
+                    edt_birthday.setVisibility(View.GONE);
                 }
                 else{
                     medinfotxt.setVisibility(View.VISIBLE);
                     edt_medinfo.setVisibility(View.VISIBLE);
                     specinfotxt.setVisibility(View.GONE);
                     spec_spinner.setVisibility(View.GONE);
+                    birthdaytxt.setVisibility(View.VISIBLE);
+                    edt_birthday.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -115,12 +147,14 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = edt_password.getText().toString().trim();
                 String userid = edt_userid.getText().toString();
                 String medinfo = edt_medinfo.getText().toString();
+                String birthday = edt_birthday.getText().toString();
+                Date birth = null;
                 boolean validregister = true;
 
                 if (TextUtils.isEmpty(name)) {
                     edt_name.setError("Name is required");
                     validregister = false;
-                }else if(! Pattern.compile(new String ("^[a-zA-Z0-9\\s]*$")).matcher(name).matches()){
+                }else if(! Pattern.compile("^[a-zA-Z0-9\\s]*$").matcher(name).matches()){
                     edt_name.setError("Name should only contain letters,numbers and space");
                     validregister = false;
                 }
@@ -128,7 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(userid)) {
                     edt_userid.setError("User ID is required");
                     validregister = false;
-                }else if(! Pattern.compile(new String ("^[a-zA-Z0-9_]*$")).matcher(userid).matches()){
+                }else if(! Pattern.compile("^[a-zA-Z0-9_]*$").matcher(userid).matches()){
                     edt_userid.setError("User ID should only contain letters, numbers and underline");
                     validregister = false;
                 }
@@ -160,7 +194,27 @@ public class RegisterActivity extends AppCompatActivity {
                     validregister = false;
                 }
 
+                if(TextUtils.isEmpty(birthday)){
+                    edt_birthday.setError("Birthday is required");
+                    validregister = false;
+                }else{
+                    SimpleDateFormat birthdayformat = new SimpleDateFormat("dd/MM/yyyy");
+                    birthdayformat.setLenient(false);
+                    try {
+                        birth = birthdayformat.parse(birthday);
+                        if(birth.after(Calendar.getInstance().getTime())){
+                            edt_birthday.setError("Birthday must not be later than today");
+                            validregister = false;
+                        }
+
+                    } catch (ParseException e) {
+                        edt_birthday.setError("Invalid birthday formate");
+                        validregister = false;
+                    }
+                }
+
                 if (validregister){
+                    Date finalBirth = birth;
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -170,7 +224,7 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                             else {
                                 if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonPatient) {
-                                    Patient patient = new Patient(name,userid,password,gender,medinfo);
+                                    Patient patient = new Patient(name,userid,password,gender,medinfo, finalBirth);
                                     databaseReference.child("Patients").child(userid).setValue(patient);
                                 }
                                 else if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonDoctor){
@@ -198,5 +252,4 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
 }
