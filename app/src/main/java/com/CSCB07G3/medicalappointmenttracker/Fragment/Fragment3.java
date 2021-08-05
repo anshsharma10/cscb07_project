@@ -75,7 +75,7 @@ public class Fragment3 extends Fragment {
 
         private class ViewHolder {
             LinearLayout tlContainer;
-            TextView patientName,patientGender;
+            TextView patientName,patientGender, display_patient_medinfo;
         }
 
         @Override
@@ -89,12 +89,14 @@ public class Fragment3 extends Fragment {
                 holder.tlContainer = convertView.findViewById(R.id.tlContainer1);
                 holder.patientName = convertView.findViewById(R.id.userName1);
                 holder.patientGender = convertView.findViewById(R.id.userGender1);
+                holder.display_patient_medinfo = convertView.findViewById(R.id.userMedinfo1);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             holder.patientName.setText(displayPatients.get(position).getName());
             holder.patientGender.setText(displayPatients.get(position).getGender());
+            holder.display_patient_medinfo.setText("Medical Information: " + displayPatients.get(position).getMedInfo());
             return convertView;
         }
 
@@ -121,7 +123,6 @@ public class Fragment3 extends Fragment {
                     }
 
                     if (constraint == null || constraint.length() == 2) {
-                        System.out.println("ckgt");
                         // set the Original result to return
                         results.count = originPatients.size();
                         results.values = originPatients;
@@ -160,9 +161,9 @@ public class Fragment3 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment3_layout, container, false);
         name="";
-        EditText searchPatient = v.findViewById(R.id.searchDoctor1);
-        listPatient = v.findViewById(R.id.listDoctor1);
-        Spinner gender_spinner = v.findViewById(R.id.spn_doctor_gender1);
+        EditText searchPatient = v.findViewById(R.id.searchPatient);
+        listPatient = v.findViewById(R.id.listPatient);
+        Spinner gender_spinner = v.findViewById(R.id.spn_patient_gender);
         gender_spinner_adapter = ArrayAdapter.createFromResource(getActivity(), R.array.genders, android.R.layout.simple_spinner_item);
         gender_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender_spinner.setAdapter(gender_spinner_adapter);

@@ -18,7 +18,7 @@
         android:visibility="visible" />
 
     <EditText
-        android:id="@+id/searchDoctor1"
+        android:id="@+id/searchPatient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content">
 
             <Spinner
-                android:id="@+id/spn_doctor_gender1"
+                android:id="@+id/spn_patient_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
@@ -64,7 +64,7 @@
     </TableLayout>
 
     <ListView
-        android:id="@+id/listDoctor1"
+        android:id="@+id/listPatient"
         android:layout_width="fill_parent"
         android:visibility="visible"
         android:layout_weight="1"
