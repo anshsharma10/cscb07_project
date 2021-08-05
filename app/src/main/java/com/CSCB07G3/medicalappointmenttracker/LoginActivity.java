@@ -55,8 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                                     finish();
                                 }
                                 else{
-                                    Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
-                                    finish();
+                                    edt_passwd.setError("Wrong password");
                                 }
                             }
                             else if (snapshot.child("Doctors").hasChild(userid)) {
@@ -68,12 +67,11 @@ public class LoginActivity extends AppCompatActivity {
                                     finish();
                                 }
                                 else{
-                                    Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
-                                    finish();
+                                    edt_passwd.setError("Wrong password");
                                 }
                             }
                             else {
-                                Toast.makeText(LoginActivity.this, "Wrong username or password", Toast.LENGTH_SHORT).show();
+                                edt_userid.setError("Such user does not exist");
                             }
                         }
 
