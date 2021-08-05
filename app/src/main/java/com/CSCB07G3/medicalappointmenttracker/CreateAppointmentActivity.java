@@ -2,16 +2,20 @@ package com.CSCB07G3.medicalappointmenttracker;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.CSCB07G3.medicalappointmenttracker.Model.AppTime;
+import com.CSCB07G3.medicalappointmenttracker.Model.Appointment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,16 +23,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class CreateAppointmentActivity extends AppCompatActivity {
+    Date d;
     EditText edt_date,edt_start_time, edt_end_time;
     Button createapppointmentbtn;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://medical-appointment-trac-30878-default-rtdb.firebaseio.com/").getReference();
+    String doctorid = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_appointment);
+
+        doctorid = getIntent().getStringExtra(DoctorTrackAppointmentActivity.doctorId);
+        System.out.println(doctorid);
 
         edt_date = findViewById(R.id.editDate);
         edt_start_time = findViewById(R.id.editTimeslot1);
@@ -39,8 +49,18 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DATE);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
+        final int[] start_hour = {calendar.get(Calendar.HOUR_OF_DAY)};
+        final int[] start_minute = {calendar.get(Calendar.MINUTE)};
+        int end_hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int end_minute = calendar.get(Calendar.MINUTE);
+
+        final int[] year1 = new int[1];
+        final int[] month1 = new int[1];
+        final int[] day1 = new int[1];
+        final int[] start_hour1 = new int[1];
+        final int[] start_minute1 = new int[1];
+        final int[] end_hour1 = new int[1];
+        final int[] end_minute1 = new int[1];
 
 
         edt_date.setOnClickListener(new View.OnClickListener() {
@@ -51,8 +71,12 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         month = month + 1;
+                        year1[0] = year;
+                        month1[0] = month;
+                        day1[0] = day;
                         String date;
                         if (month < 10 && day < 10){
+                            d = new Date();
                             date = "0" + day + "/" + "0" + month + "/" + year;
                         }
                         else if(month < 10 && day >= 10){
@@ -79,6 +103,9 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                         String time;
+                        start_minute1[0] = minute;
+                        start_hour1[0] = hour;
+
                         if (minute < 10 && hour < 10){
                             time = "0" + hour + ":" + "0" + minute;
                         }
@@ -93,7 +120,7 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                         }
                         edt_start_time.setText(time);
                     }
-                }, hour, minute, true);
+                }, start_hour[0], start_minute[0], true);
                 timePickerDialog.show();
             }
         });
@@ -106,6 +133,8 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                         String time;
+                        end_hour1[0] = hour;
+                        end_minute1[0] = minute;
                         if (minute < 10 && hour < 10){
                             time = "0" + hour + ":" + "0" + minute;
                         }
@@ -120,7 +149,7 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                         }
                         edt_end_time.setText(time);
                     }
-                }, hour, minute, true);
+                }, end_hour, end_minute, true);
                 timePickerDialog.show();
             }
         });
@@ -128,17 +157,41 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         createapppointmentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        // databaseReference.child("Appointments").child(userid).setValue(name);
-                    }
+                AppTime t1 = new AppTime(year1[0], month1[0], day1[0], start_hour1[0], start_hour1[0]);
+                AppTime t2 = new AppTime(year1[0], month1[0], day1[0], end_hour1[0], end_minute1[0]);
+                if (t1.compareTo(t2) == 1 || t1.compareTo(t2) == 0){
+                    Toast.makeText(CreateAppointmentActivity.this, "End time must be later than start time", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                            if (!snapshot.child("Appointments").hasChild("totalapp")) {
+                                databaseReference.child("Appointments").child("totalapp").setValue(1);
+                                databaseReference.child("Appointments").child("1").child(doctorid).setValue("");
+                                Appointment app = new Appointment(doctorid, t1, t2);
+                                databaseReference.child("Appointments").child("1").setValue(app);
+                            } else {
+                                String n = snapshot.child("Appointments").child("totalapp").getValue().toString();
+                                int n1 = Integer.parseInt(n) + 1;
+                                n = "" + n1;
+                                databaseReference.child("Appointments").child(n).child(doctorid).setValue("");
+                                //edt_date.getText().subSequence(edt_date.getText().)
+                                Appointment app = new Appointment(doctorid, t1, t2);
+                                databaseReference.child("Appointments").child(n).setValue(app);
+                                databaseReference.child("Appointments").child("totalapp").setValue(n);
+                            }
+                            startActivity(new Intent(CreateAppointmentActivity.this, DoctorTrackAppointmentActivity.class));
+                            finish();
+                        }
 
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
             }
         });
     }
