@@ -19,7 +19,7 @@ import com.CSCB07G3.medicalappointmenttracker.R;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_3};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_3, R.string.tab_text_4};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -34,10 +34,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position){
             case 0:
-                fragment = new Fragment3();
+                fragment = new Fragment4();
                 break;
             case 1:
-                fragment = new Fragment4();
+                fragment = new Fragment3();
                 break;
         }
         return fragment;
