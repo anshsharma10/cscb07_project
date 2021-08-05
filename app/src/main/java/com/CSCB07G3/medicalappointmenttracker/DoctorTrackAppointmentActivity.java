@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayout;
 public class DoctorTrackAppointmentActivity extends AppCompatActivity {
 
     private ActivityDoctorTrackAppointmentBinding binding;
+    public static final String doctorId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,9 @@ public class DoctorTrackAppointmentActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), CreateAppointmentActivity.class));
+                Intent i = new Intent(getApplicationContext(), CreateAppointmentActivity.class);
+                i.putExtra(doctorId, getIntent().getStringExtra(LoginActivity.USERID));
+                startActivity(i);
             }
         });
     }
