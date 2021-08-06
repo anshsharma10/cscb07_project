@@ -1,32 +1,51 @@
 package com.CSCB07G3.medicalappointmenttracker.Model;
 
 import java.io.Serializable;
+import java.util.Date;
+
 
 public class Appointment implements Serializable {
-	AppTime start_time;
-	AppTime end_time;
+	AppTime startTime;
+	AppTime endTime;
 	String doctorId;
 	String patientId = "";
-	
+	public Appointment(){
+	}
+
 	public Appointment(String doctorid, AppTime start_time, AppTime end_time) {
 		this.doctorId = doctorid;
-		this.start_time = start_time;
-		this.end_time = end_time;
+		this.startTime = start_time;
+		this.endTime = end_time;
 	}
 
 	public Appointment(String doctorid, String patientId, AppTime start_time, AppTime end_time) {
 		this.doctorId = doctorid;
 		this.patientId = patientId;
-		this.start_time = start_time;
-		this.end_time = end_time;
+		this.startTime = start_time;
+		this.endTime = end_time;
 	}
 
-    public void setUser(Patient patient) {
-    }
+	@Override
+	public String toString() {
+		return "Appointment{" +
+				"start_time=" + startTime.toString() +
+				", end_time=" + endTime.toString() +
+				", doctorId='" + doctorId + '\'' +
+				", patientId='" + patientId + '\'' +
+				'}';
+	}
 
-	public AppTime getStartTime(){ return this.start_time; }
+	public boolean isPast(){
+		Date curr = new Date();
+		return endTime.compareTo(new AppTime(curr.getYear(),curr.getMonth(),curr.getDay(),curr.getHours(),curr.getMinutes())) >=0;
+	}
+
+    public void setPatientId(String patientId){ this.patientId = patientId; }
+    public void setStartTime(AppTime startTime){this.startTime = startTime; }
+	public void setEndTime(AppTime endTime){ this.endTime = endTime; }
+	public AppTime getStartTime(){ return startTime; }
 	public String getPatientId(){ return patientId; }
 	public String getDoctorId(){ return doctorId; }
-	public AppTime getEndTime(){ return this.end_time; }
+	public AppTime getEndTime(){ return this.endTime; }
 }
 

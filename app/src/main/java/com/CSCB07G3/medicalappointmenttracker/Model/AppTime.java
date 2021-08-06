@@ -8,13 +8,24 @@ public class AppTime implements Serializable, Comparable<AppTime> {
     int year;
     int hour;
     int minute;
-
+    public AppTime(){}
     public AppTime(int year, int month, int day, int hour, int minute){
         this.day = day;
         this.month = month;
         this.year = year;
         this.hour = hour;
         this.minute = minute;
+    }
+
+    @Override
+    public String toString() {
+        return "AppTime{" +
+                "month=" + month +
+                ", day=" + day +
+                ", year=" + year +
+                ", hour=" + hour +
+                ", minute=" + minute +
+                '}';
     }
 
     public int getYear(){ return year; }

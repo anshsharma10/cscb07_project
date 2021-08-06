@@ -44,7 +44,6 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         edt_start_time = findViewById(R.id.editTimeslot1);
         edt_end_time = findViewById(R.id.editTimeslot2);
         createapppointmentbtn = findViewById(R.id.createappointmentbtn);
-
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -61,7 +60,6 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         final int[] start_minute1 = new int[1];
         final int[] end_hour1 = new int[1];
         final int[] end_minute1 = new int[1];
-
 
         edt_date.setOnClickListener(new View.OnClickListener() {
             @Override
