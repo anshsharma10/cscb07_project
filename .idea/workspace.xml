@@ -32,18 +32,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c69ec6b-b024-42eb-83d9-332ffa6bdde0" name="Default Changelist" comment="fix doctor filter">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/DoctorViewPatientInfoActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_view_patient_info.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/Medical_Appointment_Tracker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Medical_Appointment_Tracker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/Medical_Appointment_Tracker.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/Medical_Appointment_Tracker.app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment3.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Patient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
@@ -55,7 +47,7 @@
   <component name="CodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@C:\Users\Ansh\.android\avd\Pixel_3_API_30.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\ACER\.android\avd\Pixel_3a_API_30_x86.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -296,43 +288,5 @@
     <MESSAGE value="Implement Doctor Filter on gender, name and specialization; make restrictions on name and userid when register" />
     <MESSAGE value="fix doctor filter" />
     <option name="LAST_COMMIT_MESSAGE" value="fix doctor filter" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="292" y="162" key="#PSD" timestamp="1628211076830">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state x="292" y="162" key="#PSD/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628211076830" />
-    <state x="230" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1628206836768">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state x="230" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628206836768" />
-    <state x="355" y="170" key="AndroidCreateResourceFileDialog" timestamp="1628196283005">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state x="355" y="170" key="AndroidCreateResourceFileDialog/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628196283005" />
-    <state width="1506" height="213" key="GridCell.Tab.0.bottom" timestamp="1628212122190">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state width="1506" height="213" key="GridCell.Tab.0.bottom/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628212122190" />
-    <state width="1506" height="213" key="GridCell.Tab.0.center" timestamp="1628212122190">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state width="1506" height="213" key="GridCell.Tab.0.center/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628212122190" />
-    <state width="1506" height="213" key="GridCell.Tab.0.left" timestamp="1628212122190">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state width="1506" height="213" key="GridCell.Tab.0.left/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628212122190" />
-    <state width="1506" height="213" key="GridCell.Tab.0.right" timestamp="1628212122190">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state width="1506" height="213" key="GridCell.Tab.0.right/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628212122190" />
-    <state x="596" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1628212450980">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state x="596" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628212450980" />
-    <state x="484" y="15" width="580" height="801" key="find.popup" timestamp="1628204326088">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state x="484" y="15" width="580" height="801" key="find.popup/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628204326088" />
   </component>
 </project>
