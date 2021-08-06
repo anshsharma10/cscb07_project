@@ -28,12 +28,12 @@ public class Patient extends User implements Serializable {
     }
 
     public void selectAppointment(Appointment appointment){
-        appointment.setUser(this);
+        appointment.setPatientId(userId);
         //Update database
     }
 
     public void cancelAppointment(Appointment appointment){
-        appointment.setUser(null);
+        appointment.setPatientId("");
         //Update database
     }
 

@@ -17,6 +17,9 @@
             android:label="Patient Information"
             android:parentActivityName=".DoctorTrackAppointmentActivity"/>
         <activity
+            android:name=".PatientViewDoctorAvailabilityActivity"
+            android:exported="true" />
+        <activity
             android:name=".DoctorTrackAppointmentActivity"
             android:exported="true"
             android:label="@string/title_activity_doctor_track_appointment"

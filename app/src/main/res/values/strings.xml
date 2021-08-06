@@ -28,4 +28,5 @@
     <string name="gender">Gender</string>
     <string name="specialization">Specialization</string>
     <string name="title_activity_doctor_track_appointment">DoctorTrackAppointmentActivity</string>
+    <string name="date">Date</string>
 </resources>

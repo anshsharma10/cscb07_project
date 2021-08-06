@@ -1,10 +1,10 @@
 package com.CSCB07G3.medicalappointmenttracker.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
+import com.CSCB07G3.medicalappointmenttracker.PatientViewDoctorAvailabilityActivity;
 import com.CSCB07G3.medicalappointmenttracker.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -92,7 +93,7 @@ public class Fragment1 extends Fragment {
                 holder.tlContainer = convertView.findViewById(R.id.tlContainer);
                 holder.doctorName = convertView.findViewById(R.id.userName);
                 holder.doctorGender = convertView.findViewById(R.id.userGender);
-                holder.doctorSpec = convertView.findViewById(R.id.userInfo);
+                holder.doctorSpec = convertView.findViewById(R.id.user_info);
                 holder.btn_view = convertView.findViewById(R.id.btn_view_appointment);
                 convertView.setTag(holder);
             } else {
@@ -103,7 +104,10 @@ public class Fragment1 extends Fragment {
             holder.doctorSpec.setText(displayDoctors.get(position).getSpecialization());
             holder.btn_view.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Log.i("Choose Appointment",getActivity().getIntent().getStringExtra(USERID)+" select "+displayDoctors.get(position).getUserId());
+                    Intent intent = new Intent(getActivity(), PatientViewDoctorAvailabilityActivity.class);
+                    intent.putExtra(USERID,getActivity().getIntent().getStringExtra(USERID));
+                    intent.putExtra(DOCTOR_SELECTED,displayDoctors.get(position).getUserId());
+                    startActivity(intent);
                 }
             });
             return convertView;
@@ -186,10 +190,10 @@ public class Fragment1 extends Fragment {
                     for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                         Doctor doctor = singleSnapshot.getValue(Doctor.class);
                         doctorList.add(doctor);
-                        doctoradapter = new DoctorAdapter(getActivity().getApplicationContext(),doctorList);
-                        listDoctor.setAdapter(doctoradapter);
-                        doctoradapter.getFilter().filter(name+";"+gender+";"+spec);
                     }
+                    doctoradapter = new DoctorAdapter(getActivity().getApplicationContext(),doctorList);
+                    listDoctor.setAdapter(doctoradapter);
+                    doctoradapter.getFilter().filter(name+";"+gender+";"+spec);
                 }
             }
 

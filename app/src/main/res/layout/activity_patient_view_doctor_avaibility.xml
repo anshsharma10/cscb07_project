@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/spn_user_spec"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="visible"
+    tools:context=".PatientViewDoctorAvailabilityActivity">
+
+    <TextView
+        android:id="@+id/view_availability_title"
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:layout_marginBottom="25dp"
+        android:paddingVertical="25dp"
+        android:singleLine="false"
+        android:text="Availability of Doctor "
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/select_date_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:text="Select a date:" />
+
+    <Spinner
+        android:id="@+id/spn_appointment_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:visibility="visible" />
+
+    <ListView
+        android:id="@+id/listAvailability"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="25dp"
+        android:focusable="true"></ListView>
+
+</LinearLayout>
