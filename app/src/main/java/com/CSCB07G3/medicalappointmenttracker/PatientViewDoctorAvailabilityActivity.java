@@ -190,9 +190,9 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             calendar.set(start_event.getYear(),start_event.getMonth()-1,start_event.getDay(),start_event.getHour(),start_event.getMinute());
             holder.appDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(calendar.getTime()));
-            holder.appStartTime.setText(new SimpleDateFormat("hh:mm").format(calendar.getTime()));
+            holder.appStartTime.setText(new SimpleDateFormat("kk:mm").format(calendar.getTime()));
             calendar.set(end_event.getYear(),end_event.getMonth()-1,end_event.getDay(),end_event.getHour(),end_event.getMinute());
-            holder.appEndTime.setText(new SimpleDateFormat("hh:mm").format(calendar.getTime()));
+            holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(calendar.getTime()));
             holder.btn_book.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     mDatabase.child("Appointments").child(event_key).child("patientId").setValue(getIntent().getStringExtra(USERID));
