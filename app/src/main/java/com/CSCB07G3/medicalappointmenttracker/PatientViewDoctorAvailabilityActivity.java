@@ -17,8 +17,6 @@ import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -182,10 +180,8 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
         }
 
         private class ViewHolder {
-            LinearLayout tlContainer,llContainer;
-            TextView appDate,appStartTime,appEndTime,start_time_txt,end_time_txt;
-            TableRow time_container,time_txt_container;
-            TableLayout time_table;
+            LinearLayout tlContainer;
+            TextView appDate,appStartTime,appEndTime;
             Button btn_book;
         }
 
@@ -198,14 +194,8 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
                 holder = new AvailabilityAdapter.ViewHolder();
                 convertView = inflater.inflate(R.layout.row3, null);
                 holder.tlContainer = convertView.findViewById(R.id.tlContainer);
-                holder.llContainer = convertView.findViewById(R.id.llContainer);
                 holder.appDate = convertView.findViewById(R.id.appointmentDate);
                 holder.appStartTime = convertView.findViewById(R.id.start_time);
-                holder.start_time_txt = convertView.findViewById(R.id.start_time_txt);
-                holder.end_time_txt = convertView.findViewById(R.id.end_time_txt);
-                holder.time_table = convertView.findViewById(R.id.time_table);
-                holder.time_container = convertView.findViewById(R.id.time_container);
-                holder.time_txt_container = convertView.findViewById(R.id.time_txt_container);
                 holder.appEndTime = convertView.findViewById(R.id.end_time);
                 holder.btn_book = convertView.findViewById(R.id.btn_book_appointment);
                 convertView.setTag(holder);
