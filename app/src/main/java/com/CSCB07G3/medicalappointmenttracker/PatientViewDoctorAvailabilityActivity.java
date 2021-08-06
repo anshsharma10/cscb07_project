@@ -192,7 +192,7 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
 
             if (convertView == null) {
                 holder = new AvailabilityAdapter.ViewHolder();
-                convertView = inflater.inflate(R.layout.row3, null);
+                convertView = inflater.inflate(R.layout.doctor_availability_row, null);
                 holder.tlContainer = convertView.findViewById(R.id.tlContainer);
                 holder.appDate = convertView.findViewById(R.id.appointmentDate);
                 holder.appStartTime = convertView.findViewById(R.id.start_time);
