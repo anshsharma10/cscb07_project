@@ -1,6 +1,8 @@
 package com.CSCB07G3.medicalappointmenttracker.Model;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AppTime implements Serializable, Comparable<AppTime> {
     int month;
@@ -17,15 +19,10 @@ public class AppTime implements Serializable, Comparable<AppTime> {
         this.minute = minute;
     }
 
-    @Override
-    public String toString() {
-        return "AppTime{" +
-                "month=" + month +
-                ", day=" + day +
-                ", year=" + year +
-                ", hour=" + hour +
-                ", minute=" + minute +
-                '}';
+    public Date convertToDate(){
+        Calendar c = Calendar.getInstance();
+        c.set(year,month-1,day,hour,minute);
+        return c.getTime();
     }
 
     public int getYear(){ return year; }

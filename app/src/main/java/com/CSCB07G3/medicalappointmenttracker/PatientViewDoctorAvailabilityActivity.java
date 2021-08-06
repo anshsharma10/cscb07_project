@@ -21,9 +21,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.CSCB07G3.medicalappointmenttracker.Model.AppTime;
+
 import com.CSCB07G3.medicalappointmenttracker.Model.Appointment;
 import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
 import com.google.firebase.database.DataSnapshot;
@@ -35,27 +36,29 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
 public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
-    String doctorId,userId,filter_date;
-    Spinner date_spn;
+    String doctorId,userId,filter_date,filter_time;
+    Spinner date_spn,time_spn;
     ArrayList<String> dateList;
     LinkedHashMap<String,Appointment> availabilityMap;
     ListView listavailability;
     AvailabilityAdapter availabilityAdapter;
-    ArrayAdapter<String> date_adapter;
+    ArrayAdapter<String> date_adapter,time_adapter;
     DatabaseReference mDatabase;
+    HashMap<String,ArrayList<String>> timeList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dateList = new ArrayList<>();
-        filter_date= "- - ";
+        timeList = new HashMap<>();
         dateList.add("- -");
+        timeList.put("- -", new ArrayList<>());
+        timeList.get("- -").add("- -");
         availabilityMap = new LinkedHashMap<>();
         setContentView(R.layout.activity_patient_view_doctor_avaibility);
         doctorId = getIntent().getStringExtra(DOCTOR_SELECTED);
@@ -63,6 +66,7 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
         TextView title = findViewById(R.id.view_availability_title);
         listavailability = findViewById(R.id.listAvailability);
         date_spn = (Spinner) findViewById(R.id.spn_appointment_date);
+        time_spn = (Spinner) findViewById(R.id.spn_appointment_time);
         availabilityAdapter = new AvailabilityAdapter(getApplicationContext(),availabilityMap);
         listavailability.setAdapter(availabilityAdapter);
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -86,25 +90,34 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 dateList = new ArrayList<>();
+                timeList = new HashMap<>();
                 dateList.add("- -");
+                timeList.put("- -", new ArrayList<>());
+                timeList.get("- -").add("- -");
                 availabilityMap = new LinkedHashMap<>();
                 for(DataSnapshot child : dataSnapshot.getChildren()) {
                     Appointment availability = child.getValue(Appointment.class);
                     if(Objects.equals(availability.getPatientId(), "") && ! availability.isPast()){
                         availabilityMap.put(child.getKey(),availability);
-                        Date d = new GregorianCalendar(availability.getStartTime().getYear(), availability.getStartTime().getMonth()-1, availability.getStartTime().getDay()).getTime();
-                        String date = new SimpleDateFormat("dd/MM/yyyy").format(d);
+                        String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
+                        String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
                         if(! dateList.contains(date)){
                             dateList.add(date);
+                            timeList.put(date,new ArrayList<>());
+                            timeList.get(date).add("- -");
+                            timeList.get(date).add(time);
+                        }else if(! timeList.get(date).contains(time)){
+                            timeList.get(date).add(time);
                         }
                     }
                 }
+                Collections.sort(dateList);
                 date_adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, dateList);
                 date_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 date_spn.setAdapter(date_adapter);
                 availabilityAdapter = new AvailabilityAdapter(getApplicationContext(),availabilityMap);
                 listavailability.setAdapter(availabilityAdapter);
-                availabilityAdapter.getFilter().filter(filter_date);
+                availabilityAdapter.getFilter().filter(filter_date+";"+filter_time);
             }
 
             @Override
@@ -116,7 +129,22 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 filter_date = date_adapter.getItem(position);
-                availabilityAdapter.getFilter().filter(filter_date);
+                time_adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, timeList.get(filter_date));
+                time_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                time_spn.setAdapter(time_adapter);
+                availabilityAdapter.getFilter().filter(filter_date+";"+filter_time);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        time_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                filter_time = time_adapter.getItem(position);
+                availabilityAdapter.getFilter().filter(filter_date+";"+filter_time);
             }
 
             @Override
@@ -185,14 +213,9 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
                 holder = (AvailabilityAdapter.ViewHolder) convertView.getTag();
             }
             String event_key = (displayAvailabilities.keySet().toArray())[position].toString();
-            AppTime start_event = displayAvailabilities.get(event_key).getStartTime();
-            AppTime end_event = displayAvailabilities.get(event_key).getEndTime();
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(start_event.getYear(),start_event.getMonth()-1,start_event.getDay(),start_event.getHour(),start_event.getMinute());
-            holder.appDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(calendar.getTime()));
-            holder.appStartTime.setText(new SimpleDateFormat("kk:mm").format(calendar.getTime()));
-            calendar.set(end_event.getYear(),end_event.getMonth()-1,end_event.getDay(),end_event.getHour(),end_event.getMinute());
-            holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(calendar.getTime()));
+            holder.appDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(displayAvailabilities.get(event_key).getStartTime().convertToDate()));
+            holder.appStartTime.setText(new SimpleDateFormat("kk:mm").format(displayAvailabilities.get(event_key).getStartTime().convertToDate()));
+            holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(displayAvailabilities.get(event_key).getEndTime().convertToDate()));
             holder.btn_book.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     mDatabase.child("Appointments").child(event_key).child("patientId").setValue(getIntent().getStringExtra(USERID));
@@ -221,19 +244,18 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
                         originAvailabilities = new LinkedHashMap<>(displayAvailabilities);
                     }
 
-                    if (constraint == null || constraint.length() == 0) {
-                        // set the Original result to return
-                        results.count = originAvailabilities.size();
-                        results.values = originAvailabilities;
-                    }else if(constraint == "- -"){
+                    if (constraint == null || constraint.length() <=7) {
                         // set the Original result to return
                         results.count = originAvailabilities.size();
                         results.values = originAvailabilities;
                     }else {
+                        String filter_d =constraint.toString().split(";")[0];
+                        String filter_t =constraint.toString().split(";")[1];
                         for (String key: originAvailabilities.keySet()){
                             Appointment data = originAvailabilities.get(key);
-
-                            if(new SimpleDateFormat("dd/MM/yyyy").format(new GregorianCalendar(data.getStartTime().getYear(), data.getStartTime().getMonth()-1, data.getStartTime().getDay()).getTime()).equals(constraint.toString())){
+                            String data_d = new SimpleDateFormat("dd/MM/yyyy").format(data.getStartTime().convertToDate());
+                            String data_t = new SimpleDateFormat("kk:mm").format(data.getStartTime().convertToDate())+" - "+ new SimpleDateFormat("kk:mm").format(data.getEndTime().convertToDate());
+                            if((data_d.equals(filter_d)||filter_d.equals("- -")) && (data_t.equals(filter_t)|| filter_t.equals("- -"))){
                                 FilteredMap.put(key,data);
                             }
                         }
