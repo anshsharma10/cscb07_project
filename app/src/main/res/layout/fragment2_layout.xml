@@ -2,12 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="visible"
     android:layout_height="match_parent">
 
+
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/select_date_txt"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your Appointment"
-        android:textSize="30sp"
-        />
+        android:layout_marginHorizontal="20dp"
+        android:text="Select a date:" />
+
+    <Spinner
+        android:id="@+id/spn_appointment_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:minHeight="48dp"
+        android:visibility="visible" />
+    <TextView
+        android:id="@+id/select_time_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:text="Select a time slot:" />
+
+    <Spinner
+        android:id="@+id/spn_appointment_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:minHeight="48dp"
+        android:visibility="visible"/>
+
+    <ListView
+        android:id="@+id/listUppcomingAppointments"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="25dp"
+        android:focusable="true"></ListView>
 </LinearLayout>

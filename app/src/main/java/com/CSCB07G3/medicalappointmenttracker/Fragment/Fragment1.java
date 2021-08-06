@@ -89,7 +89,7 @@ public class Fragment1 extends Fragment {
 
             if (convertView == null) {
                 holder = new ViewHolder();
-                convertView = inflater.inflate(R.layout.row, null);
+                convertView = inflater.inflate(R.layout.doctor_list_row, null);
                 holder.tlContainer = convertView.findViewById(R.id.tlContainer);
                 holder.doctorName = convertView.findViewById(R.id.userName);
                 holder.doctorGender = convertView.findViewById(R.id.userGender);
