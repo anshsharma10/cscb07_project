@@ -21,10 +21,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.CSCB07G3.medicalappointmenttracker.Model.AppTime;
 import com.CSCB07G3.medicalappointmenttracker.Model.Appointment;
 import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
