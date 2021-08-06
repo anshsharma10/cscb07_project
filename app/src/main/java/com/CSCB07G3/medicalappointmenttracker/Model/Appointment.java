@@ -1,10 +1,11 @@
 package com.CSCB07G3.medicalappointmenttracker.Model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 
-public class Appointment implements Serializable {
+public class Appointment implements Serializable,Comparable<Appointment> {
 	AppTime startTime;
 	AppTime endTime;
 	String doctorId;
@@ -25,6 +26,8 @@ public class Appointment implements Serializable {
 		this.endTime = end_time;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Appointment{" +
@@ -36,8 +39,10 @@ public class Appointment implements Serializable {
 	}
 
 	public boolean isPast(){
-		Date curr = new Date();
-		return endTime.compareTo(new AppTime(curr.getYear(),curr.getMonth(),curr.getDay(),curr.getHours(),curr.getMinutes())) >=0;
+		Date curr = new Date(System.currentTimeMillis());
+		Calendar c = Calendar.getInstance();
+		c.set(endTime.getYear(),endTime.getMonth(),endTime.getDay(),endTime.getHour(),endTime.getMinute());
+		return c.getTime().before(curr);
 	}
 
     public void setPatientId(String patientId){ this.patientId = patientId; }
@@ -47,5 +52,14 @@ public class Appointment implements Serializable {
 	public String getPatientId(){ return patientId; }
 	public String getDoctorId(){ return doctorId; }
 	public AppTime getEndTime(){ return this.endTime; }
+
+	@Override
+	public int compareTo(Appointment o) {
+		if(startTime.compareTo(o.startTime)==0){
+			return endTime.compareTo(o.endTime);
+		}else{
+			return startTime.compareTo(o.startTime);
+		}
+	}
 }
 
