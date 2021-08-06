@@ -1,8 +1,9 @@
 package com.CSCB07G3.medicalappointmenttracker.Model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Patient extends User {
+public class Patient extends User implements Serializable {
     String medinfo;
     Date birthday;
 

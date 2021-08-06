@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppointmentTracker">
         <activity
+            android:name=".DoctorViewPatientInfoActivity"
+            android:exported="true"
+            android:label="Patient Information"
+            android:parentActivityName=".DoctorTrackAppointmentActivity"/>
+        <activity
             android:name=".DoctorTrackAppointmentActivity"
             android:exported="true"
             android:label="@string/title_activity_doctor_track_appointment"
