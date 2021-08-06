@@ -83,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
         registerRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
             // open register activity

@@ -1,6 +1,7 @@
 package com.CSCB07G3.medicalappointmenttracker.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.CSCB07G3.medicalappointmenttracker.DoctorViewPatientInfoActivity;
 import com.CSCB07G3.medicalappointmenttracker.Model.Patient;
 import com.CSCB07G3.medicalappointmenttracker.R;
 import com.google.android.gms.common.internal.Asserts;
@@ -68,6 +70,10 @@ public class Fragment3 extends Fragment {
             return position;
         }
 
+        public Patient getDisplayPatient(int position) {
+            return displayPatients.get(position);
+        }
+
         @Override
         public long getItemId(int position) {
             return position;
@@ -91,12 +97,15 @@ public class Fragment3 extends Fragment {
                 holder.patientGender = convertView.findViewById(R.id.userGender1);
                 holder.display_patient_medinfo = convertView.findViewById(R.id.userMedinfo1);
                 convertView.setTag(holder);
+
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             holder.patientName.setText(displayPatients.get(position).getName());
             holder.patientGender.setText(displayPatients.get(position).getGender());
             holder.display_patient_medinfo.setText("Medical Information: " + displayPatients.get(position).getMedInfo());
+
+
             return convertView;
         }
 
@@ -192,6 +201,13 @@ public class Fragment3 extends Fragment {
             }
         };
         mDatabase.addValueEventListener(doctorListener);
+        listPatient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parentAdapter, View view, int position,
+                                    long id) {
+                startActivity(new Intent(getActivity(), DoctorViewPatientInfoActivity.class).putExtra("patient",patientadapter.getDisplayPatient(position)));
+            }
+        });
         gender_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
@@ -220,4 +236,5 @@ public class Fragment3 extends Fragment {
 
         return v;
     }
+
 }
