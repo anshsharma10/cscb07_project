@@ -208,9 +208,31 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(displayAvailabilities.get(event_key).getEndTime().convertToDate()));
             holder.btn_book.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    //Start add appointment to patient appointment list
+                    DatabaseReference AppRef = mDatabase.child("Appointments");
+                    DatabaseReference dr = mDatabase.child("Patients").child(userId).child("allApps").child(event_key);
+                    ValueEventListener valueEventListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for(DataSnapshot child: dataSnapshot.getChildren()){
+                                if(child.getChildrenCount() > 1) {
+                                    Appointment app = child.getValue(Appointment.class);
+                                    if (app.getPatientId() == userId) {
+                                        dr.setValue(app);
+                                    }
+                                }
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {}
+                    };
+                    AppRef.addListenerForSingleValueEvent(valueEventListener);
+                    //End
+
                     mDatabase.child("Appointments").child(event_key).child("patientId").setValue(getIntent().getStringExtra(USERID));
                 }
             });
+
             return convertView;
         }
 
