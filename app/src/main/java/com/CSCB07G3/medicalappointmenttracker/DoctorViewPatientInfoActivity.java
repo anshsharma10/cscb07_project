@@ -1,12 +1,19 @@
 package com.CSCB07G3.medicalappointmenttracker;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.CSCB07G3.medicalappointmenttracker.Model.Patient;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class DoctorViewPatientInfoActivity extends AppCompatActivity {
 
@@ -32,6 +39,25 @@ public class DoctorViewPatientInfoActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Patients").child(patient.getUserId());
+        ValueEventListener patientListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("testtest", "onDataChange: ");
+                name.setText(dataSnapshot.child("name").getValue(String.class));
+                user.setText(dataSnapshot.child("userId").getValue(String.class));
+                gender.setText(dataSnapshot.child("gender").getValue(String.class));
+                medInfo.setText(dataSnapshot.child("medInfo").getValue(String.class));
+                doctors.setText("Requires past doctors implementation in database/patient class");
+                appointments.setText("Requires past appointments implementation in database/patient class");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
+        mDatabase.addValueEventListener(patientListener);
     }
 
     @Override
