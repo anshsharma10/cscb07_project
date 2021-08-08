@@ -216,8 +216,8 @@ public class Fragment2 extends Fragment {
             });
             holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    mDatabase.child("Appointments").child(event_key).child("patientId").setValue("");
                     mDatabase.child("Patients").child(userId).child("allApps").child(event_key).removeValue();
+                    mDatabase.child("Appointments").child(event_key).child("patientId").setValue("");
                 }
             });
             return convertView;
