@@ -194,10 +194,10 @@ public class RegisterActivity extends AppCompatActivity {
                     validregister = false;
                 }
 
-                if(TextUtils.isEmpty(birthday)){
+                if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonPatient && TextUtils.isEmpty(birthday)){
                     edt_birthday.setError("Birthday is required");
                     validregister = false;
-                }else{
+                }else if(radioGroup.getCheckedRadioButtonId() == R.id.radioButtonPatient){
                     SimpleDateFormat birthdayformat = new SimpleDateFormat("dd/MM/yyyy");
                     birthdayformat.setLenient(false);
                     try {
