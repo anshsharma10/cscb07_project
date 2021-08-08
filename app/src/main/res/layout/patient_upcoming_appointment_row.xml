@@ -37,6 +37,15 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/app_spec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
     <TableLayout
         android:id="@+id/time_table"
         android:layout_width="match_parent"

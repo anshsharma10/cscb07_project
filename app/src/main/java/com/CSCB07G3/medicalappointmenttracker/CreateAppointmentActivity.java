@@ -167,15 +167,15 @@ public class CreateAppointmentActivity extends AppCompatActivity {
 
                             if (!snapshot.child("Appointments").hasChild("totalapp")) {
                                 databaseReference.child("Appointments").child("totalapp").setValue(1);
-                                databaseReference.child("Appointments").child("1").setValue(doctorid);
-                                Appointment app = new Appointment(doctorid, t1, t2);
+                                //databaseReference.child("Appointments").child("1").setValue(doctorid);
+                                Appointment app = new Appointment("1", doctorid, t1, t2);
                                 databaseReference.child("Appointments").child("1").setValue(app);
                             } else {
                                 String n = snapshot.child("Appointments").child("totalapp").getValue().toString();
                                 int n1 = Integer.parseInt(n) + 1;
                                 n = "" + n1;
-                                databaseReference.child("Appointments").child(n).setValue(doctorid);
-                                Appointment app = new Appointment(doctorid, t1, t2);
+                                //databaseReference.child("Appointments").child(n).setValue(doctorid);
+                                Appointment app = new Appointment(n, doctorid, t1, t2);
                                 databaseReference.child("Appointments").child(n).setValue(app);
                                 databaseReference.child("Appointments").child("totalapp").setValue(n);
                             }

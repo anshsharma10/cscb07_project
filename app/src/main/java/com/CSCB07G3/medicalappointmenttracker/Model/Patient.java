@@ -41,7 +41,7 @@ public class Patient extends User implements Serializable {
         this.medinfo = medInfo;
     }
     public String getMedInfo(){ return medinfo; }
-
+    
     public void setBirthday(Date birthday){
         this.birthday = birthday;
     }
