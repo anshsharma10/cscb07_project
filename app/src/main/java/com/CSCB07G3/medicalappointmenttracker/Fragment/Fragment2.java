@@ -104,10 +104,10 @@ public class Fragment2 extends Fragment {
                     }
                 }
                 Collections.sort(dateList);
-                date_adapter = new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, dateList);
+                date_adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, dateList);
                 date_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 date_spn.setAdapter(date_adapter);
-                patientUpComeAppointmentAdapter = new Fragment2.PatientUpComeAppointmentAdapter(getActivity().getApplicationContext(),appointmentMap);
+                patientUpComeAppointmentAdapter = new Fragment2.PatientUpComeAppointmentAdapter(getActivity(),appointmentMap);
                 listappointments.setAdapter(patientUpComeAppointmentAdapter);
                 patientUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
             }

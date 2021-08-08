@@ -180,7 +180,7 @@ public class Fragment1 extends Fragment {
         spec_spinner.setVisibility(View.VISIBLE);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Doctors");
         doctorList = new ArrayList<>();
-        doctoradapter = new DoctorAdapter(getActivity().getApplicationContext(),doctorList);
+        doctoradapter = new DoctorAdapter(getActivity(),doctorList);
         listDoctor.setAdapter(doctoradapter);
         ValueEventListener doctorListener = new ValueEventListener() {
             @Override
