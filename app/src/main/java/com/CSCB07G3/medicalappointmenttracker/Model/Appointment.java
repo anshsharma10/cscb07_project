@@ -10,20 +10,23 @@ public class Appointment implements Serializable,Comparable<Appointment> {
 	AppTime endTime;
 	String doctorId;
 	String patientId = "";
+	String appointmentId;
 	public Appointment(){
 	}
 
-	public Appointment(String doctorid, AppTime start_time, AppTime end_time) {
+	public Appointment(String appointmentId, String doctorid, AppTime start_time, AppTime end_time) {
 		this.doctorId = doctorid;
 		this.startTime = start_time;
 		this.endTime = end_time;
+		this.appointmentId = appointmentId;
 	}
 
-	public Appointment(String doctorid, String patientId, AppTime start_time, AppTime end_time) {
+	public Appointment(String appointmentId, String doctorid, String patientId, AppTime start_time, AppTime end_time) {
 		this.doctorId = doctorid;
 		this.patientId = patientId;
 		this.startTime = start_time;
 		this.endTime = end_time;
+		this.appointmentId = appointmentId;
 	}
 
 
@@ -48,10 +51,12 @@ public class Appointment implements Serializable,Comparable<Appointment> {
     public void setPatientId(String patientId){ this.patientId = patientId; }
     public void setStartTime(AppTime startTime){this.startTime = startTime; }
 	public void setEndTime(AppTime endTime){ this.endTime = endTime; }
+	public void setAppointmentId(String appointmentId){ this.appointmentId = appointmentId; }
 	public AppTime getStartTime(){ return startTime; }
 	public String getPatientId(){ return patientId; }
 	public String getDoctorId(){ return doctorId; }
 	public AppTime getEndTime(){ return this.endTime; }
+	public String getAppointmentId(){ return this.appointmentId; }
 
 	@Override
 	public int compareTo(Appointment o) {

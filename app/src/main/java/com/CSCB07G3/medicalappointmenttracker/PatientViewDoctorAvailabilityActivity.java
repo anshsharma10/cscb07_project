@@ -75,7 +75,6 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
                     title.setText("Availability of Doctor " + snapshot.getValue(Doctor.class).getName());
                 }else{
                     Toast.makeText(PatientViewDoctorAvailabilityActivity.this,"Doctor removed",Toast.LENGTH_SHORT).show();
-                    finish();
                 }
             }
 

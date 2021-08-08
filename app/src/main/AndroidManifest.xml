@@ -12,10 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppointmentTracker">
         <activity
+            android:name=".LogoutConfirmDialogActivity"
+            android:exported="true" />
+        <activity
             android:name=".DoctorViewPatientInfoActivity"
             android:exported="true"
             android:label="Patient Information"
-            android:parentActivityName=".DoctorTrackAppointmentActivity"/>
+            android:parentActivityName=".DoctorTrackAppointmentActivity" />
         <activity
             android:name=".PatientViewDoctorAvailabilityActivity"
             android:exported="true" />
