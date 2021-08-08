@@ -211,24 +211,10 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
                     //Start add appointment to patient appointment list
                     DatabaseReference AppRef = mDatabase.child("Appointments").child(event_key);
                     DatabaseReference dr = mDatabase.child("Patients").child(userId).child("allApps").child(event_key);
-                    AppRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.exists()){
-                                Appointment app = snapshot.getValue(Appointment.class);
-                                if(app.getPatientId().equals("")){
-                                    AppRef.child("patientId").setValue(userId);
-                                    app.setPatientId(userId);
-                                    dr.setValue(app);
-                                }
-                            }
-                        }
+                    AppRef.child("patientId").setValue(userId);
+                    displayAvailabilities.get(event_key).setPatientId(userId);
+                    dr.setValue(displayAvailabilities.get(event_key));
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
                 }
             });
 

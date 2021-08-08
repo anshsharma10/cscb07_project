@@ -175,7 +175,7 @@ public class Fragment2 extends Fragment {
 
         private class ViewHolder {
             LinearLayout tlContainer;
-            TextView appDate,appStartTime,appEndTime,doctorName;
+            TextView appDate,appStartTime,appEndTime,doctorName,appSpec;
             Button btn_cancel;
         }
 
@@ -193,6 +193,7 @@ public class Fragment2 extends Fragment {
                 holder.appStartTime = convertView.findViewById(R.id.start_time);
                 holder.appEndTime = convertView.findViewById(R.id.end_time);
                 holder.btn_cancel = convertView.findViewById(R.id.btn_patient_cancel_app);
+                holder.appSpec = convertView.findViewById(R.id.app_spec);
                 convertView.setTag(holder);
             } else {
                 holder = (PatientUpComeAppointmentAdapter.ViewHolder) convertView.getTag();
@@ -206,6 +207,7 @@ public class Fragment2 extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
                         holder.doctorName.setText(snapshot.getValue(Doctor.class).getName());
+                        holder.appSpec.setText(snapshot.getValue(Doctor.class).getSpecialization());
                     }else{
                         holder.doctorName.setText("(Removed)");
                     }
@@ -216,8 +218,8 @@ public class Fragment2 extends Fragment {
             });
             holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    mDatabase.child("Patients").child(userId).child("allApps").child(event_key).removeValue();
                     mDatabase.child("Appointments").child(event_key).child("patientId").setValue("");
+                    mDatabase.child("Patients").child(userId).child("allApps").child(event_key).removeValue();
                 }
             });
             return convertView;
