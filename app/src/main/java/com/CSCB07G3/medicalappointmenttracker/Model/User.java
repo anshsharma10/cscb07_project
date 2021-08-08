@@ -7,7 +7,6 @@ public abstract class User implements Serializable {
     public String userId;
     public String passWord;
     public String gender;
-
     public User(){
 
     }
@@ -24,7 +23,6 @@ public abstract class User implements Serializable {
     }
 
     public abstract User signUp();
-
     public String getName(){ return name; }
     public String getPassWord(){ return passWord; }
     public String getUserId(){ return userId; }

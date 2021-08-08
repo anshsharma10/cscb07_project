@@ -2,10 +2,13 @@ package com.CSCB07G3.medicalappointmenttracker.Model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Patient extends User implements Serializable {
     String medinfo;
     Date birthday;
+    HashMap<String,Appointment> allApps = new HashMap<String,Appointment>();
+
 
     @Override
     public String toString(){
@@ -42,6 +45,7 @@ public class Patient extends User implements Serializable {
     }
     public String getMedInfo(){ return medinfo; }
 
+    public HashMap<String,Appointment> getAllApps(){ return allApps; }
     public void setBirthday(Date birthday){
         this.birthday = birthday;
     }
