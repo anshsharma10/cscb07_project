@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
+import com.CSCB07G3.medicalappointmenttracker.Model.Patient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             // check if userid is not registered before
                             if (snapshot.child("Patients").hasChild(userid)) {
-                                String getPassword = snapshot.child("Patients").child(userid).getValue(Doctor.class).getPassWord();
+                                String getPassword = snapshot.child("Patients").child(userid).getValue(Patient.class).getPassWord();
 
                                 if (getPassword.equals(passwd)){
                                     Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();

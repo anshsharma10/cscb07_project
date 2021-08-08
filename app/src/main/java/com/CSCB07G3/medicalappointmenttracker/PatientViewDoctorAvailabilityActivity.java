@@ -209,27 +209,26 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             holder.btn_book.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     //Start add appointment to patient appointment list
-                    DatabaseReference AppRef = mDatabase.child("Appointments");
+                    DatabaseReference AppRef = mDatabase.child("Appointments").child(event_key);
                     DatabaseReference dr = mDatabase.child("Patients").child(userId).child("allApps").child(event_key);
-                    ValueEventListener valueEventListener = new ValueEventListener() {
+                    AppRef.addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot child: dataSnapshot.getChildren()){
-                                if(child.getChildrenCount() > 1) {
-                                    Appointment app = child.getValue(Appointment.class);
-                                    if (app.getPatientId() == userId) {
-                                        dr.setValue(app);
-                                    }
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()){
+                                Appointment app = snapshot.getValue(Appointment.class);
+                                if(app.getPatientId().equals("")){
+                                    AppRef.child("patientId").setValue(userId);
+                                    app.setPatientId(userId);
+                                    dr.setValue(app);
                                 }
                             }
                         }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {}
-                    };
-                    AppRef.addListenerForSingleValueEvent(valueEventListener);
-                    //End
 
-                    mDatabase.child("Appointments").child(event_key).child("patientId").setValue(getIntent().getStringExtra(USERID));
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             });
 
