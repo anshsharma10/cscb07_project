@@ -75,6 +75,7 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
                     title.setText("Availability of Doctor " + snapshot.getValue(Doctor.class).getName());
                 }else{
                     Toast.makeText(PatientViewDoctorAvailabilityActivity.this,"Doctor removed",Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
 
@@ -208,13 +209,11 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(curr_app.getEndTime().convertToDate()));
             holder.btn_book.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //Start add appointment to patient appointment list
-                    DatabaseReference AppRef = mDatabase.child("Appointments").child(curr_app.getAppointmentId());
                     DatabaseReference dr = mDatabase.child("Patients").child(userId).child("allApps").child(curr_app.getAppointmentId());
-                    AppRef.child("patientId").setValue(userId);
                     curr_app.setPatientId(userId);
                     dr.setValue(curr_app);
-
+                    mDatabase.child("Appointments").child(curr_app.getAppointmentId()).child("patientId").setValue(userId);
+                    mDatabase.child("Doctors").child(doctorId).child("patientId").setValue(userId);
                 }
             });
 

@@ -14,8 +14,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3c69ec6b-b024-42eb-83d9-332ffa6bdde0" name="Default Changelist" comment="fix cancel feature">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/DoctorViewPatientInfoActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/DoctorViewPatientInfoActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_view_patient_info.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_view_patient_info.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/PatientViewDoctorAvailabilityActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/PatientViewDoctorAvailabilityActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,7 +26,7 @@
   <component name="CodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@C:\Users\Ansh\.android\avd\Pixel_3_API_30.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\shang\.android\avd\Pixel_3_XL_API_30.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -35,23 +35,15 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Medical Appointment Tracker" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Medical Appointment Tracker" type="f1a62948:ProjectNode" />
-                <item name="app" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Medical Appointment Tracker" type="f1a62948:ProjectNode" />
-                <item name="app" type="2d1252cf:ModuleNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
               </path>
             </expand>
             <select />
@@ -64,10 +56,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="resourceFile" />
+        <option value="Class" />
         <option value="valueResourceFile" />
         <option value="layoutResourceFile" />
-        <option value="Class" />
-        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -101,7 +92,7 @@
     </option>
   </component>
   <component name="ProjectId" id="1w2m0xqipb5pK7LKnVyrz0ESYqL" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -112,7 +103,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -146,13 +137,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Android App.app">
-    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
-      <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="Medical_Appointment_Tracker.app" />
       <option name="DEPLOY" value="true" />
@@ -228,7 +212,9 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -404,19 +390,13 @@
     <MESSAGE value="fix cancel feature" />
     <option name="LAST_COMMIT_MESSAGE" value="fix cancel feature" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="292" y="162" key="#PSD" timestamp="1628523330786">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state x="292" y="162" key="#PSD/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628523330786" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Appointment.java</url>
-          <line>60</line>
-          <properties class="com.CSCB07G3.medicalappointmenttracker.Model.Appointment" method="compareTo">
+          <line>58</line>
+          <properties class="com.CSCB07G3.medicalappointmenttracker.Model.Appointment">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="1" />
