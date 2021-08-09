@@ -47,6 +47,7 @@ public class Appointment implements Serializable,Comparable<Appointment> {
 	}
 
     public void setPatientId(String patientId){ this.patientId = patientId; }
+    public void setDoctorId(String doctorId) { this.doctorId = doctorId; }
     public void setStartTime(AppTime startTime){this.startTime = startTime; }
 	public void setEndTime(AppTime endTime){ this.endTime = endTime; }
 	public void setAppointmentId(String appointmentId){ this.appointmentId = appointmentId; }
