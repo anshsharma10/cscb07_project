@@ -51,7 +51,6 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         dateList = new ArrayList<>();
         timeList = new HashMap<>();
         availabilityList = new ArrayList<>();
@@ -215,7 +214,7 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
                     DatabaseReference dr = mDatabase.child("Patients").child(userId).child("allApps").child(curr_app.getAppointmentId());
                     curr_app.setPatientId(userId);
                     dr.setValue(curr_app);
-                    mDatabase.child("Doctors").child(doctorId).child("allApps").setValue(curr_app);
+                    mDatabase.child("Doctors").child(doctorId).child("allApps").child(curr_app.getAppointmentId()).setValue(curr_app);
                     mDatabase.child("Appointments").child(curr_app.getAppointmentId()).child("patientId").setValue(userId);
                 }
             });
