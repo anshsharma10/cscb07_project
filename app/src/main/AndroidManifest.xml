@@ -12,15 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppointmentTracker">
         <activity
-            android:name=".LogoutConfirmDialogActivity"
-            android:exported="true" />
-        <activity
             android:name=".DoctorViewPatientInfoActivity"
             android:exported="true"
             android:label="Patient Information"
             android:parentActivityName=".DoctorTrackAppointmentActivity" />
         <activity
             android:name=".PatientViewDoctorAvailabilityActivity"
+            android:parentActivityName=".ChooseAppointmentActivity"
             android:exported="true" />
         <activity
             android:name=".DoctorTrackAppointmentActivity"
@@ -34,7 +32,8 @@
             android:theme="@style/Theme.MedicalAppointmentTracker.NoActionBar" />
         <activity
             android:name=".CreateAppointmentActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".DoctorTrackAppointmentActivity"/>
         <activity
             android:name=".RegisterActivity"
             android:exported="true" />

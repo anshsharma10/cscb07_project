@@ -51,6 +51,7 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         dateList = new ArrayList<>();
         timeList = new HashMap<>();
         availabilityList = new ArrayList<>();
