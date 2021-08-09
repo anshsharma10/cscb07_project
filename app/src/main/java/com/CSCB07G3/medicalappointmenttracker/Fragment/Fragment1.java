@@ -40,7 +40,7 @@ public class Fragment1 extends Fragment {
     public static final String DOCTOR_SELECTED = "doctor_selected";
     private ListView listDoctor;
     private ArrayAdapter gender_spinner_adapter,spec_spinner_adapter;
-    private String gender,spec,name;
+    private String gender,spec,name,userId;
     private ArrayList<Doctor> doctorList;
     private DoctorAdapter doctoradapter;
 
@@ -105,7 +105,7 @@ public class Fragment1 extends Fragment {
             holder.btn_view.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PatientViewDoctorAvailabilityActivity.class);
-                    intent.putExtra(USERID,getActivity().getIntent().getStringExtra(USERID));
+                    intent.putExtra(USERID,userId);
                     intent.putExtra(DOCTOR_SELECTED,displayDoctors.get(position).getUserId());
                     startActivity(intent);
                 }
@@ -166,6 +166,7 @@ public class Fragment1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment1_layout, container, false);
         name="";
+        userId = getActivity().getIntent().getStringExtra(USERID);
         EditText searchDoctor = v.findViewById(R.id.searchDoctor);
         listDoctor = v.findViewById(R.id.listDoctor);
         Spinner gender_spinner = v.findViewById(R.id.spn_doctor_gender);

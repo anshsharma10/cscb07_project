@@ -1,10 +1,10 @@
 package com.CSCB07G3.medicalappointmenttracker;
 
 import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.DOCTOR_SELECTED;
-import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
+    public static final String USERID = "userid";
     String doctorId,userId,filter_date,filter_time;
     Spinner date_spn,time_spn;
     ArrayList<String> dateList;
@@ -60,6 +61,11 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
         setContentView(R.layout.activity_patient_view_doctor_avaibility);
         doctorId = getIntent().getStringExtra(DOCTOR_SELECTED);
         userId = getIntent().getStringExtra(USERID);
+        if(userId != null){
+            Log.i("info",userId);
+        }else{
+            Log.i("info","user null");
+        }
         TextView title = findViewById(R.id.view_availability_title);
         listavailability = findViewById(R.id.listAvailability);
         date_spn = (Spinner) findViewById(R.id.spn_appointment_date);
@@ -211,6 +217,12 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(curr_app.getEndTime().convertToDate()));
             holder.btn_book.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    if(curr_app.getAppointmentId()==null){
+                        Log.i("info","app null");
+                    }
+                    if(userId==null){
+                        Log.i("info","userid null");
+                    }
                     DatabaseReference dr = mDatabase.child("Patients").child(userId).child("allApps").child(curr_app.getAppointmentId());
                     curr_app.setPatientId(userId);
                     dr.setValue(curr_app);

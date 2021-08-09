@@ -24,12 +24,14 @@
             android:name=".DoctorTrackAppointmentActivity"
             android:exported="true"
             android:label="@string/title_activity_doctor_track_appointment"
-            android:theme="@style/Theme.MedicalAppointmentTracker.NoActionBar" />
+            android:theme="@style/Theme.MedicalAppointmentTracker.NoActionBar"
+            android:launchMode="singleTop" />
         <activity
             android:name=".ChooseAppointmentActivity"
             android:exported="true"
             android:label="@string/title_activity_choose_appointment2"
-            android:theme="@style/Theme.MedicalAppointmentTracker.NoActionBar" />
+            android:theme="@style/Theme.MedicalAppointmentTracker.NoActionBar"
+            android:launchMode="singleTop" />
         <activity
             android:name=".CreateAppointmentActivity"
             android:exported="true"
