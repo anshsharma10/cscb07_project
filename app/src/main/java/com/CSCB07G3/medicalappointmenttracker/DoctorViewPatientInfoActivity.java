@@ -22,7 +22,6 @@ public class DoctorViewPatientInfoActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_doctor_view_patient_info);
         TextView name = findViewById(R.id.patient_info_name);
-        TextView user = findViewById(R.id.patient_info_user);
         TextView gender = findViewById(R.id.patient_info_gender);
         TextView medInfo = findViewById(R.id.patient_info_medinfo);
         TextView doctors = findViewById(R.id.patient_info_doctors);
@@ -30,7 +29,6 @@ public class DoctorViewPatientInfoActivity extends AppCompatActivity {
 
         Patient patient = (Patient) getIntent().getExtras().getSerializable("patient");
         name.setText(patient.getName());
-        user.setText(patient.getUserId());
         gender.setText(patient.getGender());
         medInfo.setText(patient.getMedInfo());
         doctors.setText("Requires past doctors implementation in database/patient class");
@@ -46,7 +44,6 @@ public class DoctorViewPatientInfoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("testtest", "onDataChange: ");
                 name.setText(dataSnapshot.child("name").getValue(String.class));
-                user.setText(dataSnapshot.child("userId").getValue(String.class));
                 gender.setText(dataSnapshot.child("gender").getValue(String.class));
                 medInfo.setText(dataSnapshot.child("medInfo").getValue(String.class));
                 doctors.setText("Requires past doctors implementation in database/patient class");
