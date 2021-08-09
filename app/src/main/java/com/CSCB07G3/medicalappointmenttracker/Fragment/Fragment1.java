@@ -170,17 +170,17 @@ public class Fragment1 extends Fragment {
         listDoctor = v.findViewById(R.id.listDoctor);
         Spinner gender_spinner = v.findViewById(R.id.spn_doctor_gender);
         Spinner spec_spinner = v.findViewById(R.id.spn_doctor_spec);
-        gender_spinner_adapter = ArrayAdapter.createFromResource(getActivity(), R.array.genders, android.R.layout.simple_spinner_item);
+        gender_spinner_adapter = ArrayAdapter.createFromResource(v.getContext(), R.array.genders, android.R.layout.simple_spinner_item);
         gender_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender_spinner.setAdapter(gender_spinner_adapter);
         gender_spinner.setVisibility(View.VISIBLE);
-        spec_spinner_adapter = ArrayAdapter.createFromResource(getActivity(), R.array.specializations, android.R.layout.simple_spinner_item);
+        spec_spinner_adapter = ArrayAdapter.createFromResource(v.getContext(), R.array.specializations, android.R.layout.simple_spinner_item);
         spec_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spec_spinner.setAdapter(spec_spinner_adapter);
         spec_spinner.setVisibility(View.VISIBLE);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Doctors");
         doctorList = new ArrayList<>();
-        doctoradapter = new DoctorAdapter(getActivity(),doctorList);
+        doctoradapter = new DoctorAdapter(v.getContext(),doctorList);
         listDoctor.setAdapter(doctoradapter);
         ValueEventListener doctorListener = new ValueEventListener() {
             @Override
@@ -191,7 +191,7 @@ public class Fragment1 extends Fragment {
                         Doctor doctor = singleSnapshot.getValue(Doctor.class);
                         doctorList.add(doctor);
                     }
-                    doctoradapter = new DoctorAdapter(getActivity().getApplicationContext(),doctorList);
+                    doctoradapter = new DoctorAdapter(v.getContext(),doctorList);
                     listDoctor.setAdapter(doctoradapter);
                     doctoradapter.getFilter().filter(name+";"+gender+";"+spec);
                 }

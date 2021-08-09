@@ -33,40 +33,6 @@ public class AppTime implements Serializable, Comparable<AppTime> {
 
     @Override
     public int compareTo(AppTime appTime) {
-        if (year < appTime.year){
-            return -1;
-        } else if (year > appTime.year){
-            return 1;
-        } else{
-            if (month < appTime.month){
-                return -1;
-            }
-            else if (month > appTime.month){
-                return 1;
-            } else{
-                if (day < appTime.day){
-                    return -1;
-                }
-                else if (day > appTime.day){
-                    return 1;
-                } else{
-                    if (hour < appTime.hour){
-                        return -1;
-                    }
-                    else if (hour > appTime.hour){
-                        return 1;
-                    } else{
-                        if (minute < appTime.minute){
-                            return -1;
-                        }
-                        else if (minute > appTime.minute){
-                            return 1;
-                        } else{
-                            return 0;
-                        }
-                    }
-                }
-            }
-        }
+       return this.convertToDate().compareTo(appTime.convertToDate());
     }
 }

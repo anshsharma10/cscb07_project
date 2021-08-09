@@ -35,13 +35,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class Fragment2 extends Fragment {
     String userId,filter_date,filter_time;
     Spinner date_spn,time_spn;
     ArrayList<String> dateList;
-    LinkedHashMap<String, Appointment> appointmentMap;
+    ArrayList<Appointment> appointmentList;
     ListView listappointments;
     Fragment2.PatientUpComeAppointmentAdapter patientUpComeAppointmentAdapter;
     ArrayAdapter<String> date_adapter,time_adapter;
@@ -53,15 +52,15 @@ public class Fragment2 extends Fragment {
         View v = inflater.inflate(R.layout.fragment2_layout, container, false);
         dateList = new ArrayList<>();
         timeList = new HashMap<>();
+        appointmentList = new ArrayList<>();
         dateList.add("- -");
         timeList.put("- -", new ArrayList<>());
         timeList.get("- -").add("- -");
-        appointmentMap = new LinkedHashMap<>();
         userId = getActivity().getIntent().getStringExtra(USERID);
         listappointments = v.findViewById(R.id.listUppcomingAppointments);
         date_spn = (Spinner) v.findViewById(R.id.spn_appointment_date);
         time_spn = (Spinner) v.findViewById(R.id.spn_appointment_time);
-        patientUpComeAppointmentAdapter = new PatientUpComeAppointmentAdapter(getActivity().getApplicationContext(),appointmentMap);
+        patientUpComeAppointmentAdapter = new PatientUpComeAppointmentAdapter(v.getContext(),appointmentList);
         listappointments.setAdapter(patientUpComeAppointmentAdapter);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("Patients").child(userId).child("allApps").addValueEventListener(new ValueEventListener() {
@@ -69,10 +68,10 @@ public class Fragment2 extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 dateList = new ArrayList<>();
                 timeList = new HashMap<>();
+                appointmentList = new ArrayList<>();
                 dateList.add("- -");
                 timeList.put("- -", new ArrayList<>());
                 timeList.get("- -").add("- -");
-                appointmentMap = new LinkedHashMap<>();
                 for(DataSnapshot child : dataSnapshot.getChildren()) {
                     Appointment availability = child.getValue(Appointment.class);
                     if(! availability.isPast()){
@@ -80,7 +79,7 @@ public class Fragment2 extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if(snapshot.hasChild(availability.getDoctorId())){
-                                    appointmentMap.put(child.getKey(),availability);
+                                    appointmentList.add(availability);
                                     String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
                                     String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
                                     if(! dateList.contains(date)){
@@ -104,10 +103,10 @@ public class Fragment2 extends Fragment {
                     }
                 }
                 Collections.sort(dateList);
-                date_adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, dateList);
+                date_adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, dateList);
                 date_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 date_spn.setAdapter(date_adapter);
-                patientUpComeAppointmentAdapter = new Fragment2.PatientUpComeAppointmentAdapter(getActivity(),appointmentMap);
+                patientUpComeAppointmentAdapter = new Fragment2.PatientUpComeAppointmentAdapter(v.getContext(),appointmentList);
                 listappointments.setAdapter(patientUpComeAppointmentAdapter);
                 patientUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
             }
@@ -120,7 +119,7 @@ public class Fragment2 extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 filter_date = date_adapter.getItem(position);
-                time_adapter = new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, timeList.get(filter_date));
+                time_adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, timeList.get(filter_date));
                 time_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 time_spn.setAdapter(time_adapter);
                 patientUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
@@ -148,13 +147,13 @@ public class Fragment2 extends Fragment {
 
     class PatientUpComeAppointmentAdapter extends BaseAdapter implements Filterable {
 
-        private LinkedHashMap<String,Appointment> originAppointments; // appointments before filtered
-        private LinkedHashMap<String,Appointment> displayAppointments;    // appointments after filtered
+        private ArrayList<Appointment> originAppointments; // appointments before filtered
+        private ArrayList<Appointment> displayAppointments;    // appointments after filtered
         LayoutInflater inflater;
 
-        public PatientUpComeAppointmentAdapter(Context context, LinkedHashMap<String,Appointment> availabilities) {
-            this.originAppointments = availabilities;
-            this.displayAppointments = availabilities;
+        public PatientUpComeAppointmentAdapter(Context context, ArrayList<Appointment> appointmentList) {
+            this.originAppointments = appointmentList;
+            this.displayAppointments = appointmentList;
             inflater = LayoutInflater.from(context);
         }
 
@@ -198,11 +197,11 @@ public class Fragment2 extends Fragment {
             } else {
                 holder = (PatientUpComeAppointmentAdapter.ViewHolder) convertView.getTag();
             }
-            String event_key = (displayAppointments.keySet().toArray())[position].toString();
-            holder.appDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(displayAppointments.get(event_key).getStartTime().convertToDate()));
-            holder.appStartTime.setText(new SimpleDateFormat("kk:mm").format(displayAppointments.get(event_key).getStartTime().convertToDate()));
-            holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(displayAppointments.get(event_key).getEndTime().convertToDate()));
-            mDatabase.child("Doctors").child(displayAppointments.get(event_key).getDoctorId()).addValueEventListener(new ValueEventListener() {
+            Appointment curr_app = displayAppointments.get(position);
+            holder.appDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(curr_app.getStartTime().convertToDate()));
+            holder.appStartTime.setText(new SimpleDateFormat("kk:mm").format(curr_app.getStartTime().convertToDate()));
+            holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(curr_app.getEndTime().convertToDate()));
+            mDatabase.child("Doctors").child(curr_app.getDoctorId()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
@@ -218,9 +217,8 @@ public class Fragment2 extends Fragment {
             });
             holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    mDatabase.child("Patients").child(userId).child("allApps").child(event_key).removeValue();
-                    mDatabase.child("Appointments").child(event_key).child("patientId").setValue("");
-                    mDatabase.child("Patients").child(userId).child("allApps").child(event_key).removeValue();
+                    mDatabase.child("Appointments").child(curr_app.getAppointmentId()).child("patientId").setValue("");
+                    mDatabase.child("Patients").child(userId).child("allApps").child(curr_app.getAppointmentId()).removeValue();
                 }
             });
             return convertView;
@@ -232,19 +230,18 @@ public class Fragment2 extends Fragment {
                 @SuppressWarnings("unchecked")
                 @Override
                 protected void publishResults(CharSequence constraint,FilterResults results) {
-                    displayAppointments = (LinkedHashMap<String, Appointment>) results.values; // has the filtered values
+                    displayAppointments = (ArrayList<Appointment>) results.values; // has the filtered values
                     notifyDataSetChanged();  // notifies the data with new filtered values
                 }
 
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
-                    LinkedHashMap<String,Appointment>  FilteredMap = new LinkedHashMap<>();
-
+                    ArrayList<Appointment>  FilteredList = new ArrayList<>();
                     if (originAppointments == null) {
-                        originAppointments = new LinkedHashMap<>(displayAppointments);
+                        originAppointments = new ArrayList<Appointment>(displayAppointments);
                     }
-
+                    Collections.sort(originAppointments);
                     if (constraint == null || constraint.length() <=7) {
                         // set the Original result to return
                         results.count = originAppointments.size();
@@ -252,17 +249,17 @@ public class Fragment2 extends Fragment {
                     }else {
                         String filter_d =constraint.toString().split(";")[0];
                         String filter_t =constraint.toString().split(";")[1];
-                        for (String key: originAppointments.keySet()){
-                            Appointment data = originAppointments.get(key);
+                        for (Appointment data: originAppointments){
                             String data_d = new SimpleDateFormat("dd/MM/yyyy").format(data.getStartTime().convertToDate());
                             String data_t = new SimpleDateFormat("kk:mm").format(data.getStartTime().convertToDate())+" - "+ new SimpleDateFormat("kk:mm").format(data.getEndTime().convertToDate());
                             if((data_d.equals(filter_d)||filter_d.equals("- -")) && (data_t.equals(filter_t)|| filter_t.equals("- -"))){
-                                FilteredMap.put(key,data);
+                                FilteredList.add(data);
                             }
                         }
                         // set the Filtered result to return
-                        results.count = FilteredMap.size();
-                        results.values = FilteredMap;
+                        Collections.sort(FilteredList);
+                        results.count = FilteredList.size();
+                        results.values = FilteredList;
                     }
                     return results;
                 }

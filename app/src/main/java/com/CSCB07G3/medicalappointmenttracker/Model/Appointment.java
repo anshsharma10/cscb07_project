@@ -29,8 +29,6 @@ public class Appointment implements Serializable,Comparable<Appointment> {
 		this.appointmentId = appointmentId;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Appointment{" +
