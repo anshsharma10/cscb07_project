@@ -72,8 +72,8 @@ public class Fragment2 extends Fragment {
         timeList.get("- -").add("- -");
         userId = getActivity().getIntent().getStringExtra(USERID);
         listappointments = v.findViewById(R.id.listUppcomingAppointments);
-        date_spn = (Spinner) v.findViewById(R.id.spn_appointment_date);
-        time_spn = (Spinner) v.findViewById(R.id.spn_appointment_time);
+        date_spn = v.findViewById(R.id.spn_appointment_date);
+        time_spn = v.findViewById(R.id.spn_appointment_time);
         patientUpComeAppointmentAdapter = new PatientUpComeAppointmentAdapter(v.getContext(),appointmentList);
         date_adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, dateList);
         date_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -262,7 +262,7 @@ public class Fragment2 extends Fragment {
                     FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
                     ArrayList<Appointment>  FilteredList = new ArrayList<>();
                     if (originAppointments == null) {
-                        originAppointments = new ArrayList<Appointment>(displayAppointments);
+                        originAppointments = new ArrayList<>(displayAppointments);
                     }
                     Collections.sort(originAppointments);
                     if (constraint == null || constraint.length() <=7) {
