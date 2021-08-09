@@ -79,18 +79,6 @@ public class Fragment4 extends Fragment {
                         if(availability.checkNull()){
                             Log.i("info","something wrong with "+child.getKey());
                         }else if(! availability.isPast()){
-                            mDatabase.child("Patients").addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if(snapshot.hasChild(availability.getPatientId())){
-                                        mDatabase.child("Appointments").child(child.getKey()).child("patientId").setValue("");
-                                        mDatabase.child("Doctors").child(userId).child("allApps").child(child.getKey()).child("patientId").setValue("");
-                                    }
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                }
-                            });
                             if(!appointmentList.contains(availability)){
                                 appointmentList.add(availability);
                             }
@@ -216,20 +204,34 @@ public class Fragment4 extends Fragment {
             holder.appDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(curr_app.getStartTime().convertToDate()));
             holder.appStartTime.setText(new SimpleDateFormat("kk:mm").format(curr_app.getStartTime().convertToDate()));
             holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(curr_app.getEndTime().convertToDate()));
-            mDatabase.child("Doctors").child(curr_app.getDoctorId()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
-                        holder.patientName.setText(snapshot.getValue(Patient.class).getName());
-                        holder.appMedInfo.setText(snapshot.getValue(Patient.class).getMedInfo());
-                    }else{
-                        holder.patientName.setText("(Removed)");
+            if(curr_app.getPatientId() == null || curr_app.getPatientId().isEmpty()){
+                holder.patientName.setText("(Empty)");
+            }else{
+                mDatabase.child("Patients").child(curr_app.getPatientId()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            holder.patientName.setText(snapshot.getValue(Patient.class).getName());
+                            holder.appMedInfo.setText(snapshot.getValue(Patient.class).getMedInfo());
+                        }else{
+                            holder.patientName.setText("(Removed)");
+                        }
                     }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+                holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mDatabase.child("Appointments").child(curr_app.getAppointmentId()).child("patientId").setValue("");
+                        if(! holder.patientName.getText().equals("(Removed)")){
+                            mDatabase.child("Patients").child(curr_app.getPatientId()).child("allApps").child(curr_app.getAppointmentId()).removeValue();
+                        }
+                        mDatabase.child("Doctors").child(userId).child("allApps").child(curr_app.getAppointmentId()).child("patientId").setValue("");
+                    }
+                });
+            }
             return convertView;
         }
 
