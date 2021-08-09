@@ -56,8 +56,13 @@ public class Fragment1 extends Fragment {
         LayoutInflater inflater;
 
         public DoctorAdapter(Context context, ArrayList<Doctor> doctors) {
-            this.originDoctors = doctors;
-            this.displayDoctors = doctors;
+            if(doctors == null){
+                this.originDoctors = new ArrayList<>();
+                this.displayDoctors = new ArrayList<>();
+            }else{
+                this.originDoctors = doctors;
+                this.displayDoctors = doctors;
+            }
             inflater = LayoutInflater.from(context);
         }
 

@@ -158,8 +158,13 @@ public class Fragment4 extends Fragment {
         LayoutInflater inflater;
 
         public DoctorUpComeAppointmentAdapter(Context context, ArrayList<Appointment> appointmentList) {
-            this.originAppointments = appointmentList;
-            this.displayAppointments = appointmentList;
+            if(appointmentList == null){
+                this.originAppointments = new ArrayList<>();
+                this.displayAppointments = new ArrayList<>();
+            }else{
+                this.originAppointments = appointmentList;
+                this.displayAppointments = appointmentList;
+            }
             inflater = LayoutInflater.from(context);
         }
 

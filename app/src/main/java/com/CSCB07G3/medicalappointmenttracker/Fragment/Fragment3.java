@@ -55,8 +55,13 @@ public class Fragment3 extends Fragment {
         LayoutInflater inflater;
 
         public PatientAdapter(Context context, ArrayList<Patient> patients) {
-            this.originPatients = patients;
-            this.displayPatients = patients;
+            if(patients == null){
+                this.originPatients = new ArrayList<>();
+                this.displayPatients = new ArrayList<>();
+            }else{
+                this.originPatients = patients;
+                this.displayPatients = patients;
+            }
             inflater = LayoutInflater.from(context);
         }
 
@@ -173,13 +178,13 @@ public class Fragment3 extends Fragment {
         EditText searchPatient = v.findViewById(R.id.searchPatient);
         listPatient = v.findViewById(R.id.listPatient);
         Spinner gender_spinner = v.findViewById(R.id.spn_patient_gender);
-        gender_spinner_adapter = ArrayAdapter.createFromResource(getActivity(), R.array.genders, android.R.layout.simple_spinner_item);
+        gender_spinner_adapter = ArrayAdapter.createFromResource(v.getContext(), R.array.genders, android.R.layout.simple_spinner_item);
         gender_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender_spinner.setAdapter(gender_spinner_adapter);
         gender_spinner.setVisibility(View.VISIBLE);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Patients");
         patientList = new ArrayList<Patient>();
-        patientadapter = new PatientAdapter(getActivity().getApplicationContext(),patientList);
+        patientadapter = new PatientAdapter(v.getContext(),patientList);
         listPatient.setAdapter(patientadapter);
         ValueEventListener doctorListener = new ValueEventListener() {
             @Override
@@ -190,7 +195,7 @@ public class Fragment3 extends Fragment {
                         Patient patient = singleSnapshot.getValue(Patient.class);
                         patientList.add(patient);
                     }
-                    patientadapter = new PatientAdapter(getActivity().getApplicationContext(),patientList);
+                    patientadapter = new PatientAdapter(v.getContext(),patientList);
                     listPatient.setAdapter(patientadapter);
                     patientadapter.getFilter().filter(name+";"+gender);
                 }

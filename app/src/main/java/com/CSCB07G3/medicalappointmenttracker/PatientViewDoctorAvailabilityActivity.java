@@ -165,8 +165,13 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
         LayoutInflater inflater;
 
         public AvailabilityAdapter(Context context, ArrayList<Appointment> availabilities) {
-            this.originAvailabilities = availabilities;
-            this.displayAvailabilities = availabilities;
+            if(availabilities == null){
+                this.originAvailabilities = new ArrayList<>();
+                this.displayAvailabilities = new ArrayList<>();
+            }else{
+                this.originAvailabilities = availabilities;
+                this.displayAvailabilities = availabilities;
+            }
             inflater = LayoutInflater.from(context);
         }
 
