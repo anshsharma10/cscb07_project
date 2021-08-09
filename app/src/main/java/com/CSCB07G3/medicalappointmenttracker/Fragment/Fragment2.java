@@ -4,6 +4,7 @@ import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +88,9 @@ public class Fragment2 extends Fragment {
                     timeList.get("- -").add("- -");
                     for(DataSnapshot child : dataSnapshot.getChildren()) {
                         Appointment availability = child.getValue(Appointment.class);
-                        if(! availability.isPast()){
+                        if(availability.checkNull()){
+                            Log.i("info","something wrong with "+child.getKey());
+                        }else if(! availability.isPast()){
                             mDatabase.child("Doctors").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {

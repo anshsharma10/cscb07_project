@@ -61,11 +61,6 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
         setContentView(R.layout.activity_patient_view_doctor_avaibility);
         doctorId = getIntent().getStringExtra(DOCTOR_SELECTED);
         userId = getIntent().getStringExtra(USERID);
-        if(userId != null){
-            Log.i("info",userId);
-        }else{
-            Log.i("info","user null");
-        }
         TextView title = findViewById(R.id.view_availability_title);
         listavailability = findViewById(R.id.listAvailability);
         date_spn = (Spinner) findViewById(R.id.spn_appointment_date);
@@ -103,7 +98,9 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
                 timeList.get("- -").add("- -");
                 for(DataSnapshot child : dataSnapshot.getChildren()) {
                     Appointment availability = child.getValue(Appointment.class);
-                    if(Objects.equals(availability.getPatientId(), "") && ! availability.isPast()){
+                    if(availability.checkNull()){
+                        Log.i("info","something wrong with "+child.getKey());
+                    }else if(Objects.equals(availability.getPatientId(), "") && ! availability.isPast()){
                         availabilityList.add(availability);
                         String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
                         String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
@@ -217,12 +214,6 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(curr_app.getEndTime().convertToDate()));
             holder.btn_book.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if(curr_app.getAppointmentId()==null){
-                        Log.i("info","app null");
-                    }
-                    if(userId==null){
-                        Log.i("info","userid null");
-                    }
                     DatabaseReference dr = mDatabase.child("Patients").child(userId).child("allApps").child(curr_app.getAppointmentId());
                     curr_app.setPatientId(userId);
                     dr.setValue(curr_app);
