@@ -94,19 +94,7 @@ public class Fragment2 extends Fragment {
                             mDatabase.child("Doctors").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if(snapshot.hasChild(availability.getDoctorId())){
-                                        appointmentList.add(availability);
-                                        String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
-                                        String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
-                                        if(! dateList.contains(date)){
-                                            dateList.add(date);
-                                            timeList.put(date,new ArrayList<>());
-                                            timeList.get(date).add("- -");
-                                            timeList.get(date).add(time);
-                                        }else if(! timeList.get(date).contains(time)){
-                                            timeList.get(date).add(time);
-                                        }
-                                    }else{
+                                    if(!snapshot.hasChild(availability.getDoctorId())){
                                         mDatabase.child("Patients").child(userId).child("allApps").child(child.getKey()).removeValue();
                                         mDatabase.child("Appointments").child(child.getKey()).removeValue();
                                     }
@@ -116,6 +104,19 @@ public class Fragment2 extends Fragment {
 
                                 }
                             });
+                            if(! appointmentList.contains(availability)){
+                                appointmentList.add(availability);
+                            }
+                            String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
+                            String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
+                            if(! dateList.contains(date)){
+                                dateList.add(date);
+                                timeList.put(date,new ArrayList<>());
+                                timeList.get(date).add("- -");
+                                timeList.get(date).add(time);
+                            }else if(! timeList.get(date).contains(time)){
+                                timeList.get(date).add(time);
+                            }
                         }
                     }
                     Collections.sort(dateList);
@@ -131,6 +132,8 @@ public class Fragment2 extends Fragment {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
+        }else{
+            Log.i("info","a");
         }
 
         date_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

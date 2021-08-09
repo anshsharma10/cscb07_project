@@ -68,6 +68,10 @@ public class Fragment1 extends Fragment {
 
         @Override
         public int getCount() {
+
+            if(displayDoctors == null){
+                return 0;
+            }
             return displayDoctors.size();
         }
 
@@ -195,7 +199,9 @@ public class Fragment1 extends Fragment {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                         Doctor doctor = singleSnapshot.getValue(Doctor.class);
-                        doctorList.add(doctor);
+                        if(! doctorList.contains(doctor)){
+                            doctorList.add(doctor);
+                        }
                     }
                     doctoradapter = new DoctorAdapter(v.getContext(),doctorList);
                     listDoctor.setAdapter(doctoradapter);

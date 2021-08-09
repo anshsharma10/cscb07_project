@@ -101,7 +101,9 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
                     if(availability.checkNull()){
                         Log.i("info","something wrong with "+child.getKey());
                     }else if(Objects.equals(availability.getPatientId(), "") && ! availability.isPast()){
-                        availabilityList.add(availability);
+                        if(!availabilityList.contains(availability)){
+                            availabilityList.add(availability);
+                        }
                         String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
                         String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
                         if(! dateList.contains(date)){
@@ -177,6 +179,10 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
+
+            if(displayAvailabilities== null){
+                return 0;
+            }
             return displayAvailabilities.size();
         }
 

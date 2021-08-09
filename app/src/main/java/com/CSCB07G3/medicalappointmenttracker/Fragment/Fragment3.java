@@ -67,6 +67,9 @@ public class Fragment3 extends Fragment {
 
         @Override
         public int getCount() {
+            if(displayPatients == null){
+                return 0;
+            }
             return displayPatients.size();
         }
 
@@ -193,7 +196,9 @@ public class Fragment3 extends Fragment {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                         Patient patient = singleSnapshot.getValue(Patient.class);
-                        patientList.add(patient);
+                        if(! patientList.contains(patient)){
+                            patientList.add(patient);
+                        }
                     }
                     patientadapter = new PatientAdapter(v.getContext(),patientList);
                     listPatient.setAdapter(patientadapter);

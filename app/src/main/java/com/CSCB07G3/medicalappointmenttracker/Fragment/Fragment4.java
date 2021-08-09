@@ -59,15 +59,15 @@ public class Fragment4 extends Fragment {
         timeList.get("- -").add("- -");
         userId = getActivity().getIntent().getStringExtra(USERID);
         listappointments = v.findViewById(R.id.listUppcomingAppointments1);
-        date_spn = (Spinner) v.findViewById(R.id.spn_appointment_date1);
-        time_spn = (Spinner) v.findViewById(R.id.spn_appointment_time1);
+        date_spn = v.findViewById(R.id.spn_appointment_date1);
+        time_spn = v.findViewById(R.id.spn_appointment_time1);
         doctorUpComeAppointmentAdapter = new DoctorUpComeAppointmentAdapter(v.getContext(),appointmentList);
         listappointments.setAdapter(doctorUpComeAppointmentAdapter);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         if(userId != null){
             mDatabase.child("Doctors").child(userId).child("allApps").addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     dateList = new ArrayList<>();
                     timeList = new HashMap<>();
                     appointmentList = new ArrayList<>();
@@ -83,27 +83,27 @@ public class Fragment4 extends Fragment {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if(snapshot.hasChild(availability.getPatientId())){
-                                        appointmentList.add(availability);
-                                        String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
-                                        String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
-                                        if(! dateList.contains(date)){
-                                            dateList.add(date);
-                                            timeList.put(date,new ArrayList<>());
-                                            timeList.get(date).add("- -");
-                                            timeList.get(date).add(time);
-                                        }else if(! timeList.get(date).contains(time)){
-                                            timeList.get(date).add(time);
-                                        }
-                                    }else{
                                         mDatabase.child("Appointments").child(child.getKey()).child("patientId").setValue("");
                                         mDatabase.child("Doctors").child(userId).child("allApps").child(child.getKey()).child("patientId").setValue("");
                                     }
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-
                                 }
                             });
+                            if(!appointmentList.contains(availability)){
+                                appointmentList.add(availability);
+                            }
+                            String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
+                            String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
+                            if(! dateList.contains(date)){
+                                dateList.add(date);
+                                timeList.put(date,new ArrayList<>());
+                                timeList.get(date).add("- -");
+                                timeList.get(date).add(time);
+                            }else if(! timeList.get(date).contains(time)){
+                                timeList.get(date).add(time);
+                            }
                         }
                     }
                     Collections.sort(dateList);
@@ -170,6 +170,10 @@ public class Fragment4 extends Fragment {
 
         @Override
         public int getCount() {
+
+            if(displayAppointments == null){
+                return 0;
+            }
             return displayAppointments.size();
         }
 
@@ -244,7 +248,7 @@ public class Fragment4 extends Fragment {
                     FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
                     ArrayList<Appointment>  FilteredList = new ArrayList<>();
                     if (originAppointments == null) {
-                        originAppointments = new ArrayList<Appointment>(displayAppointments);
+                        originAppointments = new ArrayList<>(displayAppointments);
                     }
                     Collections.sort(originAppointments);
                     if (constraint == null || constraint.length() <=7) {
