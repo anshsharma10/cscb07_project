@@ -4,6 +4,7 @@ import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,8 +76,10 @@ public class Fragment4 extends Fragment {
                     timeList.get("- -").add("- -");
                     for(DataSnapshot child : dataSnapshot.getChildren()) {
                         Appointment availability = child.getValue(Appointment.class);
-                        if(! availability.isPast()){
-                            mDatabase.child("Doctors").addValueEventListener(new ValueEventListener() {
+                        if(availability.checkNull()){
+                            Log.i("info","something wrong with "+child.getKey());
+                        }else if(! availability.isPast()){
+                            mDatabase.child("Patients").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if(snapshot.hasChild(availability.getPatientId())){
@@ -92,8 +95,8 @@ public class Fragment4 extends Fragment {
                                             timeList.get(date).add(time);
                                         }
                                     }else{
-                                        mDatabase.child("Patients").child(userId).child("allApps").child(child.getKey()).removeValue();
-                                        mDatabase.child("Appointments").child(child.getKey()).removeValue();
+                                        mDatabase.child("Appointments").child(child.getKey()).child("patientId").setValue("");
+                                        mDatabase.child("Doctors").child(userId).child("allApps").child(child.getKey()).child("patientId").setValue("");
                                     }
                                 }
                                 @Override
@@ -216,12 +219,6 @@ public class Fragment4 extends Fragment {
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-            holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    mDatabase.child("Appointments").child(curr_app.getAppointmentId()).child("doctorId").setValue("");
-                    mDatabase.child("Doctors").child(userId).child("allApps").child(curr_app.getAppointmentId()).removeValue();
                 }
             });
             return convertView;
