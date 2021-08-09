@@ -4,7 +4,6 @@ import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,16 +52,9 @@ public class Fragment2 extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.i("info","a");
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i("info","b");
         v = inflater.inflate(R.layout.fragment2_layout, container, false);
         dateList = new ArrayList<>();
         timeList = new HashMap<>();
@@ -241,6 +233,7 @@ public class Fragment2 extends Fragment {
             holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     mDatabase.child("Appointments").child(curr_app.getAppointmentId()).child("patientId").setValue("");
+                    mDatabase.child("Doctors").child(curr_app.getDoctorId()).child("allApps").child(curr_app.getAppointmentId()).child("patientId").setValue("");
                     mDatabase.child("Patients").child(userId).child("allApps").child(curr_app.getAppointmentId()).removeValue();
                 }
             });
