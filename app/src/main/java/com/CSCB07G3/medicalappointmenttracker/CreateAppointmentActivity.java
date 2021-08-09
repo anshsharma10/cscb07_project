@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CreateAppointmentActivity extends AppCompatActivity {
+    public static final String USERID = "userid";
     Date d;
     EditText edt_date,edt_start_time, edt_end_time;
     Button createapppointmentbtn;
@@ -39,7 +40,7 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        doctorid = getIntent().getStringExtra(DoctorTrackAppointmentActivity.doctorId);
+        doctorid = getIntent().getStringExtra(USERID);
         System.out.println(doctorid);
 
         edt_date = findViewById(R.id.editDate);
@@ -184,7 +185,7 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                             }
                             DatabaseReference dr = databaseReference.child("Doctors").child(doctorid).child("allApps").child(app[0].getAppointmentId());
                             dr.setValue(app[0]);
-                            startActivity(new Intent(CreateAppointmentActivity.this, DoctorTrackAppointmentActivity.class));
+                            startActivity(new Intent(CreateAppointmentActivity.this, DoctorTrackAppointmentActivity.class).putExtra(USERID,doctorid));
                             finish();
                         }
 

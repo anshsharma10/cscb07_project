@@ -12,11 +12,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c69ec6b-b024-42eb-83d9-332ffa6bdde0" name="Default Changelist" comment="fix conflict on Fragment2 and choose appointment">
+    <list default="true" id="3c69ec6b-b024-42eb-83d9-332ffa6bdde0" name="Default Changelist" comment="fix go back, choose/cancel appointment">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment1.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/CreateAppointmentActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/CreateAppointmentActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/DoctorTrackAppointmentActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/DoctorTrackAppointmentActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment2.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Appointment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/PatientViewDoctorAvailabilityActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/PatientViewDoctorAvailabilityActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -366,7 +367,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628537626451</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="fix go back, choose/cancel appointment">
+      <created>1628541121604</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1628541121604</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -413,14 +421,15 @@
     <MESSAGE value="fix patient writing to database stuff; fix appointment class" />
     <MESSAGE value="fix conflict on Fragment2 with go back" />
     <MESSAGE value="fix conflict on Fragment2 and choose appointment" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix conflict on Fragment2 and choose appointment" />
+    <MESSAGE value="fix go back, choose/cancel appointment" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix go back, choose/cancel appointment" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/Appointment.java</url>
-          <line>58</line>
+          <line>68</line>
           <properties class="com.CSCB07G3.medicalappointmenttracker.Model.Appointment">
             <option name="EMULATED" value="true" />
           </properties>
