@@ -66,6 +66,9 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
         date_spn = (Spinner) findViewById(R.id.spn_appointment_date);
         time_spn = (Spinner) findViewById(R.id.spn_appointment_time);
         availabilityAdapter = new AvailabilityAdapter(getApplicationContext(),availabilityList);
+        date_adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, dateList);
+        date_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        date_spn.setAdapter(date_adapter);
         listavailability.setAdapter(availabilityAdapter);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("Doctors").child(doctorId).addValueEventListener(new ValueEventListener() {
@@ -212,8 +215,8 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
                     DatabaseReference dr = mDatabase.child("Patients").child(userId).child("allApps").child(curr_app.getAppointmentId());
                     curr_app.setPatientId(userId);
                     dr.setValue(curr_app);
+                    mDatabase.child("Doctors").child(doctorId).child("allApps").setValue(curr_app);
                     mDatabase.child("Appointments").child(curr_app.getAppointmentId()).child("patientId").setValue(userId);
-                    mDatabase.child("Doctors").child(doctorId).child("patientId").setValue(userId);
                 }
             });
 

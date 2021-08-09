@@ -4,6 +4,7 @@ import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +47,23 @@ public class Fragment2 extends Fragment {
     ArrayAdapter<String> date_adapter,time_adapter;
     DatabaseReference mDatabase;
     HashMap<String,ArrayList<String>> timeList;
+    View v;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i("info","a");
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment2_layout, container, false);
+        Log.i("info","b");
+        v = inflater.inflate(R.layout.fragment2_layout, container, false);
         dateList = new ArrayList<>();
         timeList = new HashMap<>();
         appointmentList = new ArrayList<>();
@@ -61,6 +75,12 @@ public class Fragment2 extends Fragment {
         date_spn = (Spinner) v.findViewById(R.id.spn_appointment_date);
         time_spn = (Spinner) v.findViewById(R.id.spn_appointment_time);
         patientUpComeAppointmentAdapter = new PatientUpComeAppointmentAdapter(v.getContext(),appointmentList);
+        date_adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, dateList);
+        date_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        date_spn.setAdapter(date_adapter);
+        time_adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, timeList.get("- -"));
+        time_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        time_spn.setAdapter(time_adapter);
         listappointments.setAdapter(patientUpComeAppointmentAdapter);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         if(userId != null){
