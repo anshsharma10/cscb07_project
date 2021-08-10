@@ -257,7 +257,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/registerbtn" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/gendertxt"
                 android:layout_width="64dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
