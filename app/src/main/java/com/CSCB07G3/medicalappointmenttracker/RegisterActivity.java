@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
@@ -46,6 +47,10 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Signup");
+
         birthdaytxt = findViewById(R.id.birthdaytxt);
         edt_birthday = findViewById(R.id.edt_birthday);
         edt_name = findViewById(R.id.editName);
@@ -114,9 +119,11 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+
         gender_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
+                ((TextView) parent.getChildAt(0)).setTextSize(18);
                 gender= gender_spinner_adapter.getItem(position).toString();
                 if (gender.equals("- -")){
                     gender = null;
@@ -129,6 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
         spec_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
+                ((TextView) parent.getChildAt(0)).setTextSize(18);
                 spec= spec_spinner_adapter.getItem(position).toString();
                 if (spec.equals("- -")){
                     spec = null;

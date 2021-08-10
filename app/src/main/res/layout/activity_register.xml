@@ -8,105 +8,111 @@
     android:visibility="visible"
     tools:context=".RegisterActivity">
 
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout9"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="106dp"
-                android:layout_marginBottom="25dp"
-                android:paddingVertical="25dp"
-                android:text="Register"
-                android:textAlignment="center"
-                android:textSize="30sp" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:text="Name"
-                android:textColor="#000" />
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="0dp"
+                android:layout_height="142dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/logo" />
 
             <EditText
                 android:id="@+id/editName"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
 
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:hint="Full Name"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:hint="  Full Name"
                 android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7"
                 tools:ignore="SpeakableTextPresentCheck" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:text="User name"
-                android:textColor="#000" />
 
             <EditText
                 android:id="@+id/usrname"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:hint="Username"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:hint="  Username"
                 android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editName"
                 tools:ignore="SpeakableTextPresentCheck" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:text="Password"
-                android:textColor="#000" />
 
             <EditText
                 android:id="@+id/passwd"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:hint="Password"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:hint="  Password"
                 android:inputType="textPassword"
-                android:paddingVertical="20dp" />
-
-            <TextView
-                android:id="@+id/gendertxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:text="Gender"
-                android:textColor="#000"
-                android:visibility="visible" />
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/usrname" />
 
             <Spinner
                 android:id="@+id/spn_doctor_gender"
-                android:layout_width="match_parent"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:minHeight="48dp"
-                android:visibility="visible" />
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/textView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginVertical="20dp"
-                android:text="Role"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Role:"
                 android:textColor="#000"
-                android:visibility="visible" />
+                android:textSize="18sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spn_doctor_gender"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <RadioGroup
                 android:id="@+id/radioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/birthdaytxt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView">
 
                 <RadioButton
                     android:id="@+id/radioButtonDoctor"
@@ -126,81 +132,156 @@
 
             <TextView
                 android:id="@+id/birthdaytxt"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginVertical="20dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
                 android:text="Date of Birth"
                 android:textColor="#000"
-                android:visibility="invisible" />
+                android:textSize="18sp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
             <EditText
                 android:id="@+id/edt_birthday"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:ems="10"
-                android:hint="DD/MM/YYYY"
+                android:hint="  DD/MM/YYYY"
                 android:inputType="date"
                 android:minHeight="48dp"
-                android:textSize="14sp"
-                android:visibility="visible" />
+                android:textSize="18sp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/birthdaytxt" />
 
             <TextView
                 android:id="@+id/medinfotxt"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginVertical="20dp"
-                android:text="Medical Information"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Medical Information:"
                 android:textColor="#000"
-                android:visibility="visible" />
+                android:textSize="18sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/medInfo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_birthday"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <EditText
                 android:id="@+id/medInfo"
-                android:layout_width="match_parent"
-                android:layout_height="199dp"
-                android:layout_marginHorizontal="30dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:gravity="start"
                 android:hint="Please input your medical history"
-                android:minHeight="48dp"
+                android:minHeight="96dp"
+                app:layout_constraintBottom_toTopOf="@+id/specinfotxt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/medinfotxt"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/specinfotxt"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginVertical="20dp"
-                android:text="Specialization"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Specialization:"
                 android:textColor="#000"
-                android:visibility="visible" />
+                android:textSize="18sp"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/medInfo" />
 
             <Spinner
                 android:id="@+id/spn_user_spec"
-                android:layout_width="match_parent"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginVertical="20dp" />
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/specinfotxt" />
 
             <Button
                 android:id="@+id/registerbtn"
-                android:layout_width="match_parent"
+                android:layout_width="351dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginVertical="20dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
                 android:background="@drawable/button_bg"
                 android:text="Register"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spn_user_spec" />
 
             <TextView
                 android:id="@+id/logInRedirect"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:text="Already registered? Login here"
-                android:textAlignment="center" />
-        </LinearLayout>
+                android:layout_marginStart="5dp"
+                android:text="Login here"
+                android:textAlignment="center"
+                android:textColor="@color/purple_500"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textView10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView10" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Already registered?"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/logInRedirect"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/registerbtn" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:text="Gender:"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/spn_doctor_gender"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwd"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="General:"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
 </LinearLayout>

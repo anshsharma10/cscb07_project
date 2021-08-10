@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.CSCB07G3.medicalappointmenttracker.Model.LoginModel;
@@ -21,6 +23,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Login");
+
         Button logInBtn = findViewById(R.id.LoginButton);
         TextView registerRedirect = findViewById(R.id.RegisterRedirect);
         edt_userid = findViewById(R.id.UserName);
