@@ -16,22 +16,22 @@ public class LoginModel {
     public LoginModel(){
         doctors = new HashMap<>();
         patients = new HashMap<>();
-        DatabaseReference Ref = FirebaseDatabase.getInstance("https://medical-appointment-trac-30878-default-rtdb.firebaseio.com").getReference();
-                Ref.child("Doctors").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        doctors = new HashMap<>();
-                        for(DataSnapshot child: snapshot.getChildren()){
-                            if(!child.getValue(Doctor.class).checkNull()){
-                                doctors.put(child.getKey(),child.getValue(Doctor.class));
-                            }
-                        }
+        DatabaseReference Ref = FirebaseDatabase.getInstance("https://medical-appointment-trac-30878-default-rtdb.firebaseio.com/").getReference();
+        Ref.child("Doctors").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                doctors = new HashMap<>();
+                for(DataSnapshot child: snapshot.getChildren()){
+                    if(!child.getValue(Doctor.class).checkNull()){
+                        doctors.put(child.getKey(),child.getValue(Doctor.class));
                     }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+            }
+        });
         Ref.child("Patients").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
