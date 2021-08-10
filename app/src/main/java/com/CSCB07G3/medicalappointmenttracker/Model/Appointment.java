@@ -38,6 +38,16 @@ public class Appointment implements Serializable,Comparable<Appointment> {
 				'}';
 	}
 
+	public boolean checkNull(){
+		if(this == null){
+			return true;
+		}
+		if(startTime !=null && endTime!=null && doctorId!=null && patientId!=null && appointmentId!=null){
+			return false;
+		}
+		return true;
+	}
+
 	public boolean isPast(){
 		return endTime.convertToDate().before(new Date(System.currentTimeMillis()));
 	}

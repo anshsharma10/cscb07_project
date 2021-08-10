@@ -4,6 +4,7 @@ import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,32 +88,34 @@ public class Fragment2 extends Fragment {
                     timeList.get("- -").add("- -");
                     for(DataSnapshot child : dataSnapshot.getChildren()) {
                         Appointment availability = child.getValue(Appointment.class);
-                        if(! availability.isPast()){
-                            mDatabase.child("Doctors").addValueEventListener(new ValueEventListener() {
+                        if(availability.checkNull()){
+                            Log.i("info","something wrong with "+child.getKey());
+                        }else if(! availability.isPast()){
+                            mDatabase.child("Doctors").child(availability.getDoctorId()).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if(snapshot.hasChild(availability.getDoctorId())){
-                                        appointmentList.add(availability);
-                                        String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
-                                        String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
-                                        if(! dateList.contains(date)){
-                                            dateList.add(date);
-                                            timeList.put(date,new ArrayList<>());
-                                            timeList.get(date).add("- -");
-                                            timeList.get(date).add(time);
-                                        }else if(! timeList.get(date).contains(time)){
-                                            timeList.get(date).add(time);
-                                        }
-                                    }else{
-                                        mDatabase.child("Patients").child(userId).child("allApps").child(child.getKey()).removeValue();
+                                    if(!snapshot.exists()){
                                         mDatabase.child("Appointments").child(child.getKey()).removeValue();
+                                        mDatabase.child("Patients").child(userId).child("allApps").child(child.getKey()).removeValue();
                                     }
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-
                                 }
                             });
+                            if(! appointmentList.contains(availability)){
+                                appointmentList.add(availability);
+                            }
+                            String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
+                            String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
+                            if(! dateList.contains(date)){
+                                dateList.add(date);
+                                timeList.put(date,new ArrayList<>());
+                                timeList.get(date).add("- -");
+                                timeList.get(date).add(time);
+                            }else if(! timeList.get(date).contains(time)){
+                                timeList.get(date).add(time);
+                            }
                         }
                     }
                     Collections.sort(dateList);
@@ -128,6 +131,8 @@ public class Fragment2 extends Fragment {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
+        }else{
+            Log.i("info","a");
         }
 
         date_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -167,8 +172,13 @@ public class Fragment2 extends Fragment {
         LayoutInflater inflater;
 
         public PatientUpComeAppointmentAdapter(Context context, ArrayList<Appointment> appointmentList) {
-            this.originAppointments = appointmentList;
-            this.displayAppointments = appointmentList;
+            if(appointmentList == null){
+                this.originAppointments = new ArrayList<>();
+                this.displayAppointments = new ArrayList<>();
+            }else{
+                this.originAppointments = appointmentList;
+                this.displayAppointments = appointmentList;
+            }
             inflater = LayoutInflater.from(context);
         }
 

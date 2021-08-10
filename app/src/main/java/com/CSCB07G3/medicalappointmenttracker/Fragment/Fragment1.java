@@ -56,13 +56,22 @@ public class Fragment1 extends Fragment {
         LayoutInflater inflater;
 
         public DoctorAdapter(Context context, ArrayList<Doctor> doctors) {
-            this.originDoctors = doctors;
-            this.displayDoctors = doctors;
+            if(doctors == null){
+                this.originDoctors = new ArrayList<>();
+                this.displayDoctors = new ArrayList<>();
+            }else{
+                this.originDoctors = doctors;
+                this.displayDoctors = doctors;
+            }
             inflater = LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
+
+            if(displayDoctors == null){
+                return 0;
+            }
             return displayDoctors.size();
         }
 
@@ -190,7 +199,9 @@ public class Fragment1 extends Fragment {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                         Doctor doctor = singleSnapshot.getValue(Doctor.class);
-                        doctorList.add(doctor);
+                        if(! doctorList.contains(doctor)){
+                            doctorList.add(doctor);
+                        }
                     }
                     doctoradapter = new DoctorAdapter(v.getContext(),doctorList);
                     listDoctor.setAdapter(doctoradapter);

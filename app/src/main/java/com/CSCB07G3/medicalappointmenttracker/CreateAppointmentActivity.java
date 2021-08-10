@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CreateAppointmentActivity extends AppCompatActivity {
+    public static final String USERID = "userid";
     Date d;
     EditText edt_date,edt_start_time, edt_end_time;
     Button createapppointmentbtn;
@@ -39,7 +40,7 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        doctorid = getIntent().getStringExtra(DoctorTrackAppointmentActivity.doctorId);
+        doctorid = getIntent().getStringExtra(USERID);
         System.out.println(doctorid);
 
         edt_date = findViewById(R.id.editDate);
@@ -157,6 +158,16 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         createapppointmentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                CreateAppointmentPresenter cap = new CreateAppointmentPresenter();
+//                int ret = cap.AddAppointment(doctorid, year1[0], month1[0], day1[0], start_hour1[0], start_minute1[0], end_hour1[0], end_minute1[0]);
+//                if(ret == 1){
+//                    Toast.makeText(CreateAppointmentActivity.this, "End time must be later than start time", Toast.LENGTH_SHORT).show();
+//                }
+//                else{
+//                    System.out.println(ret);
+//                    startActivity(new Intent(CreateAppointmentActivity.this, DoctorTrackAppointmentActivity.class).putExtra(USERID,doctorid));
+//                    finish();
+//                }
                 final Appointment[] app = new Appointment[1];
                 AppTime t1 = new AppTime(year1[0], month1[0], day1[0], start_hour1[0], start_minute1[0]);
                 AppTime t2 = new AppTime(year1[0], month1[0], day1[0], end_hour1[0], end_minute1[0]);
@@ -184,7 +195,7 @@ public class CreateAppointmentActivity extends AppCompatActivity {
                             }
                             DatabaseReference dr = databaseReference.child("Doctors").child(doctorid).child("allApps").child(app[0].getAppointmentId());
                             dr.setValue(app[0]);
-                            startActivity(new Intent(CreateAppointmentActivity.this, DoctorTrackAppointmentActivity.class));
+                            startActivity(new Intent(CreateAppointmentActivity.this, DoctorTrackAppointmentActivity.class).putExtra(USERID,doctorid));
                             finish();
                         }
 
