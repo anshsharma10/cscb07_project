@@ -17,12 +17,8 @@ public abstract class User implements Serializable {
         this.passWord = passWord;
         this.gender = gender;
     }
-
-    public void getAppointment(){
-
-    }
-
-    public abstract User signUp();
+    public abstract boolean checkNull();
+    public abstract String Type();
     public String getName(){ return name; }
     public String getPassWord(){ return passWord; }
     public String getUserId(){ return userId; }

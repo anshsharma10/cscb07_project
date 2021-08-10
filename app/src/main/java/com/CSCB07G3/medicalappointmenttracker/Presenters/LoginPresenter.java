@@ -1,57 +1,41 @@
 package com.CSCB07G3.medicalappointmenttracker.Presenters;
 
-import androidx.annotation.NonNull;
-
-import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
-import com.CSCB07G3.medicalappointmenttracker.Model.Patient;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.CSCB07G3.medicalappointmenttracker.LoginActivity;
+import com.CSCB07G3.medicalappointmenttracker.Model.LoginModel;
+import com.CSCB07G3.medicalappointmenttracker.Model.User;
 
 public class LoginPresenter {
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://medical-appointment-trac-30878-default-rtdb.firebaseio.com/").getReference();
-
-    public LoginPresenter(){
-
+    private LoginModel model;
+    private LoginActivity view;
+    public LoginPresenter(LoginModel model,LoginActivity view){
+        this.model =model;
+        this.view =view;
     }
 
-    public int UserExist(String userId, String passWord){
-        final int[] ret = {0};
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // check if userid is not registered before
-                if (snapshot.child("Patients").hasChild(userId)) {
-                    String getPassword = snapshot.child("Patients").child(userId).getValue(Patient.class).getPassWord();
-                    if (getPassword.equals(passWord)) {
-                        ret[0] = 1;
-                    } else {
-                        ret[0] = 2;
+    public void Login(){
+        String username = view.getUsername();
+        String password = view.getPassWord();
+        if(username.equals("")){
+            view.setUsernameError("Username cannot be empty");
+        }else if(password.equals("")){
+            view.setPasswordError("Password cannot be empty");
+        }else {
+            model.checkLogin(username, password, new LoginModel.OnLoginListener() {
+                @Override
+                public void loginSuccess(User user) {
+                    view.showMessage("Login Success");
+                    if(user.Type().equals("Doctors")){
+                        view.redirectToDoctor(username);
+                    }else{
+                        view.redirectToPatient(username);
                     }
-                } else if (snapshot.child("Doctors").hasChild(userId)) {
-                    String getPassword = snapshot.child("Doctors").child(userId).getValue(Doctor.class).getPassWord();
-
-                    if (getPassword.equals(passWord)) {
-                        ret[0] = 3;
-                        System.out.println("chinese1");
-                    } else {
-                        ret[0] = 4;
-                    }
-                } else {
-                    ret[0] = 5;
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        System.out.println(ret[0]);
-        return ret[0];
+                @Override
+                public void loginFailed(String s) {
+                    view.showMessage(s);
+                }
+            });
+        }
     }
 }
