@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.CSCB07G3.medicalappointmenttracker.DoctorViewPatientInfoActivity;
+import com.CSCB07G3.medicalappointmenttracker.Model.Appointment;
 import com.CSCB07G3.medicalappointmenttracker.Model.Patient;
 import com.CSCB07G3.medicalappointmenttracker.R;
 import com.google.android.gms.common.internal.Asserts;
@@ -186,18 +187,37 @@ public class Fragment3 extends Fragment {
         gender_spinner.setAdapter(gender_spinner_adapter);
         gender_spinner.setVisibility(View.VISIBLE);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Patients");
+        DatabaseReference mDatabase1 = FirebaseDatabase.getInstance().getReference("Doctors");
         patientList = new ArrayList<Patient>();
         patientadapter = new PatientAdapter(v.getContext(),patientList);
         listPatient.setAdapter(patientadapter);
+        String doctorid = getActivity().getIntent().getStringExtra(USERID);
         ValueEventListener doctorListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 patientList = new ArrayList<>();
+                boolean new_item = false;
                 if(dataSnapshot.exists()){
                     for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                         Patient patient = singleSnapshot.getValue(Patient.class);
                         if(! patientList.contains(patient)){
-                            patientList.add(patient);
+                            mDatabase1.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot ds) {
+                                    for(DataSnapshot ds1: ds.child(doctorid).child("allApps").getChildren()){
+                                        Appointment app = ds1.getValue(Appointment.class);
+                                        System.out.println(app.getAppointmentId());
+                                        if (app.getPatientId().equals(patient.getUserId())){
+                                            patientList.add(patient);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                         }
                     }
                     patientadapter = new PatientAdapter(v.getContext(),patientList);
