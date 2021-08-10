@@ -24,7 +24,7 @@
     <string name="tab_text_2">Your Appointment</string>
     <string name="tab_text_3">Upcoming</string>
     <string name="tab_text_4">View Patients</string>
-    <string name="choose_a_doctor_to_view_appointments">Choose a doctor to view appointments</string>
+    <string name="choose_a_doctor_to_view_appointments">Filter by Doctor Name</string>
     <string name="gender">Gender</string>
     <string name="specialization">Specialization</string>
     <string name="title_activity_doctor_track_appointment">DoctorTrackAppointmentActivity</string>
