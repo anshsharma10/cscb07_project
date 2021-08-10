@@ -43,6 +43,26 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Please enter your user ID or password", Toast.LENGTH_SHORT).show();
                 }
                 else{
+//                    LoginPresenter loginPresenter = new LoginPresenter();
+//                    if (loginPresenter.UserExist(userid, passwd) == 1){
+//                        Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(LoginActivity.this, ChooseAppointmentActivity.class).putExtra(USERID,userid));
+//                        finish();
+//                    }
+//                    else if (loginPresenter.UserExist(userid, passwd) == 2){
+//                        edt_passwd.setError("Wrong password");
+//                    }
+//                    else if (loginPresenter.UserExist(userid, passwd) == 3){
+//                        Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(LoginActivity.this, DoctorTrackAppointmentActivity.class).putExtra(USERID,userid));
+//                        finish();
+//                    }
+//                    else if (loginPresenter.UserExist(userid, passwd) == 4){
+//                        edt_passwd.setError("Wrong password");
+//                    }
+//                    else if (loginPresenter.UserExist(userid, passwd) == 5){
+//                        edt_userid.setError("Such user does not exist");
+//                    }
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
