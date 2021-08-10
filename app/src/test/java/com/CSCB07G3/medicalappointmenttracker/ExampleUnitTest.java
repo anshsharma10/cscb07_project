@@ -1,15 +1,21 @@
 package com.CSCB07G3.medicalappointmenttracker;
 
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
 import com.CSCB07G3.medicalappointmenttracker.Model.LoginModel;
+import com.CSCB07G3.medicalappointmenttracker.Model.Patient;
 import com.CSCB07G3.medicalappointmenttracker.Presenters.LoginPresenter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.Date;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -22,6 +28,7 @@ public class ExampleUnitTest {
     LoginModel loginModel;
     @Mock
     LoginActivity loginView;
+
     @Test
     public void testEmptyUsername(){
         when(loginView.getUsername()).thenReturn("");
@@ -47,6 +54,42 @@ public class ExampleUnitTest {
         LoginPresenter presenter = new LoginPresenter(loginModel,loginView);
         presenter.Login();
         verify(loginView).showMessage("User not found");
+    }
+
+    @Test
+    public void testPassWordIncorrect(){
+        when(loginView.getUsername()).thenReturn("abc");
+        when(loginView.getPassWord()).thenReturn("abc");
+        when(loginModel.foundUser("abc")).thenReturn(new Doctor("","abc","a","",""));
+        LoginPresenter presenter = new LoginPresenter(loginModel,loginView);
+        presenter.Login();
+        verify(loginView).showMessage("Wrong password");
+    }
+
+    @Test
+    public void testDoctorLogin(){
+        when(loginView.getUsername()).thenReturn("abc");
+        when(loginView.getPassWord()).thenReturn("abc");
+        when(loginModel.foundUser("abc")).thenReturn(new Doctor("","abc","abc","",""));
+        LoginPresenter presenter = new LoginPresenter(loginModel,loginView);
+        presenter.Login();
+        InOrder order = inOrder(loginModel,loginView);
+        order.verify(loginModel).foundUser("abc");
+        order.verify(loginView).showMessage("Login Success!");
+        order.verify(loginView).redirectToDoctor("abc");
+    }
+
+    @Test
+    public void testPatientLogin(){
+        when(loginView.getUsername()).thenReturn("abc");
+        when(loginView.getPassWord()).thenReturn("abc");
+        when(loginModel.foundUser("abc")).thenReturn(new Patient("","abc","abc","","",new Date()));
+        LoginPresenter presenter = new LoginPresenter(loginModel,loginView);
+        presenter.Login();
+        InOrder order = inOrder(loginModel,loginView);
+        order.verify(loginModel).foundUser("abc");
+        order.verify(loginView).showMessage("Login Success!");
+        order.verify(loginView).redirectToPatient("abc");
     }
 
     //@Test

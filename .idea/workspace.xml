@@ -15,10 +15,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c69ec6b-b024-42eb-83d9-332ffa6bdde0" name="Default Changelist" comment="fix filter">
+    <list default="true" id="3c69ec6b-b024-42eb-83d9-332ffa6bdde0" name="Default Changelist" comment="MVP login and Tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/LoginModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Model/LoginModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Presenters/LoginPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Presenters/LoginPresenter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/test/java/com/CSCB07G3/medicalappointmenttracker/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/CSCB07G3/medicalappointmenttracker/ExampleUnitTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -148,7 +146,7 @@
       <recent name="com.CSCB07G3.medicalappointmenttracker" />
     </key>
   </component>
-  <component name="RunManager" selected="Android App.app">
+  <component name="RunManager" selected="Gradle.ExampleUnitTest">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="Medical_Appointment_Tracker.app" />
       <option name="DEPLOY" value="true" />
@@ -207,7 +205,7 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExampleUnitTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ExampleUnitTest" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -229,11 +227,6 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Gradle.ExampleUnitTest" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -433,7 +426,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628623113945</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="MVP login and Tests">
+      <created>1628629670021</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1628629670021</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -462,7 +462,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="move book doctor to fragment1" />
     <MESSAGE value="Implement Doctor Filter on gender, name and specialization; make restrictions on name and userid when register" />
     <MESSAGE value="fix doctor filter" />
     <MESSAGE value="Implement patient choose appointment activities" />
@@ -487,7 +486,8 @@
     <MESSAGE value="fix respond to past" />
     <MESSAGE value="small fix" />
     <MESSAGE value="fix filter" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix filter" />
+    <MESSAGE value="MVP login and Tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="MVP login and Tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -509,6 +509,6 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Medical_Appointment_Tracker$ExampleUnitTest.ic" NAME="ExampleUnitTest Coverage Results" MODIFIED="1628625295116" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Medical_Appointment_Tracker$ExampleUnitTest.ic" NAME="ExampleUnitTest Coverage Results" MODIFIED="1628630305622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
