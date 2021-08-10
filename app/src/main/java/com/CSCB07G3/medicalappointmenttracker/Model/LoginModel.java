@@ -16,22 +16,22 @@ public class LoginModel {
     public LoginModel(){
         doctors = new HashMap<>();
         patients = new HashMap<>();
-        DatabaseReference Ref = FirebaseDatabase.getInstance("https://medical-appointment-trac-30878-default-rtdb.firebaseio.com").getReference();
-                Ref.child("Doctors").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        doctors = new HashMap<>();
-                        for(DataSnapshot child: snapshot.getChildren()){
-                            if(!child.getValue(Doctor.class).checkNull()){
-                                doctors.put(child.getKey(),child.getValue(Doctor.class));
-                            }
-                        }
+        DatabaseReference Ref = FirebaseDatabase.getInstance("https://medical-appointment-trac-30878-default-rtdb.firebaseio.com/").getReference();
+        Ref.child("Doctors").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                doctors = new HashMap<>();
+                for(DataSnapshot child: snapshot.getChildren()){
+                    if(!child.getValue(Doctor.class).checkNull()){
+                        doctors.put(child.getKey(),child.getValue(Doctor.class));
                     }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+            }
+        });
         Ref.child("Patients").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -42,29 +42,20 @@ public class LoginModel {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
     }
-
-    public interface OnLoginListener{
-        void loginSuccess(User user);
-        void loginFailed(String s);
-    }
-
-    public void checkLogin(String userId,String passWord,OnLoginListener onLoginListener){
+    public User foundUser(String userId){
         HashMap<String,User> users = doctors;
         users.putAll(patients);
         if(users.containsKey(userId)){
-            if(users.get(userId).getPassWord().equals(passWord)){
-                onLoginListener.loginSuccess(users.get(userId));
-            }else{
-                onLoginListener.loginFailed("Wrong password");
-            }
-        }else{
-            onLoginListener.loginFailed("User doesn't exist");
+            return users.get(userId);
+        }else {
+            return null;
         }
     }
 }
