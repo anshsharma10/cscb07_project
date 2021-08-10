@@ -158,21 +158,15 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         createapppointmentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                CreateAppointmentPresenter cap = new CreateAppointmentPresenter();
-//                int ret = cap.AddAppointment(doctorid, year1[0], month1[0], day1[0], start_hour1[0], start_minute1[0], end_hour1[0], end_minute1[0]);
-//                if(ret == 1){
-//                    Toast.makeText(CreateAppointmentActivity.this, "End time must be later than start time", Toast.LENGTH_SHORT).show();
-//                }
-//                else{
-//                    System.out.println(ret);
-//                    startActivity(new Intent(CreateAppointmentActivity.this, DoctorTrackAppointmentActivity.class).putExtra(USERID,doctorid));
-//                    finish();
-//                }
                 final Appointment[] app = new Appointment[1];
                 AppTime t1 = new AppTime(year1[0], month1[0], day1[0], start_hour1[0], start_minute1[0]);
                 AppTime t2 = new AppTime(year1[0], month1[0], day1[0], end_hour1[0], end_minute1[0]);
+                AppTime now = new AppTime(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, Calendar.HOUR_OF_DAY, Calendar.MINUTE);
                 if (t1.compareTo(t2) == 1 || t1.compareTo(t2) == 0){
                     Toast.makeText(CreateAppointmentActivity.this, "End time must be later than start time", Toast.LENGTH_SHORT).show();
+                }
+                else if(t1.compareTo(now) != -1){
+                    Toast.makeText(CreateAppointmentActivity.this, "The time must be later than now", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
