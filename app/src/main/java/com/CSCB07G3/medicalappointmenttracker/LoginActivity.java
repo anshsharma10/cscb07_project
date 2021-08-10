@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText edt_userid = findViewById(R.id.UserName);
         EditText edt_passwd = findViewById(R.id.Password);
         Button logInBtn = findViewById(R.id.LoginButton);
-        TextView registerRedirect = findViewById(R.id.RegisterRedirect);
+        TextView registerRedirect = findViewById(R.id.registerRedirect);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://medical-appointment-trac-30878-default-rtdb.firebaseio.com/").getReference();
 
