@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.setTitle("Login");
 
         Button logInBtn = findViewById(R.id.LoginButton);
-        TextView registerRedirect = findViewById(R.id.RegisterRedirect);
+        TextView registerRedirect = findViewById(R.id.registerRedirect);
         edt_userid = findViewById(R.id.UserName);
         edt_passwd = findViewById(R.id.Password);
         presenter = new LoginPresenter(new LoginModel(),this);
