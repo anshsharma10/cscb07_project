@@ -200,25 +200,22 @@ public class Fragment3 extends Fragment {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                         Patient patient = singleSnapshot.getValue(Patient.class);
-                        if(! patientList.contains(patient)){
-                            mDatabase1.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot ds) {
-                                    for(DataSnapshot ds1: ds.child(doctorid).child("allApps").getChildren()){
-                                        Appointment app = ds1.getValue(Appointment.class);
-                                        System.out.println(app.getAppointmentId());
-                                        if (app.getPatientId().equals(patient.getUserId())){
-                                            patientList.add(patient);
-                                        }
+                        mDatabase1.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot ds) {
+                                for(DataSnapshot ds1: ds.child(doctorid).child("allApps").getChildren()){
+                                    Appointment app = ds1.getValue(Appointment.class);
+                                    if (app.getPatientId().equals(patient.getUserId()) && (! patientList.contains(patient))){
+                                        patientList.add(patient);
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                                }
-                            });
-                        }
+                            }
+                        });
                     }
                     patientadapter = new PatientAdapter(v.getContext(),patientList);
                     listPatient.setAdapter(patientadapter);
@@ -230,7 +227,7 @@ public class Fragment3 extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         };
-        mDatabase.addValueEventListener(doctorListener);
+        mDatabase.addListenerForSingleValueEvent(doctorListener);
         listPatient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parentAdapter, View view, int position,
