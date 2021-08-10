@@ -42,29 +42,20 @@ public class LoginModel {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
     }
-
-    public interface OnLoginListener{
-        void loginSuccess(User user);
-        void loginFailed(String s);
-    }
-
-    public void checkLogin(String userId,String passWord,OnLoginListener onLoginListener){
+    public User foundUser(String userId){
         HashMap<String,User> users = doctors;
         users.putAll(patients);
         if(users.containsKey(userId)){
-            if(users.get(userId).getPassWord().equals(passWord)){
-                onLoginListener.loginSuccess(users.get(userId));
-            }else{
-                onLoginListener.loginFailed("Wrong password");
-            }
-        }else{
-            onLoginListener.loginFailed("User doesn't exist");
+            return users.get(userId);
+        }else {
+            return null;
         }
     }
 }

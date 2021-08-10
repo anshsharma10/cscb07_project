@@ -20,22 +20,18 @@ public class LoginPresenter {
         }else if(password.equals("")){
             view.setPasswordError("Password cannot be empty");
         }else {
-            model.checkLogin(username, password, new LoginModel.OnLoginListener() {
-                @Override
-                public void loginSuccess(User user) {
-                    view.showMessage("Login Success");
-                    if(user.Type().equals("Doctors")){
-                        view.redirectToDoctor(username);
-                    }else{
-                        view.redirectToPatient(username);
-                    }
-                }
-
-                @Override
-                public void loginFailed(String s) {
-                    view.showMessage(s);
-                }
-            });
+            User user = model.foundUser(username);
+            if(user == null){
+                view.showMessage("User not found");
+            }else if(!user.getPassWord().equals(password)){
+                view.showMessage("Wrong password");
+            }else if(user.Type().equals("Doctors")){
+                view.showMessage("Login Success!");
+                view.redirectToDoctor(username);
+            }else {
+                view.showMessage("Login Success!");
+                view.redirectToPatient(username);
+            }
         }
     }
 }
