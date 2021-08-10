@@ -183,11 +183,9 @@ public class Fragment1 extends Fragment {
         gender_spinner_adapter = ArrayAdapter.createFromResource(v.getContext(), R.array.genders, android.R.layout.simple_spinner_item);
         gender_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender_spinner.setAdapter(gender_spinner_adapter);
-        gender_spinner.setVisibility(View.VISIBLE);
         spec_spinner_adapter = ArrayAdapter.createFromResource(v.getContext(), R.array.specializations, android.R.layout.simple_spinner_item);
         spec_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spec_spinner.setAdapter(spec_spinner_adapter);
-        spec_spinner.setVisibility(View.VISIBLE);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Doctors");
         doctorList = new ArrayList<>();
         doctoradapter = new DoctorAdapter(v.getContext(),doctorList);
