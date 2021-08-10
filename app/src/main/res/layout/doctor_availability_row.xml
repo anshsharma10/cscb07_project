@@ -3,7 +3,8 @@
     android:id="@+id/tlContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/border">
 
     <LinearLayout
         android:id="@+id/llContainer"
@@ -15,25 +16,14 @@
 
         <TextView
             android:id="@+id/appointmentDate"
-            android:layout_width="227dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:minHeight="48dp"
             android:singleLine="true"
-            android:textSize="30sp" />
-
-        <Button
-            android:id="@+id/btn_book_appointment"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_bg"
-            android:text="Book"
-            android:textColor="#FFFFFF" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -78,6 +68,7 @@
                 android:layout_weight="1"
                 android:minHeight="48dp"
                 android:singleLine="false"
+                android:textAlignment="center"
                 android:textSize="20sp" />
 
             <TextView
@@ -88,10 +79,21 @@
                 android:layout_weight="1"
                 android:minHeight="48dp"
                 android:singleLine="false"
+                android:textAlignment="center"
                 android:textSize="20sp" />
 
         </TableRow>
 
     </TableLayout>
+
+    <Button
+        android:id="@+id/btn_book_appointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_bg"
+        android:text="Book"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>
