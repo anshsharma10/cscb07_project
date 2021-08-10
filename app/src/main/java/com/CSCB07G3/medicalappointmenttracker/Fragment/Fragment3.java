@@ -153,11 +153,7 @@ public class Fragment3 extends Fragment {
                             return results;
                         }
                         String filter_name = filter.substring(0,tmp);
-                        //Log.i("name",filter_name);
-                        //String filter_spec = constraint.toString().substring(constraint.toString().lastIndexOf(";")+1);
-                        //Log.i("spec",filter_spec);
                         String filter_gender = filter.substring(tmp+1);
-                        //Log.i("gender",filter_gender);
                         for (int i = 0; i < originPatients.size(); i++) {
                             Patient data = originPatients.get(i);
                             if (data.getName().toLowerCase().contains(filter_name.toLowerCase()) && (filter_gender.equals("- -") || data.getGender().equals(filter_gender))) {

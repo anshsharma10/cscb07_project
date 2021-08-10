@@ -49,10 +49,10 @@ public class Fragment2 extends Fragment {
     HashMap<String,ArrayList<String>> timeList;
     View v;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onStart() {
+        super.onStart();
+        patientUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
     }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,7 +78,6 @@ public class Fragment2 extends Fragment {
         time_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         time_spn.setAdapter(time_adapter);
         listappointments.setAdapter(patientUpComeAppointmentAdapter);
-        patientUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         if(userId != null){
             mDatabase.child("Patients").child(userId).child("allApps").addValueEventListener(new ValueEventListener() {

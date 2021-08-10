@@ -47,6 +47,13 @@ public class Fragment4 extends Fragment {
     ArrayAdapter<String> date_adapter,time_adapter;
     DatabaseReference mDatabase;
     HashMap<String,ArrayList<String>> timeList;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        doctorUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,7 +73,6 @@ public class Fragment4 extends Fragment {
         doctorUpComeAppointmentAdapter = new DoctorUpComeAppointmentAdapter(v.getContext(),appointmentList);
         listappointments.setAdapter(doctorUpComeAppointmentAdapter);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        doctorUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
         if(userId != null){
             mDatabase.child("Doctors").child(userId).child("allApps").addValueEventListener(new ValueEventListener() {
                 @Override
