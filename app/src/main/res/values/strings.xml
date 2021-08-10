@@ -21,7 +21,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_choose_appointment2">ChooseAppointmentActivity2</string>
     <string name="tab_text_1">Available</string>
-    <string name="tab_text_2">Your Appointment</string>
+    <string name="tab_text_2">Upcoming</string>
     <string name="tab_text_3">Upcoming</string>
     <string name="tab_text_4">View Patients</string>
     <string name="choose_a_doctor_to_view_appointments">Filter by Doctor Name</string>
