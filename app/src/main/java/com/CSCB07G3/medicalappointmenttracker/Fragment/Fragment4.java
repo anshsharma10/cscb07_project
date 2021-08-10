@@ -58,12 +58,15 @@ public class Fragment4 extends Fragment {
         timeList.put("- -", new ArrayList<>());
         timeList.get("- -").add("- -");
         userId = getActivity().getIntent().getStringExtra(USERID);
+        filter_date ="- -";
+        filter_time = "- -";
         listappointments = v.findViewById(R.id.listUppcomingAppointments1);
         date_spn = v.findViewById(R.id.spn_appointment_date1);
         time_spn = v.findViewById(R.id.spn_appointment_time1);
         doctorUpComeAppointmentAdapter = new DoctorUpComeAppointmentAdapter(v.getContext(),appointmentList);
         listappointments.setAdapter(doctorUpComeAppointmentAdapter);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        doctorUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
         if(userId != null){
             mDatabase.child("Doctors").child(userId).child("allApps").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -206,6 +209,13 @@ public class Fragment4 extends Fragment {
             holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(curr_app.getEndTime().convertToDate()));
             if(curr_app.getPatientId() == null || curr_app.getPatientId().isEmpty()){
                 holder.patientName.setText("(Empty)");
+                holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mDatabase.child("Appointments").child(curr_app.getAppointmentId()).removeValue();
+                        mDatabase.child("Doctors").child(userId).child("allApps").child(curr_app.getAppointmentId()).removeValue();
+                    }
+                });
             }else{
                 mDatabase.child("Patients").child(curr_app.getPatientId()).addValueEventListener(new ValueEventListener() {
                     @Override
@@ -253,7 +263,7 @@ public class Fragment4 extends Fragment {
                         originAppointments = new ArrayList<Appointment>(displayAppointments);
                     }
                     Collections.sort(originAppointments);
-                    if (constraint == null || constraint.length() <=7) {
+                    if (constraint == null || constraint.length()==0) {
                         // set the Original result to return
                         results.count = originAppointments.size();
                         results.values = originAppointments;
@@ -263,7 +273,11 @@ public class Fragment4 extends Fragment {
                         for (Appointment data: originAppointments){
                             String data_d = new SimpleDateFormat("dd/MM/yyyy").format(data.getStartTime().convertToDate());
                             String data_t = new SimpleDateFormat("kk:mm").format(data.getStartTime().convertToDate())+" - "+ new SimpleDateFormat("kk:mm").format(data.getEndTime().convertToDate());
-                            if((data_d.equals(filter_d)||filter_d.equals("- -")) && (data_t.equals(filter_t)|| filter_t.equals("- -"))){
+                            if(data.isPast()){
+                                originAppointments.remove(data);
+                                mDatabase.child("Doctors").child(userId).child("allApps").child(data.getAppointmentId()).child("past").setValue(true);
+                            }
+                            if((data_d.equals(filter_d)||filter_d.equals("- -")) && (data_t.equals(filter_t)|| filter_t.equals("- -"))&& !data.isPast()){
                                 FilteredList.add(data);
                             }
                         }
