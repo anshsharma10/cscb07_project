@@ -57,7 +57,6 @@ public class Fragment2 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment2_layout, container, false);
-        Log.i("info","a");
         dateList = new ArrayList<>();
         timeList = new HashMap<>();
         appointmentList = new ArrayList<>();
@@ -185,6 +184,9 @@ public class Fragment2 extends Fragment {
 
         @Override
         public int getCount() {
+            if(displayAppointments ==null){
+                return 0;
+            }
             return displayAppointments.size();
         }
 

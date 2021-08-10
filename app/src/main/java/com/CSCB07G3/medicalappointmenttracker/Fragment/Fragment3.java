@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,7 +141,7 @@ public class Fragment3 extends Fragment {
                         originPatients = new ArrayList<>(displayPatients);
                     }
 
-                    if (constraint == null || constraint.length() == 2) {
+                    if (constraint == null || constraint.length() <=4) {
                         // set the Original result to return
                         results.count = originPatients.size();
                         results.values = originPatients;
@@ -154,6 +155,7 @@ public class Fragment3 extends Fragment {
                         }
                         String filter_name = filter.substring(0,tmp);
                         String filter_gender = filter.substring(tmp+1);
+                        Log.i("info",filter_gender);
                         for (int i = 0; i < originPatients.size(); i++) {
                             Patient data = originPatients.get(i);
                             if (data.getName().toLowerCase().contains(filter_name.toLowerCase()) && (filter_gender.equals("- -") || data.getGender().equals(filter_gender))) {
@@ -175,6 +177,7 @@ public class Fragment3 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment3_layout, container, false);
         name="";
+        gender ="- -";
         EditText searchPatient = v.findViewById(R.id.searchPatient);
         listPatient = v.findViewById(R.id.listPatient);
         Spinner gender_spinner = v.findViewById(R.id.spn_patient_gender);
