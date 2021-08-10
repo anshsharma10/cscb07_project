@@ -1,10 +1,10 @@
 package com.CSCB07G3.medicalappointmenttracker;
 
 import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.DOCTOR_SELECTED;
-import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
+    public static final String USERID = "userid";
     String doctorId,userId,filter_date,filter_time;
     Spinner date_spn,time_spn;
     ArrayList<String> dateList;
@@ -65,6 +66,9 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
         date_spn = (Spinner) findViewById(R.id.spn_appointment_date);
         time_spn = (Spinner) findViewById(R.id.spn_appointment_time);
         availabilityAdapter = new AvailabilityAdapter(getApplicationContext(),availabilityList);
+        date_adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, dateList);
+        date_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        date_spn.setAdapter(date_adapter);
         listavailability.setAdapter(availabilityAdapter);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("Doctors").child(doctorId).addValueEventListener(new ValueEventListener() {
@@ -74,6 +78,7 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
                     title.setText("Availability of Doctor " + snapshot.getValue(Doctor.class).getName());
                 }else{
                     Toast.makeText(PatientViewDoctorAvailabilityActivity.this,"Doctor removed",Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
 
@@ -93,8 +98,12 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
                 timeList.get("- -").add("- -");
                 for(DataSnapshot child : dataSnapshot.getChildren()) {
                     Appointment availability = child.getValue(Appointment.class);
-                    if(Objects.equals(availability.getPatientId(), "") && ! availability.isPast()){
-                        availabilityList.add(availability);
+                    if(availability.checkNull()){
+                        Log.i("info","something wrong with "+child.getKey());
+                    }else if(Objects.equals(availability.getPatientId(), "") && ! availability.isPast()){
+                        if(!availabilityList.contains(availability)){
+                            availabilityList.add(availability);
+                        }
                         String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
                         String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
                         if(! dateList.contains(date)){
@@ -158,13 +167,22 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
         LayoutInflater inflater;
 
         public AvailabilityAdapter(Context context, ArrayList<Appointment> availabilities) {
-            this.originAvailabilities = availabilities;
-            this.displayAvailabilities = availabilities;
+            if(availabilities == null){
+                this.originAvailabilities = new ArrayList<>();
+                this.displayAvailabilities = new ArrayList<>();
+            }else{
+                this.originAvailabilities = availabilities;
+                this.displayAvailabilities = availabilities;
+            }
             inflater = LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
+
+            if(displayAvailabilities== null){
+                return 0;
+            }
             return displayAvailabilities.size();
         }
 
@@ -207,13 +225,11 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(curr_app.getEndTime().convertToDate()));
             holder.btn_book.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //Start add appointment to patient appointment list
-                    DatabaseReference AppRef = mDatabase.child("Appointments").child(curr_app.getAppointmentId());
                     DatabaseReference dr = mDatabase.child("Patients").child(userId).child("allApps").child(curr_app.getAppointmentId());
-                    AppRef.child("patientId").setValue(userId);
                     curr_app.setPatientId(userId);
                     dr.setValue(curr_app);
-
+                    mDatabase.child("Doctors").child(doctorId).child("allApps").child(curr_app.getAppointmentId()).setValue(curr_app);
+                    mDatabase.child("Appointments").child(curr_app.getAppointmentId()).child("patientId").setValue(userId);
                 }
             });
 

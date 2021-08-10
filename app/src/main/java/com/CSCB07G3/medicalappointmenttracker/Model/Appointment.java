@@ -1,7 +1,6 @@
 package com.CSCB07G3.medicalappointmenttracker.Model;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 
 
@@ -39,15 +38,22 @@ public class Appointment implements Serializable,Comparable<Appointment> {
 				'}';
 	}
 
+	public boolean checkNull(){
+		if(this == null){
+			return true;
+		}
+		if(startTime !=null && endTime!=null && doctorId!=null && patientId!=null && appointmentId!=null){
+			return false;
+		}
+		return true;
+	}
+
 	public boolean isPast(){
-		Date curr = new Date(System.currentTimeMillis());
-		Calendar c = Calendar.getInstance();
-		c.set(endTime.getYear(),endTime.getMonth(),endTime.getDay(),endTime.getHour(),endTime.getMinute());
-		return c.getTime().before(curr);
+		return endTime.convertToDate().before(new Date(System.currentTimeMillis()));
 	}
 
     public void setPatientId(String patientId){ this.patientId = patientId; }
-    public void setDoctorId(String doctorId) { this.doctorId = doctorId; }
+	public void setDoctorId(String doctorId){ this.doctorId = doctorId; }
     public void setStartTime(AppTime startTime){this.startTime = startTime; }
 	public void setEndTime(AppTime endTime){ this.endTime = endTime; }
 	public void setAppointmentId(String appointmentId){ this.appointmentId = appointmentId; }

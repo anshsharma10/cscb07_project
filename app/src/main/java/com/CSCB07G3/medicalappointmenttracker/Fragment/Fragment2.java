@@ -4,6 +4,7 @@ import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +47,16 @@ public class Fragment2 extends Fragment {
     ArrayAdapter<String> date_adapter,time_adapter;
     DatabaseReference mDatabase;
     HashMap<String,ArrayList<String>> timeList;
+    View v;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment2_layout, container, false);
+        v = inflater.inflate(R.layout.fragment2_layout, container, false);
         dateList = new ArrayList<>();
         timeList = new HashMap<>();
         appointmentList = new ArrayList<>();
@@ -58,63 +65,76 @@ public class Fragment2 extends Fragment {
         timeList.get("- -").add("- -");
         userId = getActivity().getIntent().getStringExtra(USERID);
         listappointments = v.findViewById(R.id.listUppcomingAppointments);
-        date_spn = (Spinner) v.findViewById(R.id.spn_appointment_date);
-        time_spn = (Spinner) v.findViewById(R.id.spn_appointment_time);
+        date_spn = v.findViewById(R.id.spn_appointment_date);
+        time_spn = v.findViewById(R.id.spn_appointment_time);
         patientUpComeAppointmentAdapter = new PatientUpComeAppointmentAdapter(v.getContext(),appointmentList);
+        date_adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, dateList);
+        date_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        date_spn.setAdapter(date_adapter);
+        time_adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, timeList.get("- -"));
+        time_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        time_spn.setAdapter(time_adapter);
         listappointments.setAdapter(patientUpComeAppointmentAdapter);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("Patients").child(userId).child("allApps").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                dateList = new ArrayList<>();
-                timeList = new HashMap<>();
-                appointmentList = new ArrayList<>();
-                dateList.add("- -");
-                timeList.put("- -", new ArrayList<>());
-                timeList.get("- -").add("- -");
-                for(DataSnapshot child : dataSnapshot.getChildren()) {
-                    Appointment availability = child.getValue(Appointment.class);
-                    if(! availability.isPast()){
-                        mDatabase.child("Doctors").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if(snapshot.hasChild(availability.getDoctorId())){
-                                    appointmentList.add(availability);
-                                    String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
-                                    String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
-                                    if(! dateList.contains(date)){
-                                        dateList.add(date);
-                                        timeList.put(date,new ArrayList<>());
-                                        timeList.get(date).add("- -");
-                                        timeList.get(date).add(time);
-                                    }else if(! timeList.get(date).contains(time)){
-                                        timeList.get(date).add(time);
+        if(userId != null){
+            mDatabase.child("Patients").child(userId).child("allApps").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    dateList = new ArrayList<>();
+                    timeList = new HashMap<>();
+                    appointmentList = new ArrayList<>();
+                    dateList.add("- -");
+                    timeList.put("- -", new ArrayList<>());
+                    timeList.get("- -").add("- -");
+                    for(DataSnapshot child : dataSnapshot.getChildren()) {
+                        Appointment availability = child.getValue(Appointment.class);
+                        if(availability.checkNull()){
+                            Log.i("info","something wrong with "+child.getKey());
+                        }else if(! availability.isPast()){
+                            mDatabase.child("Doctors").child(availability.getDoctorId()).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(!snapshot.exists()){
+                                        mDatabase.child("Appointments").child(child.getKey()).removeValue();
+                                        mDatabase.child("Patients").child(userId).child("allApps").child(child.getKey()).removeValue();
                                     }
-                                }else{
-                                    mDatabase.child("Patients").child(userId).child("allApps").child(child.getKey()).removeValue();
-                                    mDatabase.child("Appointments").child(child.getKey()).removeValue();
                                 }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                }
+                            });
+                            if(! appointmentList.contains(availability)){
+                                appointmentList.add(availability);
                             }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
+                            String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
+                            String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
+                            if(! dateList.contains(date)){
+                                dateList.add(date);
+                                timeList.put(date,new ArrayList<>());
+                                timeList.get(date).add("- -");
+                                timeList.get(date).add(time);
+                            }else if(! timeList.get(date).contains(time)){
+                                timeList.get(date).add(time);
                             }
-                        });
+                        }
                     }
+                    Collections.sort(dateList);
+                    date_adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, dateList);
+                    date_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    date_spn.setAdapter(date_adapter);
+                    patientUpComeAppointmentAdapter = new Fragment2.PatientUpComeAppointmentAdapter(v.getContext(),appointmentList);
+                    listappointments.setAdapter(patientUpComeAppointmentAdapter);
+                    patientUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
                 }
-                Collections.sort(dateList);
-                date_adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, dateList);
-                date_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                date_spn.setAdapter(date_adapter);
-                patientUpComeAppointmentAdapter = new Fragment2.PatientUpComeAppointmentAdapter(v.getContext(),appointmentList);
-                listappointments.setAdapter(patientUpComeAppointmentAdapter);
-                patientUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+        }else{
+            Log.i("info","a");
+        }
+
         date_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -152,8 +172,13 @@ public class Fragment2 extends Fragment {
         LayoutInflater inflater;
 
         public PatientUpComeAppointmentAdapter(Context context, ArrayList<Appointment> appointmentList) {
-            this.originAppointments = appointmentList;
-            this.displayAppointments = appointmentList;
+            if(appointmentList == null){
+                this.originAppointments = new ArrayList<>();
+                this.displayAppointments = new ArrayList<>();
+            }else{
+                this.originAppointments = appointmentList;
+                this.displayAppointments = appointmentList;
+            }
             inflater = LayoutInflater.from(context);
         }
 
@@ -218,6 +243,7 @@ public class Fragment2 extends Fragment {
             holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     mDatabase.child("Appointments").child(curr_app.getAppointmentId()).child("patientId").setValue("");
+                    mDatabase.child("Doctors").child(curr_app.getDoctorId()).child("allApps").child(curr_app.getAppointmentId()).child("patientId").setValue("");
                     mDatabase.child("Patients").child(userId).child("allApps").child(curr_app.getAppointmentId()).removeValue();
                 }
             });
@@ -239,7 +265,7 @@ public class Fragment2 extends Fragment {
                     FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
                     ArrayList<Appointment>  FilteredList = new ArrayList<>();
                     if (originAppointments == null) {
-                        originAppointments = new ArrayList<Appointment>(displayAppointments);
+                        originAppointments = new ArrayList<>(displayAppointments);
                     }
                     Collections.sort(originAppointments);
                     if (constraint == null || constraint.length() <=7) {

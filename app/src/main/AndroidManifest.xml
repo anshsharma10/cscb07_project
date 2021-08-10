@@ -12,29 +12,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppointmentTracker">
         <activity
-            android:name=".LogoutConfirmDialogActivity"
-            android:exported="true" />
-        <activity
             android:name=".DoctorViewPatientInfoActivity"
             android:exported="true"
             android:label="Patient Information"
             android:parentActivityName=".DoctorTrackAppointmentActivity" />
         <activity
             android:name=".PatientViewDoctorAvailabilityActivity"
+            android:parentActivityName=".ChooseAppointmentActivity"
             android:exported="true" />
         <activity
             android:name=".DoctorTrackAppointmentActivity"
             android:exported="true"
             android:label="@string/title_activity_doctor_track_appointment"
-            android:theme="@style/Theme.MedicalAppointmentTracker.NoActionBar" />
+            android:theme="@style/Theme.MedicalAppointmentTracker.NoActionBar"
+            android:launchMode="singleTop" />
         <activity
             android:name=".ChooseAppointmentActivity"
             android:exported="true"
             android:label="@string/title_activity_choose_appointment2"
-            android:theme="@style/Theme.MedicalAppointmentTracker.NoActionBar" />
+            android:theme="@style/Theme.MedicalAppointmentTracker.NoActionBar"
+            android:launchMode="singleTop" />
         <activity
             android:name=".CreateAppointmentActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".DoctorTrackAppointmentActivity"/>
         <activity
             android:name=".RegisterActivity"
             android:exported="true" />
@@ -47,9 +48,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" />
     </application>
 
 </manifest>

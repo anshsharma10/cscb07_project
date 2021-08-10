@@ -17,13 +17,19 @@ public class Doctor extends User{
         this.specialization=specialization;
     }
 
-    @Override
-    public User signUp() {
-        return this;
-    }
-
     public void setSpecialization(String specialization){
         this.specialization = specialization;
     }
     public String getSpecialization(){ return specialization; }
+    public String Type(){
+        return "Doctors";
+    }
+    public boolean checkNull(){
+        if(this == null){
+            return true;
+        }else if(specialization!= null && userId!=null&&name!=null&&passWord!=null&&gender!=null){
+            return false;
+        }
+        return true;
+    }
 }
