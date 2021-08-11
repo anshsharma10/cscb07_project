@@ -113,7 +113,7 @@ public class Fragment3 extends Fragment {
             }
             holder.patientName.setText(displayPatients.get(position).getName());
             holder.patientGender.setText(displayPatients.get(position).getGender());
-            holder.display_patient_medinfo.setText("Medical Information: " + displayPatients.get(position).getMedInfo());
+            holder.display_patient_medinfo.setText("Med Info: " + displayPatients.get(position).getMedInfo());
 
 
             return convertView;

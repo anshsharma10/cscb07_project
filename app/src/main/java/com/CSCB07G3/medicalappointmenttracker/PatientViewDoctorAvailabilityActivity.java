@@ -75,7 +75,7 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    title.setText("Availability of Doctor " + snapshot.getValue(Doctor.class).getName());
+                    title.setText("Availability of Doctor \n" + snapshot.getValue(Doctor.class).getName());
                 }else{
                     Toast.makeText(PatientViewDoctorAvailabilityActivity.this,"Doctor removed",Toast.LENGTH_SHORT).show();
                     finish();
