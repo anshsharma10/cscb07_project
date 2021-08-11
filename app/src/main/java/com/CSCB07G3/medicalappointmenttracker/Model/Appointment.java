@@ -49,6 +49,8 @@ public class Appointment implements Serializable,Comparable<Appointment> {
 	}
 
 	public boolean isPast(){
+		boolean result = endTime.convertToDate().before(new Date(System.currentTimeMillis()));
+		//Update database with past value
 		return endTime.convertToDate().before(new Date(System.currentTimeMillis()));
 	}
 
