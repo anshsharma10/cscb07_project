@@ -1,5 +1,7 @@
 package com.CSCB07G3.medicalappointmenttracker.Fragment;
 
+import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,8 +36,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-
-import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
 
 public class Fragment4 extends Fragment {
     String userId,filter_date,filter_time;
@@ -288,7 +288,7 @@ public class Fragment4 extends Fragment {
                             String data_d = new SimpleDateFormat("dd/MM/yyyy").format(data.getStartTime().convertToDate());
                             String data_t = new SimpleDateFormat("kk:mm").format(data.getStartTime().convertToDate())+" - "+ new SimpleDateFormat("kk:mm").format(data.getEndTime().convertToDate());
                             if(data.isPast()){
-                                originAppointments.remove(data);
+                                Log.i("info","a");
                                 mDatabase.child("Doctors").child(userId).child("pastApps").child(data.getAppointmentId()).setValue(data);
                                 mDatabase.child("Doctors").child(userId).child("upcomeApps").child(data.getAppointmentId()).removeValue();
                                 if (!data.getPatientId().equals("")) {

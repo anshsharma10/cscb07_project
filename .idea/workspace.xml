@@ -36,7 +36,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3c69ec6b-b024-42eb-83d9-332ffa6bdde0" name="Default Changelist" comment="upcome and past">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/DoctorViewPatientInfoActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/DoctorViewPatientInfoActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment2.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment3.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment4.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment4.java" afterDir="false" />
@@ -50,7 +49,7 @@
   <component name="CodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@C:\Users\Ansh\.android\avd\Pixel_3_API_30.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\shang\.android\avd\Pixel_3_XL_API_30.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -245,7 +244,9 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
   </component>
