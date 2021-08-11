@@ -33,8 +33,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
-                android:text="Date"
-                android:textColor="#000" />
+                android:text=" Date:"
+                android:textColor="#000"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/editDate"
@@ -52,8 +53,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
-                android:text=" Start time"
-                android:textColor="#000" />
+                android:text=" Start time:"
+                android:textColor="#000"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/editTimeslot1"
@@ -70,8 +72,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
-                android:text=" End time"
-                android:textColor="#000" />
+                android:text=" End time:"
+                android:textColor="#000"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/editTimeslot2"

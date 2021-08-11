@@ -3,39 +3,66 @@
     android:id="@+id/tlContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/border">
 
-    <LinearLayout
-        android:id="@+id/llContainer"
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:stretchColumns="*">
 
-        <TextView
-            android:id="@+id/doctorName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:singleLine="true"
-            android:textAlignment="center"
-            android:textSize="30sp" />
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="match_parent" >
 
-        <TextView
-            android:id="@+id/appointmentDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:singleLine="true"
-            android:textSize="30sp" />
+            <TextView
+                android:id="@+id/doctor_name_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Doctor Name"
+                android:textAlignment="center" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/appoint_date_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Date"
+                android:textAlignment="center" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/doctorName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:minHeight="48dp"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/appointmentDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:minHeight="48dp"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+    </TableLayout>
 
     <TextView
         android:id="@+id/app_spec"
@@ -59,7 +86,7 @@
 
             <TextView
                 android:id="@+id/start_time_txt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Start Time"
@@ -67,7 +94,7 @@
 
             <TextView
                 android:id="@+id/end_time_txt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="End Time"
@@ -81,25 +108,25 @@
 
             <TextView
                 android:id="@+id/start_time"
-                android:layout_width="10dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_weight="1"
                 android:minHeight="48dp"
                 android:singleLine="false"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/end_time"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_weight="1"
                 android:minHeight="48dp"
                 android:singleLine="false"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </TableRow>
 
@@ -109,7 +136,9 @@
         android:id="@+id/btn_patient_cancel_app"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_weight="1"
+        android:background="@drawable/button_bg"
         android:text="Cancel" />
 
 </LinearLayout>
