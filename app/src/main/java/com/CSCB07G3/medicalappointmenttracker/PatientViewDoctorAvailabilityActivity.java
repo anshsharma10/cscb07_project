@@ -29,7 +29,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -86,8 +85,7 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        Query query = mDatabase.child("Appointments").orderByChild("doctorId").equalTo(doctorId);
-        ValueEventListener valueEventListener = new ValueEventListener() {
+        mDatabase.child("Doctors").child(doctorId).child("upcomeApps").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 dateList = new ArrayList<>();
@@ -129,8 +127,7 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
-        };
-        query.addValueEventListener(valueEventListener);
+        });
         date_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -225,10 +222,10 @@ public class PatientViewDoctorAvailabilityActivity extends AppCompatActivity {
             holder.appEndTime.setText(new SimpleDateFormat("kk:mm").format(curr_app.getEndTime().convertToDate()));
             holder.btn_book.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    DatabaseReference dr = mDatabase.child("Patients").child(userId).child("allApps").child(curr_app.getAppointmentId());
+                    DatabaseReference dr = mDatabase.child("Patients").child(userId).child("upcomeApps").child(curr_app.getAppointmentId());
                     curr_app.setPatientId(userId);
                     dr.setValue(curr_app);
-                    mDatabase.child("Doctors").child(doctorId).child("allApps").child(curr_app.getAppointmentId()).setValue(curr_app);
+                    mDatabase.child("Doctors").child(doctorId).child("upcomeApps").child(curr_app.getAppointmentId()).setValue(curr_app);
                     mDatabase.child("Appointments").child(curr_app.getAppointmentId()).child("patientId").setValue(userId);
                 }
             });

@@ -159,18 +159,15 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         createapppointmentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("info","a");
                 System.out.println(doctorid);
                 final Appointment[] app = new Appointment[1];
                 AppTime t1 = new AppTime(year1[0], month1[0], day1[0], start_hour1[0], start_minute1[0]);
                 AppTime t2 = new AppTime(year1[0], month1[0], day1[0], end_hour1[0], end_minute1[0]);
                 if (t2.convertToDate().before(t1.convertToDate())){
                     Toast.makeText(CreateAppointmentActivity.this, "End time must be later than start time", Toast.LENGTH_SHORT).show();
-                    Log.i("info","b");
                 }
                 else if(t1.convertToDate().before(new Date())){
                     Toast.makeText(CreateAppointmentActivity.this, "The time must be later than now", Toast.LENGTH_SHORT).show();
-                    Log.i("info","c");
                 }
                 else {
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
