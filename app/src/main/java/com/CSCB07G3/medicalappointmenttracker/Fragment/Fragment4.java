@@ -125,13 +125,12 @@ public class Fragment4 extends Fragment {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         if(snapshot.exists()){
-
+                                            mDatabase.child("Patients").child(availability.getPatientId()).child("pastDoctors").child(userId).setValue(Doctor.class);
                                         }
                                     }
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
-                                        mDatabase.child("Patients").child(availability.getPatientId()).child("pastDoctors").child(userId).setValue(Doctor.class);
                                     }
                                 });
 
@@ -337,12 +336,11 @@ public class Fragment4 extends Fragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if(snapshot.exists()){
-
+                                                mDatabase.child("Patients").child(data.getPatientId()).child("pastDoctors").child(userId).setValue(Doctor.class);
                                             }
                                         }
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError error) {
-                                            mDatabase.child("Patients").child(data.getPatientId()).child("pastDoctors").child(userId).setValue(Doctor.class);
                                         }
                                     });
                                 }
