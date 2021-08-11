@@ -66,6 +66,26 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:text="Date of Birth"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/patient_info_date_of_birth"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="30dp"
+                android:maxHeight="120dp"
+                android:minHeight="25dp"
+                android:scrollbars="vertical"
+                android:textColor="#000"
+                android:textSize="17dp" />
+
+            <TextView
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,10 +113,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="9dp"
-                android:text="Doctor History"
-                android:textColor="#000"
-                android:textSize="16sp" />
+                android:text="Previous Doctors"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/patient_info_doctors"
@@ -118,7 +136,7 @@
                 android:layout_marginBottom="8dp"
                 android:text="Appointment History"
                 android:textColor="#000"
-                android:textSize="16sp" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/patient_info_appointments"
@@ -129,7 +147,8 @@
                 android:minHeight="25dp"
                 android:scrollbars="vertical"
                 android:textColor="#000"
-                android:textSize="14sp" />
+                android:textSize="17dp"
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>
