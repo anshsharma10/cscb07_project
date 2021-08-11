@@ -284,6 +284,7 @@ public class Fragment2 extends Fragment {
                             String data_d = new SimpleDateFormat("dd/MM/yyyy").format(data.getStartTime().convertToDate());
                             String data_t = new SimpleDateFormat("kk:mm").format(data.getStartTime().convertToDate())+" - "+ new SimpleDateFormat("kk:mm").format(data.getEndTime().convertToDate());
                             if(data.isPast()) {
+                                originAppointments.remove(data);
                                 mDatabase.child("Patients").child(userId).child("pastApps").child(data.getAppointmentId()).setValue(data);
                                 mDatabase.child("Patients").child(userId).child("upcomeApps").child(data.getAppointmentId()).removeValue();
                             }
