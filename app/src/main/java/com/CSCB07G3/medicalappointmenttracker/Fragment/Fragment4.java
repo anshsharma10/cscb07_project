@@ -186,7 +186,7 @@ public class Fragment4 extends Fragment {
 
         private class ViewHolder {
             LinearLayout tlContainer;
-            TextView appDate,appStartTime,appEndTime,patientName,appMedInfo;
+            TextView appDate,appStartTime,appEndTime,patientName;
             Button btn_cancel;
         }
 
@@ -204,7 +204,6 @@ public class Fragment4 extends Fragment {
                 holder.appStartTime = convertView.findViewById(R.id.start_time1);
                 holder.appEndTime = convertView.findViewById(R.id.end_time1);
                 holder.btn_cancel = convertView.findViewById(R.id.btn_patient_cancel_app1);
-                holder.appMedInfo = convertView.findViewById(R.id.app_spec1);
                 convertView.setTag(holder);
             } else {
                 holder = (DoctorUpComeAppointmentAdapter.ViewHolder) convertView.getTag();
@@ -228,7 +227,6 @@ public class Fragment4 extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
                             holder.patientName.setText(snapshot.getValue(Patient.class).getName());
-                            holder.appMedInfo.setText(snapshot.getValue(Patient.class).getMedInfo());
                         }else{
                             holder.patientName.setText("(Removed)");
                         }
