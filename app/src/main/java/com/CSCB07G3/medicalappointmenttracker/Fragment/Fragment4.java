@@ -1,7 +1,5 @@
 package com.CSCB07G3.medicalappointmenttracker.Fragment;
 
-import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +34,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+
+import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
 
 public class Fragment4 extends Fragment {
     String userId,filter_date,filter_time;
@@ -104,7 +104,12 @@ public class Fragment4 extends Fragment {
                         }else{
                             mDatabase.child("Doctors").child(userId).child("pastApps").child(availability.getAppointmentId()).setValue(availability);
                             mDatabase.child("Doctors").child(userId).child("upcomeApps").child(availability.getAppointmentId()).removeValue();
-                        }
+                            if (!availability.getPatientId().equals("")) {
+                                mDatabase.child("Patients").child(availability.getPatientId()).child("pastApps").child(availability.getAppointmentId()).setValue(availability);
+                                mDatabase.child("Patients").child(availability.getPatientId()).child("upcomeApps").child(availability.getAppointmentId()).removeValue();
+                            }
+                            mDatabase.child("Appointments").child(availability.getAppointmentId()).setValue(availability);
+                            }
                     }
                     Collections.sort(dateList);
                     date_adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, dateList);
@@ -284,6 +289,11 @@ public class Fragment4 extends Fragment {
                                 originAppointments.remove(data);
                                 mDatabase.child("Doctors").child(userId).child("pastApps").child(data.getAppointmentId()).setValue(data);
                                 mDatabase.child("Doctors").child(userId).child("upcomeApps").child(data.getAppointmentId()).removeValue();
+                                if (!data.getPatientId().equals("")) {
+                                    mDatabase.child("Patients").child(data.getPatientId()).child("pastApps").child(data.getAppointmentId()).setValue(data);
+                                    mDatabase.child("Patients").child(data.getPatientId()).child("upcomeApps").child(data.getAppointmentId()).removeValue();
+                                }
+                                mDatabase.child("Appointments").child(data.getAppointmentId()).setValue(data);
                             }
                             if((data_d.equals(filter_d)||filter_d.equals("- -")) && (data_t.equals(filter_t)|| filter_t.equals("- -"))&& !data.isPast()){
                                 FilteredList.add(data);

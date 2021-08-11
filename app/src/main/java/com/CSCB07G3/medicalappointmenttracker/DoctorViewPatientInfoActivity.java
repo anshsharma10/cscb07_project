@@ -58,34 +58,32 @@ public class DoctorViewPatientInfoActivity extends AppCompatActivity {
 
 
                 ArrayList<String> doctorsList = new ArrayList<String>();
-                for (DataSnapshot appointmentSnapshot : dataSnapshot.child("allApps").getChildren()) {
-                    Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
-                    if (appointment.isPast()) {
-                        DatabaseReference doctorRef = FirebaseDatabase.getInstance().getReference("Doctors").child(appointment.getDoctorId());
+                for (DataSnapshot appointmentSnapshot : dataSnapshot.child("pastApps").getChildren()) {
+                Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
+                    DatabaseReference doctorRef = FirebaseDatabase.getInstance().getReference("Doctors").child(appointment.getDoctorId());
 
-                        ValueEventListener getDoctor = new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull @NotNull DataSnapshot DoctorsSnapshot) {
-                                if (!doctorsList.contains(DoctorsSnapshot.child("name").getValue(String.class) + "\n")) {
-                                    doctorsList.add(DoctorsSnapshot.child("name").getValue(String.class) + "\n");
-                                    if (doctorsList.size() != 0) {
-                                        String doctorsListString = "";
-                                        for (String doctorString : doctorsList) {
-                                            doctorsListString += doctorString;
-                                        }
-                                        doctorsListString = doctorsListString.trim();
-                                        doctors.setText(doctorsListString);
+                    ValueEventListener getDoctor = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot DoctorsSnapshot) {
+                            if (!doctorsList.contains(DoctorsSnapshot.child("name").getValue(String.class) + "\n")) {
+                                doctorsList.add(DoctorsSnapshot.child("name").getValue(String.class) + "\n");
+                                if (doctorsList.size() != 0) {
+                                    String doctorsListString = "";
+                                    for (String doctorString : doctorsList) {
+                                        doctorsListString += doctorString;
                                     }
+                                    doctorsListString = doctorsListString.trim();
+                                    doctors.setText(doctorsListString);
                                 }
                             }
+                        }
 
-                            @Override
-                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-                            }
-                        };
-                        doctorRef.addListenerForSingleValueEvent(getDoctor);
-                    }
+                        }
+                    };
+                    doctorRef.addListenerForSingleValueEvent(getDoctor);
                 }
                 if (doctorsList.size() == 0) {
                     doctors.setText("No doctor history");
