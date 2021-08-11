@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 
 import com.CSCB07G3.medicalappointmenttracker.Model.Appointment;
 import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
+import com.CSCB07G3.medicalappointmenttracker.Model.Patient;
 import com.CSCB07G3.medicalappointmenttracker.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -124,9 +125,32 @@ public class Fragment2 extends Fragment {
                             mDatabase.child("Doctors").child(availability.getDoctorId()).child("pastApps").child(availability.getAppointmentId()).setValue(availability);
                             mDatabase.child("Doctors").child(availability.getDoctorId()).child("upcomeApps").child(availability.getAppointmentId()).removeValue();
                             mDatabase.child("Appointments").child(availability.getAppointmentId()).setValue(availability);
+                            mDatabase.child("Patients").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()){
+                                        mDatabase.child("Doctors").child(availability.getDoctorId()).child("pastPatients").child(userId).setValue(snapshot.getValue(Patient.class));
+                                    }
+                                }
 
-                            mDatabase.child("Doctors").child(availability.getDoctorId()).child("pastPatients").child(availability.getPatientId()).setValue(availability.getPatientId());
-                            mDatabase.child("Patients").child(userId).child("pastDoctors").child(availability.getDoctorId()).setValue(availability.getDoctorId());
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            mDatabase.child("Doctors").child(availability.getDoctorId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.exists()){
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    mDatabase.child("Patients").child(userId).child("pastDoctors").child(availability.getDoctorId()).setValue(Doctor.class);
+                                }
+                            });
                         }
 
                     }
@@ -297,8 +321,31 @@ public class Fragment2 extends Fragment {
                                 mDatabase.child("Doctors").child(data.getDoctorId()).child("pastApps").child(data.getAppointmentId()).setValue(data);
                                 mDatabase.child("Doctors").child(data.getDoctorId()).child("upcomeApps").child(data.getAppointmentId()).removeValue();
                                 mDatabase.child("Appointments").child(data.getAppointmentId()).setValue(data);
-                                mDatabase.child("Doctors").child(data.getDoctorId()).child("pastPatients").child(data.getPatientId()).setValue(data.getPatientId());
-                                mDatabase.child("Patients").child(userId).child("pastDoctors").child(data.getDoctorId()).setValue(data.getDoctorId());
+                                mDatabase.child("Patients").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()){
+                                            mDatabase.child("Doctors").child(data.getDoctorId()).child("pastPatients").child(userId).setValue(snapshot.getValue(Patient.class));
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                                mDatabase.child("Doctors").child(data.getDoctorId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if(snapshot.exists()){
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        mDatabase.child("Patients").child(userId).child("pastDoctors").child(data.getDoctorId()).setValue(Doctor.class);
+                                    }
+                                });
                             }
                             if((data_d.equals(filter_d)||filter_d.equals("- -")) && (data_t.equals(filter_t)|| filter_t.equals("- -")) && !data.isPast()){
                                 FilteredList.add(data);
