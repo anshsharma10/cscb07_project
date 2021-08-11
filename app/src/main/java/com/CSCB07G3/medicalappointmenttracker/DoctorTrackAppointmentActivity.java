@@ -3,6 +3,7 @@ package com.CSCB07G3.medicalappointmenttracker;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -38,6 +39,15 @@ public class DoctorTrackAppointmentActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), CreateAppointmentActivity.class);
                 i.putExtra(USERID,doctorId);
                 startActivity(i);
+            }
+        });
+        Button refresh = binding.btnRefresh;
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = getIntent().putExtra(USERID,getIntent().getStringExtra(USERID)).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                finish();
+                startActivity(intent);
             }
         });
     }
