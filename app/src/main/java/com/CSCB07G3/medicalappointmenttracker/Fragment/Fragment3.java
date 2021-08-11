@@ -202,7 +202,7 @@ public class Fragment3 extends Fragment {
                         mDatabase1.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot ds) {
-                                for(DataSnapshot ds1: ds.child(doctorid).child("allApps").getChildren()){
+                                for(DataSnapshot ds1: ds.child(doctorid).child("pastApps").getChildren()){
                                     Appointment app = ds1.getValue(Appointment.class);
                                     if (app.getPatientId().equals(patient.getUserId()) && (! patientList.contains(patient))){
                                         patientList.add(patient);

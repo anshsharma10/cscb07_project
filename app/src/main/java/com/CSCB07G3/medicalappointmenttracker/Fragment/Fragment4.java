@@ -74,7 +74,7 @@ public class Fragment4 extends Fragment {
         listappointments.setAdapter(doctorUpComeAppointmentAdapter);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         if(userId != null){
-            mDatabase.child("Doctors").child(userId).child("allApps").addValueEventListener(new ValueEventListener() {
+            mDatabase.child("Doctors").child(userId).child("upcomeApps").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     dateList = new ArrayList<>();
@@ -101,6 +101,9 @@ public class Fragment4 extends Fragment {
                             }else if(! timeList.get(date).contains(time)){
                                 timeList.get(date).add(time);
                             }
+                        }else{
+                            mDatabase.child("Doctors").child(userId).child("pastApps").child(availability.getAppointmentId()).setValue(availability);
+                            mDatabase.child("Doctors").child(userId).child("upcomeApps").child(availability.getAppointmentId()).removeValue();
                         }
                     }
                     Collections.sort(dateList);
@@ -218,7 +221,7 @@ public class Fragment4 extends Fragment {
                     @Override
                     public void onClick(View view) {
                         mDatabase.child("Appointments").child(curr_app.getAppointmentId()).removeValue();
-                        mDatabase.child("Doctors").child(userId).child("allApps").child(curr_app.getAppointmentId()).removeValue();
+                        mDatabase.child("Doctors").child(userId).child("upcomeApps").child(curr_app.getAppointmentId()).removeValue();
                     }
                 });
             }else{
@@ -240,9 +243,9 @@ public class Fragment4 extends Fragment {
                     public void onClick(View view) {
                         mDatabase.child("Appointments").child(curr_app.getAppointmentId()).child("patientId").setValue("");
                         if(! holder.patientName.getText().equals("(Removed)")){
-                            mDatabase.child("Patients").child(curr_app.getPatientId()).child("allApps").child(curr_app.getAppointmentId()).removeValue();
+                            mDatabase.child("Patients").child(curr_app.getPatientId()).child("upcomeApps").child(curr_app.getAppointmentId()).removeValue();
                         }
-                        mDatabase.child("Doctors").child(userId).child("allApps").child(curr_app.getAppointmentId()).child("patientId").setValue("");
+                        mDatabase.child("Doctors").child(userId).child("upcomeApps").child(curr_app.getAppointmentId()).child("patientId").setValue("");
                     }
                 });
             }
@@ -279,7 +282,8 @@ public class Fragment4 extends Fragment {
                             String data_t = new SimpleDateFormat("kk:mm").format(data.getStartTime().convertToDate())+" - "+ new SimpleDateFormat("kk:mm").format(data.getEndTime().convertToDate());
                             if(data.isPast()){
                                 originAppointments.remove(data);
-                                mDatabase.child("Doctors").child(userId).child("allApps").child(data.getAppointmentId()).child("past").setValue(true);
+                                mDatabase.child("Doctors").child(userId).child("pastApps").child(data.getAppointmentId()).setValue(data);
+                                mDatabase.child("Doctors").child(userId).child("upcomeApps").child(data.getAppointmentId()).removeValue();
                             }
                             if((data_d.equals(filter_d)||filter_d.equals("- -")) && (data_t.equals(filter_t)|| filter_t.equals("- -"))&& !data.isPast()){
                                 FilteredList.add(data);

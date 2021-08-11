@@ -43,7 +43,7 @@ public class CreateAppointmentPresenter {
                         databaseReference.child("Appointments").child(n).setValue(app[0]);
                         databaseReference.child("Appointments").child("totalapp").setValue(n);
                     }
-                    DatabaseReference dr = databaseReference.child("Doctors").child(doctorid).child("allApps").child(app[0].getAppointmentId());
+                    DatabaseReference dr = databaseReference.child("Doctors").child(doctorid).child("upcomeApps").child(app[0].getAppointmentId());
                     dr.setValue(app[0]);
                 }
 

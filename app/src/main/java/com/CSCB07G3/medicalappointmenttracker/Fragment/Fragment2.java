@@ -1,5 +1,7 @@
 package com.CSCB07G3.medicalappointmenttracker.Fragment;
 
+import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,8 +36,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-
-import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
 
 public class Fragment2 extends Fragment {
     String userId,filter_date,filter_time;
@@ -79,7 +79,7 @@ public class Fragment2 extends Fragment {
         listappointments.setAdapter(patientUpComeAppointmentAdapter);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         if(userId != null){
-            mDatabase.child("Patients").child(userId).child("allApps").addValueEventListener(new ValueEventListener() {
+            mDatabase.child("Patients").child(userId).child("upcomeApps").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     dateList = new ArrayList<>();
@@ -98,7 +98,7 @@ public class Fragment2 extends Fragment {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if(!snapshot.exists()){
                                         mDatabase.child("Appointments").child(child.getKey()).removeValue();
-                                        mDatabase.child("Patients").child(userId).child("allApps").child(child.getKey()).removeValue();
+                                        mDatabase.child("Patients").child(userId).child("upcomeApps").child(child.getKey()).removeValue();
                                     }
                                 }
                                 @Override
@@ -118,6 +118,9 @@ public class Fragment2 extends Fragment {
                             }else if(! timeList.get(date).contains(time)){
                                 timeList.get(date).add(time);
                             }
+                        }else{
+                            mDatabase.child("Patients").child(userId).child("pastApps").child(availability.getAppointmentId()).setValue(availability);
+                            mDatabase.child("Patients").child(userId).child("upcomeApps").child(availability.getAppointmentId()).removeValue();
                         }
                     }
                     Collections.sort(dateList);
@@ -245,8 +248,8 @@ public class Fragment2 extends Fragment {
             holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     mDatabase.child("Appointments").child(curr_app.getAppointmentId()).child("patientId").setValue("");
-                    mDatabase.child("Doctors").child(curr_app.getDoctorId()).child("allApps").child(curr_app.getAppointmentId()).child("patientId").setValue("");
-                    mDatabase.child("Patients").child(userId).child("allApps").child(curr_app.getAppointmentId()).removeValue();
+                    mDatabase.child("Doctors").child(curr_app.getDoctorId()).child("upcomeApps").child(curr_app.getAppointmentId()).child("patientId").setValue("");
+                    mDatabase.child("Patients").child(userId).child("upcomeApps").child(curr_app.getAppointmentId()).removeValue();
                 }
             });
             return convertView;
@@ -281,7 +284,8 @@ public class Fragment2 extends Fragment {
                             String data_d = new SimpleDateFormat("dd/MM/yyyy").format(data.getStartTime().convertToDate());
                             String data_t = new SimpleDateFormat("kk:mm").format(data.getStartTime().convertToDate())+" - "+ new SimpleDateFormat("kk:mm").format(data.getEndTime().convertToDate());
                             if(data.isPast()) {
-                                originAppointments.remove(data);
+                                mDatabase.child("Patients").child(userId).child("pastApps").child(data.getAppointmentId()).setValue(data);
+                                mDatabase.child("Patients").child(userId).child("upcomeApps").child(data.getAppointmentId()).removeValue();
                             }
                             if((data_d.equals(filter_d)||filter_d.equals("- -")) && (data_t.equals(filter_t)|| filter_t.equals("- -")) && !data.isPast()){
                                 FilteredList.add(data);
