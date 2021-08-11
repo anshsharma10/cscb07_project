@@ -62,16 +62,19 @@ public class Fragment3 extends Fragment {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot patientSnapshot : dataSnapshot.getChildren()){
                         Patient patient = patientSnapshot.getValue(Patient.class);
+                        ArrayList<String> tempPatientList = new ArrayList<String>();
                         for(DataSnapshot appSnapshot:patientSnapshot.child("pastApps").getChildren()){
                             Appointment app = appSnapshot.getValue(Appointment.class);
-                            if(patient.getUserId().equals(app.getPatientId())&& !patientList.contains(patient)){
+                            if(patient.getUserId().equals(app.getPatientId())&& !patientList.contains(patient) && !tempPatientList.contains(patient.getUserId())){
                                 patientList.add(patient);
+                                tempPatientList.add(patient.getUserId());
                             }
                         }
                         for(DataSnapshot appSnapshot:patientSnapshot.child("upcomeApps").getChildren()){
                             Appointment app = appSnapshot.getValue(Appointment.class);
-                            if(patient.getUserId().equals(app.getPatientId())&& !patientList.contains(patient)){
+                            if(patient.getUserId().equals(app.getPatientId())&& !patientList.contains(patient) && !!tempPatientList.contains(patient.getUserId())){
                                 patientList.add(patient);
+                                tempPatientList.add(patient.getUserId());
                             }
                         }
                     }
