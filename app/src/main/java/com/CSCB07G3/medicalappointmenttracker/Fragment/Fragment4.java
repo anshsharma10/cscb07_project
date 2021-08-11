@@ -1,7 +1,5 @@
 package com.CSCB07G3.medicalappointmenttracker.Fragment;
 
-import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +35,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+
+import static com.CSCB07G3.medicalappointmenttracker.Fragment.Fragment1.USERID;
 
 public class Fragment4 extends Fragment {
     String userId,filter_date,filter_time;
@@ -125,7 +125,7 @@ public class Fragment4 extends Fragment {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         if(snapshot.exists()){
-                                            mDatabase.child("Patients").child(availability.getPatientId()).child("pastDoctors").child(userId).setValue(Doctor.class);
+                                            mDatabase.child("Patients").child(availability.getPatientId()).child("pastDoctors").child(userId).setValue(snapshot.getValue(Doctor.class));
                                         }
                                     }
 
@@ -336,7 +336,7 @@ public class Fragment4 extends Fragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if(snapshot.exists()){
-                                                mDatabase.child("Patients").child(data.getPatientId()).child("pastDoctors").child(userId).setValue(Doctor.class);
+                                                mDatabase.child("Patients").child(data.getPatientId()).child("pastDoctors").child(userId).setValue(snapshot.getValue(Doctor.class));
                                             }
                                         }
                                         @Override
