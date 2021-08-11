@@ -36,7 +36,9 @@
   <component name="ChangeListManager">
     <list default="true" id="3c69ec6b-b024-42eb-83d9-332ffa6bdde0" name="Default Changelist" comment="upcome and past">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment3.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/CSCB07G3/medicalappointmenttracker/Fragment/Fragment3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_choose_appointment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_choose_appointment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_track_appointment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_track_appointment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,7 +49,7 @@
   <component name="CodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@C:\Users\Ansh\.android\avd\Pixel_3_API_30.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\ACER\.android\avd\Pixel_3a_API_30_x86.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -249,7 +251,9 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
   </component>
@@ -528,36 +532,6 @@
     <MESSAGE value="upcome and past" />
     <option name="LAST_COMMIT_MESSAGE" value="upcome and past" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="292" y="162" key="#PSD" timestamp="1628713356577">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state x="292" y="162" key="#PSD/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628713356577" />
-    <state width="1506" height="133" key="GridCell.Tab.0.bottom" timestamp="1628710227017">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state width="1506" height="133" key="GridCell.Tab.0.bottom/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628710227017" />
-    <state width="1506" height="133" key="GridCell.Tab.0.center" timestamp="1628710227017">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state width="1506" height="133" key="GridCell.Tab.0.center/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628710227017" />
-    <state width="1506" height="133" key="GridCell.Tab.0.left" timestamp="1628710227017">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state width="1506" height="133" key="GridCell.Tab.0.left/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628710227017" />
-    <state width="1506" height="133" key="GridCell.Tab.0.right" timestamp="1628710227017">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state width="1506" height="133" key="GridCell.Tab.0.right/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628710227017" />
-    <state x="484" y="148" width="580" height="534" key="find.popup" timestamp="1628709660253">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state x="484" y="148" width="580" height="534" key="find.popup/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628709660253" />
-    <state x="437" y="152" width="672" height="678" key="search.everywhere.popup" timestamp="1628713578980">
-      <screen x="0" y="0" width="1549" height="831" />
-    </state>
-    <state x="437" y="152" width="672" height="678" key="search.everywhere.popup/0.0.1549.831/0.-1080.1549.871@0.0.1549.831" timestamp="1628713578980" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -583,6 +557,6 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Medical_Appointment_Tracker$ExampleUnitTest.ic" NAME="ExampleUnitTest Coverage Results" MODIFIED="1628630464236" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Medical_Appointment_Tracker$ExampleUnitTest.ic" NAME="ExampleUnitTest Coverage Results" MODIFIED="1628684945182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

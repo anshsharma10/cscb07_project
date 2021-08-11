@@ -31,6 +31,8 @@
                 android:id="@+id/bt_refresh"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="12dp"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:text="Refresh" />
         </LinearLayout>
