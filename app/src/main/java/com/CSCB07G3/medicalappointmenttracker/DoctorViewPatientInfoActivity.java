@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.CSCB07G3.medicalappointmenttracker.Model.Doctor;
 import com.CSCB07G3.medicalappointmenttracker.Model.Patient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,15 +55,15 @@ public class DoctorViewPatientInfoActivity extends AppCompatActivity {
                 dob.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date(dataSnapshot.child("birthday").child("time").getValue(Long.class))));
 
                 if (dataSnapshot.child("pastDoctors").exists()) {
-                    ArrayList<String> doctorsList = new ArrayList<String>();
+                    ArrayList<Doctor> doctorsList = new ArrayList<>();
                     for (DataSnapshot pastDoctor : dataSnapshot.child("pastDoctors").getChildren()) {
-                        doctorsList.add(pastDoctor.getValue(String.class));
+                        doctorsList.add(pastDoctor.getValue(Doctor.class));
                     }
                     String doctorsListString = "";
-                    for (String pastDoctor : doctorsList) {
-                        doctorsListString += pastDoctor + "\n";
+                    for (Doctor pastDoctor : doctorsList) {
+                        doctorsListString += pastDoctor.getName() +", "+pastDoctor.getSpecialization()+"\n";
                     }
-                    doctorsListString = doctorsListString.trim();
+                    doctorsListString = doctorsListString;
                     doctors.setText(doctorsListString);
                 } else {
                     doctors.setText("No doctor history");
