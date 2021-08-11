@@ -107,6 +107,8 @@ public class Fragment4 extends Fragment {
                             if (!availability.getPatientId().equals("")) {
                                 mDatabase.child("Patients").child(availability.getPatientId()).child("pastApps").child(availability.getAppointmentId()).setValue(availability);
                                 mDatabase.child("Patients").child(availability.getPatientId()).child("upcomeApps").child(availability.getAppointmentId()).removeValue();
+                                mDatabase.child("Doctors").child(userId).child("pastPatients").child(availability.getPatientId()).setValue(availability.getPatientId());
+                                mDatabase.child("Patients").child(availability.getPatientId()).child("pastDoctors").child(availability.getDoctorId()).setValue(availability.getDoctorId());
                             }
                             mDatabase.child("Appointments").child(availability.getAppointmentId()).setValue(availability);
                             }
@@ -292,6 +294,8 @@ public class Fragment4 extends Fragment {
                                 if (!data.getPatientId().equals("")) {
                                     mDatabase.child("Patients").child(data.getPatientId()).child("pastApps").child(data.getAppointmentId()).setValue(data);
                                     mDatabase.child("Patients").child(data.getPatientId()).child("upcomeApps").child(data.getAppointmentId()).removeValue();
+                                    mDatabase.child("Doctors").child(userId).child("pastPatients").child(data.getPatientId()).setValue(data.getPatientId());
+                                    mDatabase.child("Patients").child(data.getPatientId()).child("pastDoctors").child(data.getDoctorId()).setValue(data.getDoctorId());
                                 }
                                 mDatabase.child("Appointments").child(data.getAppointmentId()).setValue(data);
                             }

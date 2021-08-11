@@ -127,6 +127,7 @@ public class Fragment3 extends Fragment {
                 @Override
                 protected void publishResults(CharSequence constraint,FilterResults results) {
                     displayPatients = (ArrayList<Patient>) results.values; // has the filtered values
+                    //Remove all duplicates
                     Asserts.checkNotNull(results.values);
                     notifyDataSetChanged();  // notifies the data with new filtered values
                 }
@@ -194,9 +195,12 @@ public class Fragment3 extends Fragment {
         ValueEventListener doctorListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                patientList = new ArrayList<>();
                 boolean new_item = false;
                 if(dataSnapshot.exists()){
+                    patientList =  new ArrayList<Patient>();
+                    patientList = new ArrayList<Patient>();
+                    patientadapter = new PatientAdapter(v.getContext(),patientList);
+                    listPatient.setAdapter(patientadapter);
                     for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                         Patient patient = singleSnapshot.getValue(Patient.class);
                         mDatabase1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -217,6 +221,7 @@ public class Fragment3 extends Fragment {
                         });
                     }
                     patientadapter = new PatientAdapter(v.getContext(),patientList);
+                    Log.d("monke", "onDataChange: " + patientList.toString());
                     listPatient.setAdapter(patientadapter);
                     patientadapter.getFilter().filter(name+";"+gender);
                 }
@@ -226,7 +231,7 @@ public class Fragment3 extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         };
-        mDatabase.addListenerForSingleValueEvent(doctorListener);
+        mDatabase.addValueEventListener(doctorListener);
         listPatient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parentAdapter, View view, int position,
