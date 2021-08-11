@@ -48,17 +48,91 @@ public class Fragment4 extends Fragment {
     ArrayAdapter<String> date_adapter,time_adapter;
     DatabaseReference mDatabase;
     HashMap<String,ArrayList<String>> timeList;
-
+    View v;
     @Override
     public void onStart() {
-        super.onStart();
-        doctorUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
+        super.onStart();mDatabase.child("Doctors").child(userId).child("upcomeApps").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                dateList = new ArrayList<>();
+                timeList = new HashMap<>();
+                appointmentList = new ArrayList<>();
+                dateList.add("- -");
+                timeList.put("- -", new ArrayList<>());
+                timeList.get("- -").add("- -");
+                for(DataSnapshot child : dataSnapshot.getChildren()) {
+                    Appointment availability = child.getValue(Appointment.class);
+                    if(availability.checkNull()){
+                        Log.i("info","something wrong with "+child.getKey());
+                    }else if(! availability.isPast()){
+                        if(!appointmentList.contains(availability)){
+                            appointmentList.add(availability);
+                        }
+                        String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
+                        String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
+                        if(! dateList.contains(date)){
+                            dateList.add(date);
+                            timeList.put(date,new ArrayList<>());
+                            timeList.get(date).add("- -");
+                            timeList.get(date).add(time);
+                        }else if(! timeList.get(date).contains(time)){
+                            timeList.get(date).add(time);
+                        }
+                    }else{
+                        mDatabase.child("Doctors").child(userId).child("pastApps").child(availability.getAppointmentId()).setValue(availability);
+                        mDatabase.child("Doctors").child(userId).child("upcomeApps").child(availability.getAppointmentId()).removeValue();
+                        if (!availability.getPatientId().equals("")) {
+                            mDatabase.child("Patients").child(availability.getPatientId()).child("pastApps").child(availability.getAppointmentId()).setValue(availability);
+                            mDatabase.child("Patients").child(availability.getPatientId()).child("upcomeApps").child(availability.getAppointmentId()).removeValue();
+                            mDatabase.child("Patients").child(availability.getPatientId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()){
+                                        mDatabase.child("Doctors").child(userId).child("pastPatients").child(snapshot.getKey()).setValue(snapshot.getValue(Patient.class));
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            mDatabase.child("Doctors").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.exists()){
+                                        mDatabase.child("Patients").child(availability.getPatientId()).child("pastDoctors").child(userId).setValue(snapshot.getValue(Doctor.class));
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                }
+                            });
+
+                        }
+                        mDatabase.child("Appointments").child(availability.getAppointmentId()).setValue(availability);
+                    }
+                }
+                Collections.sort(dateList);
+                date_adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, dateList);
+                date_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                date_spn.setAdapter(date_adapter);
+                doctorUpComeAppointmentAdapter = new Fragment4.DoctorUpComeAppointmentAdapter(v.getContext(),appointmentList);
+                listappointments.setAdapter(doctorUpComeAppointmentAdapter);
+                doctorUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment4_layout, container, false);
+        v = inflater.inflate(R.layout.fragment4_layout, container, false);
         dateList = new ArrayList<>();
         timeList = new HashMap<>();
         appointmentList = new ArrayList<>();
@@ -74,85 +148,6 @@ public class Fragment4 extends Fragment {
         doctorUpComeAppointmentAdapter = new DoctorUpComeAppointmentAdapter(v.getContext(),appointmentList);
         listappointments.setAdapter(doctorUpComeAppointmentAdapter);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        if(userId != null){
-            mDatabase.child("Doctors").child(userId).child("upcomeApps").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    dateList = new ArrayList<>();
-                    timeList = new HashMap<>();
-                    appointmentList = new ArrayList<>();
-                    dateList.add("- -");
-                    timeList.put("- -", new ArrayList<>());
-                    timeList.get("- -").add("- -");
-                    for(DataSnapshot child : dataSnapshot.getChildren()) {
-                        Appointment availability = child.getValue(Appointment.class);
-                        if(availability.checkNull()){
-                            Log.i("info","something wrong with "+child.getKey());
-                        }else if(! availability.isPast()){
-                            if(!appointmentList.contains(availability)){
-                                appointmentList.add(availability);
-                            }
-                            String date = new SimpleDateFormat("dd/MM/yyyy").format(availability.getStartTime().convertToDate());
-                            String time = new SimpleDateFormat("kk:mm").format(availability.getStartTime().convertToDate()) +" - "+ new SimpleDateFormat("kk:mm").format(availability.getEndTime().convertToDate());
-                            if(! dateList.contains(date)){
-                                dateList.add(date);
-                                timeList.put(date,new ArrayList<>());
-                                timeList.get(date).add("- -");
-                                timeList.get(date).add(time);
-                            }else if(! timeList.get(date).contains(time)){
-                                timeList.get(date).add(time);
-                            }
-                        }else{
-                            mDatabase.child("Doctors").child(userId).child("pastApps").child(availability.getAppointmentId()).setValue(availability);
-                            mDatabase.child("Doctors").child(userId).child("upcomeApps").child(availability.getAppointmentId()).removeValue();
-                            if (!availability.getPatientId().equals("")) {
-                                mDatabase.child("Patients").child(availability.getPatientId()).child("pastApps").child(availability.getAppointmentId()).setValue(availability);
-                                mDatabase.child("Patients").child(availability.getPatientId()).child("upcomeApps").child(availability.getAppointmentId()).removeValue();
-                                mDatabase.child("Patients").child(availability.getPatientId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        if (snapshot.exists()){
-                                            mDatabase.child("Doctors").child(userId).child("pastPatients").child(snapshot.getKey()).setValue(snapshot.getValue(Patient.class));
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
-                                mDatabase.child("Doctors").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        if(snapshot.exists()){
-                                            mDatabase.child("Patients").child(availability.getPatientId()).child("pastDoctors").child(userId).setValue(Doctor.class);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                    }
-                                });
-
-                            }
-                            mDatabase.child("Appointments").child(availability.getAppointmentId()).setValue(availability);
-                        }
-                    }
-                    Collections.sort(dateList);
-                    date_adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, dateList);
-                    date_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    date_spn.setAdapter(date_adapter);
-                    doctorUpComeAppointmentAdapter = new Fragment4.DoctorUpComeAppointmentAdapter(v.getContext(),appointmentList);
-                    listappointments.setAdapter(doctorUpComeAppointmentAdapter);
-                    doctorUpComeAppointmentAdapter.getFilter().filter(filter_date+";"+filter_time);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
-        }
-
         date_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -312,40 +307,6 @@ public class Fragment4 extends Fragment {
                         for (Appointment data: originAppointments){
                             String data_d = new SimpleDateFormat("dd/MM/yyyy").format(data.getStartTime().convertToDate());
                             String data_t = new SimpleDateFormat("kk:mm").format(data.getStartTime().convertToDate())+" - "+ new SimpleDateFormat("kk:mm").format(data.getEndTime().convertToDate());
-                            if(data.isPast()){
-                                Log.i("info","a");
-                                mDatabase.child("Doctors").child(userId).child("pastApps").child(data.getAppointmentId()).setValue(data);
-                                mDatabase.child("Doctors").child(userId).child("upcomeApps").child(data.getAppointmentId()).removeValue();
-                                if (!data.getPatientId().equals("")) {
-                                    mDatabase.child("Patients").child(data.getPatientId()).child("pastApps").child(data.getAppointmentId()).setValue(data);
-                                    mDatabase.child("Patients").child(data.getPatientId()).child("upcomeApps").child(data.getAppointmentId()).removeValue();
-                                    mDatabase.child("Patients").child(data.getPatientId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (snapshot.exists()){
-                                                mDatabase.child("Doctors").child(userId).child("pastPatients").child(snapshot.getKey()).setValue(snapshot.getValue(Patient.class));
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                                    mDatabase.child("Doctors").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if(snapshot.exists()){
-                                                mDatabase.child("Patients").child(data.getPatientId()).child("pastDoctors").child(userId).setValue(Doctor.class);
-                                            }
-                                        }
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-                                        }
-                                    });
-                                }
-                                mDatabase.child("Appointments").child(data.getAppointmentId()).setValue(data);
-                            }
                             if((data_d.equals(filter_d)||filter_d.equals("- -")) && (data_t.equals(filter_t)|| filter_t.equals("- -"))&& !data.isPast()){
                                 FilteredList.add(data);
                             }
