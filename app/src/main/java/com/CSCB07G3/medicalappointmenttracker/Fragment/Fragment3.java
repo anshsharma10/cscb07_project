@@ -185,36 +185,31 @@ public class Fragment3 extends Fragment {
         gender_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender_spinner.setAdapter(gender_spinner_adapter);
         gender_spinner.setVisibility(View.VISIBLE);
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Patients");
-        DatabaseReference mDatabase1 = FirebaseDatabase.getInstance().getReference("Doctors");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         patientList = new ArrayList<Patient>();
         patientadapter = new PatientAdapter(v.getContext(),patientList);
         listPatient.setAdapter(patientadapter);
         String doctorid = getActivity().getIntent().getStringExtra(USERID);
-        ValueEventListener doctorListener = new ValueEventListener() {
+        mDatabase.child("Patients").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 patientList = new ArrayList<>();
                 boolean new_item = false;
                 if(dataSnapshot.exists()){
-                    for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
-                        Patient patient = singleSnapshot.getValue(Patient.class);
-                        mDatabase1.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot ds) {
-                                for(DataSnapshot ds1: ds.child(doctorid).child("pastApps").getChildren()){
-                                    Appointment app = ds1.getValue(Appointment.class);
-                                    if (app.getPatientId().equals(patient.getUserId()) && (! patientList.contains(patient))){
-                                        patientList.add(patient);
-                                    }
-                                }
+                    for(DataSnapshot patientSnapshot : dataSnapshot.getChildren()){
+                        Patient patient = patientSnapshot.getValue(Patient.class);
+                        for(DataSnapshot appSnapshot:patientSnapshot.child("pastApps").getChildren()){
+                            Appointment app = appSnapshot.getValue(Appointment.class);
+                            if(patient.getUserId().equals(app.getPatientId())&& !patientList.contains(patient)){
+                                patientList.add(patient);
                             }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
+                        }
+                        for(DataSnapshot appSnapshot:patientSnapshot.child("upcomeApps").getChildren()){
+                            Appointment app = appSnapshot.getValue(Appointment.class);
+                            if(patient.getUserId().equals(app.getPatientId())&& !patientList.contains(patient)){
+                                patientList.add(patient);
                             }
-                        });
+                        }
                     }
                     patientadapter = new PatientAdapter(v.getContext(),patientList);
                     listPatient.setAdapter(patientadapter);
@@ -225,8 +220,7 @@ public class Fragment3 extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
-        };
-        mDatabase.addListenerForSingleValueEvent(doctorListener);
+        });
         listPatient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parentAdapter, View view, int position,
