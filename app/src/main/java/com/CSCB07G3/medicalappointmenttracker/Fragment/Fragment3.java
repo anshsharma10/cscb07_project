@@ -45,6 +45,7 @@ public class Fragment3 extends Fragment {
     private ArrayList<Patient> patientList;
     private PatientAdapter patientadapter;
     DatabaseReference mDatabase;
+    String userid;
     View v;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,14 +66,14 @@ public class Fragment3 extends Fragment {
                         ArrayList<String> tempPatientList = new ArrayList<String>();
                         for(DataSnapshot appSnapshot:patientSnapshot.child("pastApps").getChildren()){
                             Appointment app = appSnapshot.getValue(Appointment.class);
-                            if(patient.getUserId().equals(app.getPatientId())&& !patientList.contains(patient) && !tempPatientList.contains(patient.getUserId())){
+                            if(app.getDoctorId().equals(userid)&& !patientList.contains(patient) && !tempPatientList.contains(patient.getUserId())){
                                 patientList.add(patient);
                                 tempPatientList.add(patient.getUserId());
                             }
                         }
                         for(DataSnapshot appSnapshot:patientSnapshot.child("upcomeApps").getChildren()){
                             Appointment app = appSnapshot.getValue(Appointment.class);
-                            if(patient.getUserId().equals(app.getPatientId())&& !patientList.contains(patient) && !!tempPatientList.contains(patient.getUserId())){
+                            if(app.getDoctorId().equals(userid)&& !patientList.contains(patient) && !!tempPatientList.contains(patient.getUserId())){
                                 patientList.add(patient);
                                 tempPatientList.add(patient.getUserId());
                             }
@@ -219,6 +220,7 @@ public class Fragment3 extends Fragment {
         v = inflater.inflate(R.layout.fragment3_layout, container, false);
         name="";
         gender ="- -";
+        userid = getActivity().getIntent().getStringExtra(USERID);
         EditText searchPatient = v.findViewById(R.id.searchPatient);
         listPatient = v.findViewById(R.id.listPatient);
         Spinner gender_spinner = v.findViewById(R.id.spn_patient_gender);
