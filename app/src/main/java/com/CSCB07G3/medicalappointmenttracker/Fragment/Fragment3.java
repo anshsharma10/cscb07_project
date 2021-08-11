@@ -164,6 +164,7 @@ public class Fragment3 extends Fragment {
                 @Override
                 protected void publishResults(CharSequence constraint,FilterResults results) {
                     displayPatients = (ArrayList<Patient>) results.values; // has the filtered values
+                    //Remove all duplicates
                     Asserts.checkNotNull(results.values);
                     notifyDataSetChanged();  // notifies the data with new filtered values
                 }
